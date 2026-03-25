@@ -44,11 +44,13 @@ const ogImageUrl = ogImage ?? '/images/og-default.jpg';
   </head>
   <body class="bg-cream text-warm-gray-900 font-body">
     <AmbientBackground variant="blush" />
-    <Header />
-    <main>
-      <slot />
-    </main>
-    <Footer />
-    <MobileBookingBar />
+    <div class="relative" style="z-index: 1;">
+      <Header />
+      <main>
+        <slot />
+      </main>
+      <Footer />
+      <MobileBookingBar />
+    </div>
   </body>
 </html>
