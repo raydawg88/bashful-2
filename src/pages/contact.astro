@@ -1,0 +1,173 @@
+---
+/**
+ * Contact — Location, directions, map, and business info for Bashful Beauty.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BookingCTA from '../components/BookingCTA.astro';
+import { business } from '../data/business';
+
+/** Full address string */
+const fullAddress = `${business.address.street}, ${business.address.city}, ${business.address.state} ${business.address.zip}`;
+
+/** LocalBusiness JSON-LD */
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: business.name,
+  description: 'Rockwall\'s most trusted beauty studio specializing in waxing, facials, lash lifts, brow shaping, spray tans, and teeth whitening.',
+  url: 'https://bashfulbeauty.com/contact',
+  telephone: business.phone,
+  priceRange: '$$',
+  image: '/images/og-default.jpg',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: business.address.street,
+    addressLocality: business.address.city,
+    addressRegion: business.address.state,
+    postalCode: business.address.zip,
+    addressCountry: 'US',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 32.9312,
+    longitude: -96.4597,
+  },
+  sameAs: [
+    business.social.instagram,
+    business.social.facebook,
+    business.social.tiktok,
+  ],
+};
+---
+
+<BaseLayout
+  title="Contact & Directions | Bashful Beauty Rockwall"
+  description="Visit Bashful Beauty Spa at 502 N Goliad St, Rockwall, TX 75087. Located in the cute little cottage behind Bin 303. Call (469) 434-0155."
+>
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <!-- ================================================================== -->
+  <!-- Hero                                                                -->
+  <!-- ================================================================== -->
+  <section class="bg-gradient-to-br from-cream via-blush-50 to-linen">
+    <div class="max-w-4xl mx-auto px-6 py-20 md:py-28 text-center">
+      <h1 class="font-heading text-5xl md:text-6xl text-warm-gray-900 leading-tight mb-6">
+        Come See Us
+      </h1>
+      <p class="text-warm-gray-700 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
+        Located in Downtown Rockwall
+      </p>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- Contact Info + Map (two columns)                                    -->
+  <!-- ================================================================== -->
+  <section class="py-20 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-12 lg:gap-16">
+        <!-- Left: Contact details -->
+        <div>
+          <h2 class="font-heading text-2xl sm:text-3xl text-warm-gray-900 mb-8">
+            Visit Bashful Beauty
+          </h2>
+
+          <!-- Address -->
+          <div class="mb-8">
+            <h3 class="font-heading text-lg text-warm-gray-900 mb-2">Address</h3>
+            <a
+              href={business.googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-warm-gray-700 hover:text-blush-500 transition leading-relaxed block"
+            >
+              {business.address.street}<br />
+              {business.address.city}, {business.address.state} {business.address.zip}
+            </a>
+            <p class="text-blush-500 text-sm mt-2 font-medium italic">
+              {business.locationNote}
+            </p>
+          </div>
+
+          <!-- Phone -->
+          <div class="mb-8">
+            <h3 class="font-heading text-lg text-warm-gray-900 mb-2">Phone</h3>
+            <a
+              href={business.phoneHref}
+              class="text-warm-gray-700 hover:text-blush-500 transition text-lg"
+            >
+              {business.phone}
+            </a>
+          </div>
+
+          <!-- Hours -->
+          <div class="mb-8">
+            <h3 class="font-heading text-lg text-warm-gray-900 mb-2">Hours</h3>
+            {business.hours.length > 0 ? (
+              <table class="w-full text-warm-gray-700">
+                <tbody>
+                  {business.hours.map((h) => (
+                    <tr class="border-b border-warm-gray-100">
+                      <td class="py-2 pr-6 font-medium">{h.day}</td>
+                      <td class="py-2">{h.open} &ndash; {h.close}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div class="bg-blush-50 rounded-xl p-4">
+                <p class="text-warm-gray-600 text-sm">
+                  Hours coming soon. Call or text us to confirm availability.
+                </p>
+              </div>
+            )}
+          </div>
+
+          <!-- Service area -->
+          <div class="mb-8">
+            <h3 class="font-heading text-lg text-warm-gray-900 mb-3">Serving</h3>
+            <div class="flex flex-wrap gap-2">
+              {business.serviceArea.map((city) => (
+                <span class="bg-blush-50 text-warm-gray-700 px-3 py-1 rounded-full text-sm">
+                  {city}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <!-- Get Directions CTA -->
+          <a
+            href={business.googleMapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition"
+          >
+            Get Directions
+          </a>
+        </div>
+
+        <!-- Right: Google Maps embed -->
+        <div>
+          <div class="rounded-2xl overflow-hidden shadow-lg h-full min-h-[400px]">
+            <iframe
+              src={business.googleMapsEmbed}
+              width="100%"
+              height="100%"
+              style="border:0; min-height:400px;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Bashful Beauty location on Google Maps"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- Booking CTA                                                         -->
+  <!-- ================================================================== -->
+  <BookingCTA />
+</BaseLayout>

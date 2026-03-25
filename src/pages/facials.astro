@@ -1,0 +1,219 @@
+---
+/**
+ * Facials — Full facials and skincare services page for Bashful Beauty.
+ * Displays treatment menu, upgrades, skin concern guide, and what to expect.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BookingCTA from '../components/BookingCTA.astro';
+import WatercolorDivider from '../components/WatercolorDivider.astro';
+import { serviceCategories } from '../data/services';
+import { business } from '../data/business';
+
+const title = 'Custom Facials in Rockwall, TX';
+const description =
+  'Personalized facial treatments at Bashful Beauty Spa. Anti-aging, acne, hydration — every facial is customized to your skin goals. Book your appointment in Rockwall, TX.';
+
+const facials = serviceCategories.find((c) => c.id === 'facials')!;
+const treatments = facials.subGroups?.find((g) => g.label === 'Treatments');
+const upgrades = facials.subGroups?.find((g) => g.label === 'Upgrades');
+
+const skinConcerns = [
+  {
+    concern: 'Aging & Fine Lines',
+    icon: '✦',
+    recommendations: ['Anti Aging Peptide Facial', 'SWiCH Treatment'],
+  },
+  {
+    concern: 'Acne & Breakouts',
+    icon: '✦',
+    recommendations: ['Custom Facial', 'Custom Chemical Peel', 'Teen Facial'],
+  },
+  {
+    concern: 'Dull or Dry Skin',
+    icon: '✦',
+    recommendations: ['Super Berry Brightening Facial', 'Custom Hydra-facial'],
+  },
+  {
+    concern: 'First Time?',
+    icon: '✦',
+    recommendations: ['Custom Express Facial', 'Custom Facial'],
+  },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Facial Treatments',
+  description,
+  provider: {
+    '@type': 'BeautySalon',
+    name: business.name,
+    telephone: business.phone,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: business.address.street,
+      addressLocality: business.address.city,
+      addressRegion: business.address.state,
+      postalCode: business.address.zip,
+    },
+  },
+  areaServed: business.serviceArea.map((city) => ({
+    '@type': 'City',
+    name: city,
+  })),
+};
+---
+
+<BaseLayout title={title} description={description}>
+  <!-- JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <!-- Hero -->
+  <section class="relative bg-blush-50 overflow-hidden">
+    <div class="max-w-6xl mx-auto px-6 py-16 sm:py-24 lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center">
+      <div>
+        <p class="text-blush-500 font-semibold tracking-wide uppercase text-sm mb-2">Customized Skincare</p>
+        <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl text-warm-gray-900 mb-6">
+          Facials
+        </h1>
+        <p class="text-warm-gray-700 text-lg leading-relaxed mb-8 max-w-xl">
+          Every face is different — that's why every facial at Bashful Beauty is fully customized.
+          Your esthetician analyzes your skin, selects the right products, and builds a treatment
+          plan around your specific goals. Whether you're fighting breakouts, chasing that glow,
+          or staying ahead of fine lines, we'll get you there.
+        </p>
+        <a
+          href={business.bookingUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition"
+        >
+          Book a Facial
+        </a>
+      </div>
+      <div class="mt-10 lg:mt-0">
+        <img
+          src="/images/services/facials.jpg"
+          alt="Custom facial treatment at Bashful Beauty Spa in Rockwall, TX"
+          class="rounded-2xl shadow-lg w-full object-cover aspect-[4/3]"
+          loading="eager"
+        />
+      </div>
+    </div>
+  </section>
+
+  <WatercolorDivider />
+
+  <!-- Skin Concern Guide -->
+  <section class="py-16 px-6">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-3 text-center">
+        Not Sure Which Facial? Start Here.
+      </h2>
+      <p class="text-warm-gray-700 text-lg mb-10 text-center max-w-2xl mx-auto">
+        Tell us your skin concern and we'll point you in the right direction.
+      </p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {skinConcerns.map((sc) => (
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-warm-gray-100 text-center">
+            <div class="text-blush-500 text-2xl mb-3">{sc.icon}</div>
+            <h3 class="font-heading text-xl text-warm-gray-900 mb-4">{sc.concern}</h3>
+            <ul class="space-y-2">
+              {sc.recommendations.map((rec) => (
+                <li class="text-warm-gray-700 text-sm leading-snug">{rec}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <WatercolorDivider />
+
+  <!-- Treatments Menu -->
+  {treatments && (
+    <section class="py-16 px-6">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-8 text-center">
+          Facial Treatments
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {treatments.items.map((item, i) => (
+            <div
+              class={`px-5 py-3.5 rounded-xl text-warm-gray-700 text-[15px] ${
+                i % 2 === 0 ? 'bg-blush-50' : 'bg-white'
+              }`}
+            >
+              {item.name}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <WatercolorDivider />
+
+  <!-- Upgrades Menu -->
+  {upgrades && (
+    <section class="py-16 px-6">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-3 text-center">
+          Facial Upgrades
+        </h2>
+        <p class="text-warm-gray-700 text-lg mb-8 text-center">
+          Enhance any facial with these add-ons.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {upgrades.items.map((item, i) => (
+            <div
+              class={`px-5 py-3.5 rounded-xl text-warm-gray-700 text-[15px] ${
+                i % 2 === 0 ? 'bg-blush-50' : 'bg-white'
+              }`}
+            >
+              {item.name}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <WatercolorDivider />
+
+  <!-- What to Expect -->
+  <section class="py-16 px-6">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-6 text-center">
+        What to Expect at Your Facial
+      </h2>
+      <div class="bg-white rounded-2xl p-8 sm:p-10 shadow-sm text-warm-gray-700 text-lg leading-relaxed space-y-4">
+        <p>
+          Every facial at Bashful Beauty begins with a one-on-one skin analysis. Your esthetician
+          will examine your skin under proper lighting, ask about your goals and any sensitivities,
+          then build a treatment plan on the spot — no cookie-cutter facials here.
+        </p>
+        <p>
+          Most facial appointments run 45–75 minutes depending on the treatment. Plan to arrive
+          with a clean face (no makeup if possible) and avoid heavy exfoliation or retinol products
+          for 48 hours before your visit.
+        </p>
+        <p>
+          After your treatment, your esthetician will walk you through a simple at-home routine to
+          keep results going between visits. Have questions beforehand? Check out our
+          <a href="/faq" class="text-blush-500 underline hover:text-blush-600 transition">
+            FAQ page
+          </a>
+          for everything you need to know.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking CTA -->
+  <BookingCTA
+    heading="Your Skin Deserves This"
+    subtext="Book a custom facial today and let your esthetician build the perfect treatment for you."
+  />
+</BaseLayout>

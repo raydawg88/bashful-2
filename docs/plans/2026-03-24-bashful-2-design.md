@@ -1,12 +1,17 @@
-# Bashful 2.0 — Comprehensive Implementation Plan
+# Bashful 2.0 — Implementation Plan (SUPERSEDED)
 
-## Executive Summary
-
-Redesign BashfulBeauty.co from a single-page Carrd site into a multi-page Next.js application. The goal is to elevate the brand to match its 4.9-star reputation and 20+ year track record, while optimizing for the primary conversion action: booking an appointment.
-
-**Project location:** `/Users/rayhernandez/Library/CloudStorage/Dropbox-Personal/Goldfish/personal/bashful-2`
-**Deploy target:** Netlify
-**Domain:** bashfulbeauty.co
+> **This plan has been superseded by the revised plan.**
+> See: `/Users/rayhernandez/Documents/Claude/Projects/Bashful Beauty/bashful-2-revised-plan.md`
+>
+> Key changes from this plan:
+> - Astro 5.x instead of Next.js (static site, zero JS by default)
+> - 7 pages instead of 17 (leaner, stronger per-page SEO)
+> - Cloudflare Pages (production) + Netlify (staging) instead of Netlify-only
+> - LLM/AI search optimization as first-class concern
+> - No pricing on site (except membership pricing) — Square is source of truth
+> - No gallery page, no products page, no blog at launch
+> - Tailwind CSS 4 with CSS-first config (no tailwind.config.ts)
+> - Self-hosted fonts via Fontsource instead of Google Fonts CDN
 
 ---
 

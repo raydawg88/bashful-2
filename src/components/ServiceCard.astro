@@ -1,0 +1,44 @@
+---
+/**
+ * ServiceCard — Card component for displaying a service category.
+ * Used on the homepage to link to individual service pages.
+ */
+interface Props {
+  title: string;
+  description: string;
+  href: string;
+  imageSrc?: string;
+}
+
+const { title, description, href, imageSrc } = Astro.props;
+---
+
+<a
+  href={href}
+  class="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+>
+  <!-- Image area -->
+  {imageSrc ? (
+    <div class="aspect-[4/3] overflow-hidden">
+      <img
+        src={imageSrc}
+        alt={title}
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        loading="lazy"
+      />
+    </div>
+  ) : (
+    <div class="aspect-[4/3] bg-blush-50 flex items-center justify-center">
+      <span class="text-blush-200 text-5xl font-heading">&#10047;</span>
+    </div>
+  )}
+
+  <!-- Content -->
+  <div class="p-6">
+    <h3 class="font-heading text-xl text-warm-gray-900 mb-2">{title}</h3>
+    <p class="text-warm-gray-700 text-sm leading-relaxed mb-4">{description}</p>
+    <span class="text-blush-500 text-sm font-semibold group-hover:text-blush-600 transition">
+      Learn More &rarr;
+    </span>
+  </div>
+</a>

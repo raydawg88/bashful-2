@@ -1,0 +1,17 @@
+---
+/**
+ * MobileBookingBar — Sticky bottom booking CTA, visible only on mobile.
+ */
+import { business } from '../data/business';
+---
+
+<div class="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-white border-t border-blush-100 px-4 py-3">
+  <a
+    href={business.bookingUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="block bg-blush-500 text-white w-full py-3 rounded-full text-center font-semibold hover:bg-blush-600 transition"
+  >
+    Book Now
+  </a>
+</div>

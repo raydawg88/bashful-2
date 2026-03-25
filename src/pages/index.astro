@@ -1,17 +1,332 @@
 ---
+/**
+ * Homepage — Bashful Beauty Spa
+ * The main landing page featuring hero, services, memberships, testimonials,
+ * about teaser, and booking CTA sections.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import TestimonialCard from '../components/TestimonialCard.astro';
+import WatercolorDivider from '../components/WatercolorDivider.astro';
+import BookingCTA from '../components/BookingCTA.astro';
+import { business } from '../data/business';
+import { memberships } from '../data/services';
+import { testimonials } from '../data/testimonials';
 
+/** Service cards displayed on the homepage */
+const serviceCards = [
+  {
+    title: 'Waxing',
+    href: '/waxing',
+    imageSrc: '/images/services/waxing.jpg',
+    description: 'Expert waxing for every body. Brazilian, bikini, full body — our most popular service.',
+  },
+  {
+    title: 'Facials',
+    href: '/facials',
+    imageSrc: '/images/services/facials.jpg',
+    description: "Custom facials tailored to your skin goals. Anti-aging, hydration, acne — we've got you.",
+  },
+  {
+    title: 'Lash Lift & Tint',
+    href: '/beauty-services#lashes',
+    imageSrc: '/images/services/lashes.jpg',
+    description: 'Dramatic, eye-catching results using your natural lashes.',
+  },
+  {
+    title: 'Brows',
+    href: '/beauty-services#brows',
+    imageSrc: '/images/services/brows.jpg',
+    description: 'Shaping, tinting, and lamination for your perfect arch.',
+  },
+  {
+    title: 'Spray Tans',
+    href: '/beauty-services#spray-tans',
+    imageSrc: '/images/services/spray-tans.jpg',
+    description: 'Natural-looking golden glow. Perfect for vacations, weddings, and everyday confidence.',
+  },
+  {
+    title: 'Teeth Whitening',
+    href: '/beauty-services#teeth-whitening',
+    imageSrc: '/images/services/teeth-whitening.jpg',
+    description: 'Dramatic results in as little as one hour. Painless and relaxing.',
+  },
+];
+
+/** First 3 testimonials for the homepage */
+const featuredTestimonials = testimonials.slice(0, 3);
+
+/** Membership descriptions for the spotlight section */
+const membershipDescriptions: Record<string, string> = {
+  'Brazilian Membership': 'Unlimited Brazilians. Come as often as you want.',
+  'Manzilian Membership': 'Unlimited Manzilians. No limits, no hassle.',
+};
+
+/** LocalBusiness JSON-LD structured data */
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: business.name,
+  description: 'Rockwall\'s most trusted beauty studio specializing in waxing, facials, lash lifts, brow shaping, spray tans, and teeth whitening.',
+  url: 'https://bashfulbeauty.com',
+  telephone: business.phone,
+  priceRange: '$$',
+  image: '/images/og-default.jpg',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: business.address.street,
+    addressLocality: business.address.city,
+    addressRegion: business.address.state,
+    postalCode: business.address.zip,
+    addressCountry: 'US',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 32.9312,
+    longitude: -96.4597,
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: business.reviews.google.rating,
+    reviewCount: business.reviews.google.count,
+    bestRating: 5,
+  },
+  sameAs: [
+    business.social.instagram,
+    business.social.facebook,
+    business.social.tiktok,
+  ],
+};
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+  title="Rockwall's Most Trusted Beauty Studio"
+  description="Bashful Beauty is Rockwall's most trusted beauty studio — waxing, facials, lash lifts, brow shaping, spray tans, and teeth whitening. 4.9 stars from 181 Google reviews. Book your appointment today."
+>
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <!-- ================================================================== -->
+  <!-- 1. Hero Section                                                     -->
+  <!-- ================================================================== -->
+  <section class="relative overflow-hidden bg-gradient-to-br from-cream via-blush-50 to-linen">
+    <div class="max-w-7xl mx-auto px-6 py-20 md:py-28 lg:py-32">
+      <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+        <!-- Text column -->
+        <div class="text-center md:text-left">
+          <h1 class="font-heading text-5xl md:text-6xl text-warm-gray-900 leading-tight mb-6">
+            Relax. Rejuvenate. <span class="text-blush-500">Glow.</span>
+          </h1>
+          <p class="text-warm-gray-700 text-lg md:text-xl leading-relaxed mb-8 max-w-lg mx-auto md:mx-0">
+            Rockwall's most trusted beauty studio — where 20 years of expertise meets the charm of our downtown cottage.
+          </p>
+
+          <!-- CTAs -->
+          <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start mb-8">
+            <a
+              href={business.bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition shadow-sm hover:shadow-md"
+            >
+              Book an Appointment
+            </a>
+            <a
+              href="#services"
+              class="inline-block border-2 border-blush-500 text-blush-500 px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-500 hover:text-white transition"
+            >
+              Explore Services
+            </a>
+          </div>
+
+          <!-- Review stats -->
+          <p class="text-warm-gray-600 text-sm md:text-base">
+            <span class="text-gold-light">&#9733;</span>
+            {business.reviews.google.rating} stars from {business.reviews.google.count} Google reviews
+          </p>
+        </div>
+
+        <!-- Image column -->
+        <div class="flex justify-center md:justify-end">
+          <div class="relative w-full max-w-md lg:max-w-lg">
+            <img
+              src="/images/team/group.jpg"
+              alt="The Bashful Beauty team at their downtown Rockwall cottage studio"
+              class="w-full rounded-2xl shadow-lg object-cover aspect-[4/5]"
+            />
+            <!-- Decorative accent -->
+            <div
+              class="absolute -z-10 -bottom-4 -right-4 w-full h-full rounded-2xl bg-blush-100 opacity-50"
+              aria-hidden="true"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- 2. Services Overview                                                -->
+  <!-- ================================================================== -->
+  <section id="services" class="py-20 px-6">
+    <div class="max-w-7xl mx-auto">
+      <!-- Section header -->
+      <div class="text-center mb-14">
+        <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-4">
+          Our Services
+        </h2>
+        <p class="text-warm-gray-700 text-lg max-w-2xl mx-auto leading-relaxed">
+          From head-to-toe waxing to rejuvenating facials, we offer a full menu of beauty services designed to make you look and feel your best.
+        </p>
+      </div>
+
+      <!-- Service cards grid -->
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        {serviceCards.map((card) => (
+          <ServiceCard
+            title={card.title}
+            description={card.description}
+            href={card.href}
+            imageSrc={card.imageSrc}
+          />
+        ))}
+      </div>
+    </div>
+
+    <WatercolorDivider />
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- 3. Membership Spotlight                                             -->
+  <!-- ================================================================== -->
+  <section class="py-20 px-6 bg-blush-50">
+    <div class="max-w-4xl mx-auto">
+      <!-- Section header -->
+      <div class="text-center mb-12">
+        <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-4">
+          Save With a Membership
+        </h2>
+      </div>
+
+      <!-- Membership cards -->
+      <div class="grid sm:grid-cols-2 gap-8">
+        {memberships.map((membership) => (
+          <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+            <!-- Gold accent top border -->
+            <div class="h-1.5 bg-gold-light"></div>
+
+            <div class="p-8 text-center">
+              <h3 class="font-heading text-xl text-warm-gray-900 mb-4">
+                {membership.name}
+              </h3>
+              <p class="text-4xl font-bold text-warm-gray-900 mb-1">
+                {membership.price}
+              </p>
+              <p class="text-warm-gray-500 text-sm mb-6">
+                {membership.priceNote}
+              </p>
+              <p class="text-warm-gray-700 leading-relaxed mb-8">
+                {membershipDescriptions[membership.name]}
+              </p>
+              <a
+                href={business.bookingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-block bg-blush-500 text-white px-8 py-3 rounded-full font-semibold hover:bg-blush-600 transition"
+              >
+                Book Now
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Fine print -->
+      <p class="text-center text-warm-gray-500 text-sm mt-8">
+        Memberships are available at your appointment. Ask your esthetician for details.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- 4. Testimonials                                                     -->
+  <!-- ================================================================== -->
+  <section class="py-20 px-6">
+    <div class="max-w-6xl mx-auto">
+      <!-- Section header -->
+      <div class="text-center mb-12">
+        <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-4">
+          What Our Clients Say
+        </h2>
+        <p class="text-warm-gray-700 text-lg">
+          <span class="text-gold-light">&#9733;</span>
+          {business.reviews.google.rating} stars across {business.reviews.google.count} Google reviews
+        </p>
+      </div>
+
+      <!-- Testimonial cards grid -->
+      <div class="grid md:grid-cols-3 gap-8">
+        {featuredTestimonials.map((t) => (
+          <TestimonialCard
+            quote={t.quote}
+            author="Verified Client"
+            source={t.source}
+            rating={business.reviews.google.rating}
+          />
+        ))}
+      </div>
+
+      <!-- Google reviews link -->
+      <div class="text-center mt-10">
+        <a
+          href={business.googleMapsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blush-500 font-semibold hover:text-blush-600 transition"
+        >
+          Read more reviews on Google &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- 5. About Teaser / The Cottage                                       -->
+  <!-- ================================================================== -->
+  <section class="py-20 px-6 bg-linen">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <!-- Image -->
+        <div class="order-2 md:order-1">
+          <img
+            src="/images/cottage/exterior.jpg"
+            alt="Bashful Beauty's charming cottage studio in downtown Rockwall"
+            class="w-full rounded-2xl shadow-lg object-cover aspect-[4/3]"
+            loading="lazy"
+          />
+        </div>
+
+        <!-- Text -->
+        <div class="order-1 md:order-2 text-center md:text-left">
+          <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-6">
+            Doe's Skincare Cottage
+          </h2>
+          <p class="text-warm-gray-700 text-lg leading-relaxed mb-8">
+            With over 20 years in the beauty industry, Doe Hernandez built Bashful Beauty in the heart of downtown Rockwall. Our little cottage behind Bin 303 is where world-class skincare meets small-town charm.
+          </p>
+          <a
+            href="/about"
+            class="text-blush-500 font-semibold text-lg hover:text-blush-600 transition"
+          >
+            Meet the Team &rarr;
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- 6. Booking CTA                                                      -->
+  <!-- ================================================================== -->
+  <BookingCTA />
+</BaseLayout>

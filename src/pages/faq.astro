@@ -1,0 +1,172 @@
+---
+/**
+ * FAQ — Frequently asked questions, pre-wax care, and post-wax care instructions.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WatercolorDivider from '../components/WatercolorDivider.astro';
+import BookingCTA from '../components/BookingCTA.astro';
+import { faqs, preWaxCare, postWaxCare } from '../data/faq';
+
+/** FAQPage JSON-LD */
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer,
+    },
+  })),
+};
+
+/** HowTo JSON-LD for pre-wax care */
+const preWaxHowTo = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'Pre-Wax Care Instructions',
+  description: 'How to prepare for your waxing appointment at Bashful Beauty Spa.',
+  step: preWaxCare.map((step, i) => ({
+    '@type': 'HowToStep',
+    position: i + 1,
+    name: step.title,
+    text: step.description,
+  })),
+};
+
+/** HowTo JSON-LD for post-wax care */
+const postWaxHowTo = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'Post-Wax Care Instructions',
+  description: 'How to care for your skin after a waxing appointment at Bashful Beauty Spa.',
+  step: postWaxCare.map((step, i) => ({
+    '@type': 'HowToStep',
+    position: i + 1,
+    name: step.title,
+    text: step.description,
+  })),
+};
+---
+
+<BaseLayout
+  title="FAQ | Bashful Beauty Spa"
+  description="Frequently asked questions about waxing, facials, spray tans, and more at Bashful Beauty Spa in Rockwall, TX. Pre and post wax care instructions."
+>
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(preWaxHowTo)} />
+  <script type="application/ld+json" set:html={JSON.stringify(postWaxHowTo)} />
+
+  <!-- ================================================================== -->
+  <!-- Hero                                                                -->
+  <!-- ================================================================== -->
+  <section class="bg-gradient-to-br from-cream via-blush-50 to-linen">
+    <div class="max-w-4xl mx-auto px-6 py-20 md:py-28 text-center">
+      <h1 class="font-heading text-5xl md:text-6xl text-warm-gray-900 leading-tight mb-6">
+        Frequently Asked Questions
+      </h1>
+      <p class="text-warm-gray-700 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
+        Everything you need to know before your visit. Can't find your answer? Call or text us anytime.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- General FAQ                                                         -->
+  <!-- ================================================================== -->
+  <section class="py-20 px-6">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-10 text-center">
+        Common Questions
+      </h2>
+
+      <div class="space-y-0">
+        {faqs.map((faq) => (
+          <details class="group border-b border-warm-gray-200">
+            <summary class="flex items-center justify-between cursor-pointer py-5 text-left">
+              <span class="font-heading text-lg text-warm-gray-900 pr-4">{faq.question}</span>
+              <span class="text-blush-500 shrink-0 transition-transform group-open:rotate-45 text-2xl leading-none">+</span>
+            </summary>
+            <div class="pb-5 pr-8">
+              <p class="text-warm-gray-700 leading-relaxed">{faq.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <WatercolorDivider />
+
+  <!-- ================================================================== -->
+  <!-- Pre-Wax Care                                                        -->
+  <!-- ================================================================== -->
+  <section class="py-20 px-6 bg-blush-50">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-4">
+          Pre-Wax Care Instructions
+        </h2>
+        <p class="text-warm-gray-700 text-lg leading-relaxed">
+          Follow these steps before your waxing appointment for the best results.
+        </p>
+      </div>
+
+      <div class="space-y-6">
+        {preWaxCare.map((step, i) => (
+          <div class="bg-white rounded-xl p-6 shadow-sm flex gap-4">
+            <div class="shrink-0 w-8 h-8 rounded-full bg-blush-500 text-white flex items-center justify-center font-semibold text-sm">
+              {i + 1}
+            </div>
+            <div>
+              <h3 class="font-heading text-lg text-blush-500 mb-1">{step.title}</h3>
+              <p class="text-warm-gray-700 leading-relaxed">{step.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <WatercolorDivider />
+
+  <!-- ================================================================== -->
+  <!-- Post-Wax Care                                                       -->
+  <!-- ================================================================== -->
+  <section class="py-20 px-6">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-4">
+          Post-Wax Care Instructions
+        </h2>
+        <p class="text-warm-gray-700 text-lg leading-relaxed">
+          Take care of your skin after your wax to keep it smooth and irritation-free.
+        </p>
+      </div>
+
+      <div class="space-y-6">
+        {postWaxCare.map((step, i) => (
+          <div class="bg-white rounded-xl p-6 shadow-sm flex gap-4">
+            <div class="shrink-0 w-8 h-8 rounded-full bg-blush-500 text-white flex items-center justify-center font-semibold text-sm">
+              {i + 1}
+            </div>
+            <div>
+              <h3 class="font-heading text-lg text-blush-500 mb-1">{step.title}</h3>
+              <p class="text-warm-gray-700 leading-relaxed">{step.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- Booking CTA                                                         -->
+  <!-- ================================================================== -->
+  <BookingCTA
+    heading="Ready to Book?"
+    subtext="Now that you know what to expect, book your appointment and let us take care of the rest."
+  />
+</BaseLayout>

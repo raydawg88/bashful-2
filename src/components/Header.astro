@@ -1,0 +1,125 @@
+---
+/**
+ * Header — Sticky navigation with desktop nav links and mobile hamburger menu.
+ */
+import { business } from '../data/business';
+
+const navLinks = [
+  { label: 'Waxing', href: '/waxing' },
+  { label: 'Facials', href: '/facials' },
+  { label: 'Beauty Services', href: '/beauty-services' },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+];
+---
+
+<header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-blush-100">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+    <!-- Logo -->
+    <a href="/" class="font-heading text-2xl font-semibold text-warm-gray-900 hover:text-warm-gray-900">
+      Bashful Beauty
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden md:flex items-center gap-8" aria-label="Main navigation">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="uppercase text-xs tracking-widest font-body text-warm-gray-700 hover:text-blush-500 transition"
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Desktop Book Now -->
+    <a
+      href={business.bookingUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="hidden md:inline-block bg-blush-500 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-blush-600 transition"
+    >
+      Book Now
+    </a>
+
+    <!-- Mobile hamburger button -->
+    <button
+      id="mobile-menu-open"
+      class="md:hidden flex flex-col justify-center gap-1.5 w-8 h-8"
+      aria-label="Open menu"
+    >
+      <span class="block w-6 h-0.5 bg-warm-gray-900"></span>
+      <span class="block w-6 h-0.5 bg-warm-gray-900"></span>
+      <span class="block w-6 h-0.5 bg-warm-gray-900"></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile menu overlay -->
+<div
+  id="mobile-menu"
+  class="fixed inset-0 bg-white z-50 flex-col items-center justify-center gap-8 hidden"
+  aria-label="Mobile navigation"
+>
+  <!-- Close button -->
+  <button
+    id="mobile-menu-close"
+    class="absolute top-5 right-6 w-8 h-8 flex items-center justify-center"
+    aria-label="Close menu"
+  >
+    <svg class="w-6 h-6 text-warm-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </button>
+
+  <!-- Mobile links -->
+  <nav class="flex flex-col items-center gap-8">
+    {navLinks.map((link) => (
+      <a
+        href={link.href}
+        class="text-2xl font-heading text-warm-gray-900 hover:text-blush-500 transition mobile-nav-link"
+      >
+        {link.label}
+      </a>
+    ))}
+  </nav>
+
+  <!-- Mobile Book Now -->
+  <a
+    href={business.bookingUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="mt-4 bg-blush-500 text-white px-10 py-3 rounded-full text-lg font-semibold hover:bg-blush-600 transition"
+  >
+    Book Now
+  </a>
+</div>
+
+<!-- Spacer to prevent content from hiding behind fixed header -->
+<div class="h-[72px]"></div>
+
+<script>
+  const openBtn = document.getElementById('mobile-menu-open');
+  const closeBtn = document.getElementById('mobile-menu-close');
+  const menu = document.getElementById('mobile-menu');
+
+  function openMenu() {
+    menu?.classList.remove('hidden');
+    menu?.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    menu?.classList.add('hidden');
+    menu?.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+
+  openBtn?.addEventListener('click', openMenu);
+  closeBtn?.addEventListener('click', closeMenu);
+
+  // Close menu when a nav link is clicked
+  document.querySelectorAll('.mobile-nav-link').forEach((link) => {
+    link.addEventListener('click', closeMenu);
+  });
+</script>

@@ -1,0 +1,33 @@
+---
+/**
+ * Booking Redirect — Immediately sends the user to Square Appointments.
+ * Uses meta refresh + JS redirect for maximum compatibility.
+ * Shows a fallback link if neither redirect fires.
+ */
+import { business } from '../data/business';
+
+const bookingUrl = business.bookingUrl;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Booking | Bashful Beauty</title>
+    <meta name="description" content="Book your appointment at Bashful Beauty — Rockwall's most trusted beauty studio." />
+    <meta http-equiv="refresh" content={`0;url=${bookingUrl}`} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+  </head>
+  <body style="margin:0; padding:0; min-height:100vh; display:flex; align-items:center; justify-content:center; font-family:system-ui,-apple-system,sans-serif; background:#FFF9F5; color:#2D2520;">
+    <div style="text-align:center; padding:2rem;">
+      <p style="font-size:1.125rem; margin-bottom:1rem;">Redirecting to booking...</p>
+      <p style="font-size:0.875rem; color:#6b7280;">
+        Not redirected? <a href={bookingUrl} style="color:#E8607A; text-decoration:underline;">Click here to book your appointment</a>.
+      </p>
+    </div>
+    <script define:vars={{ bookingUrl }}>
+      window.location.href = bookingUrl;
+    </script>
+  </body>
+</html>

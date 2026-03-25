@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------
+   Fontsource — Playfair Display (headings)
+   ------------------------------------------------ */
+@import "@fontsource/playfair-display/400.css";
+@import "@fontsource/playfair-display/500.css";
+@import "@fontsource/playfair-display/600.css";
+@import "@fontsource/playfair-display/700.css";
+
+/* ------------------------------------------------
+   Fontsource — Lato (body)
+   ------------------------------------------------ */
+@import "@fontsource/lato/300.css";
+@import "@fontsource/lato/400.css";
+@import "@fontsource/lato/700.css";
+
+/* ================================================
+   Theme — Bashful Beauty Spa
+   ================================================ */
+@theme {
+  /* --- Blush (primary) --- */
+  --color-blush-50: #FFF5F6;
+  --color-blush-100: #FFE4E8;
+  --color-blush-200: #FFCCD4;
+  --color-blush-300: #F8A4B2;
+  --color-blush-400: #F08294;
+  --color-blush-500: #E8607A;
+  --color-blush-600: #C74B63;
+
+  /* --- Accent & premium --- */
+  --color-rose-gold: #B76E79;
+  --color-gold-light: #D4AF37;
+  --color-gold-soft: #F0E6C8;
+  --color-sage: #A8B5A0;
+
+  /* --- Neutrals --- */
+  --color-cream: #FFF9F5;
+  --color-linen: #FAF5F0;
+  --color-warm-gray-100: #F5F0EB;
+  --color-warm-gray-200: #E8E0D8;
+  --color-warm-gray-500: #9A8E84;
+  --color-warm-gray-700: #5C504A;
+  --color-warm-gray-900: #2D2520;
+
+  /* --- Semantic surfaces --- */
+  --color-surface: #FFF9F5;
+  --color-surface-raised: #FFFFFF;
+  --color-surface-muted: #FAF5F0;
+
+  /* --- Fonts --- */
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Lato', 'Helvetica Neue', sans-serif;
+}
+
+/* ================================================
+   Base layer
+   ================================================ */
+@layer base {
+  html {
+    background-color: var(--color-cream);
+    color: var(--color-warm-gray-900);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  /* Selection highlight */
+  ::selection {
+    background-color: var(--color-blush-100);
+    color: var(--color-warm-gray-900);
+  }
+
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-warm-gray-900);
+  }
+
+  /* Links */
+  a {
+    color: var(--color-blush-500);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  a:hover {
+    color: var(--color-blush-600);
+  }
+
+  /* Buttons */
+  button {
+    transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+  }
+
+  /* Images */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* ================================================
+   Utilities
+   ================================================ */
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@utility watercolor-overlay {
+  position: relative;
+  isolation: isolate;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0.35;
+    pointer-events: none;
+    background: radial-gradient(
+        ellipse 60% 50% at 15% 20%,
+        var(--color-blush-100),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 50% 60% at 85% 75%,
+        var(--color-gold-soft),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 40% 40% at 50% 50%,
+        var(--color-blush-50),
+        transparent 60%
+      );
+    mix-blend-mode: multiply;
+  }
+}

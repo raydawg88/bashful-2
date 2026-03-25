@@ -1,0 +1,228 @@
+---
+/**
+ * Waxing — Full waxing services page for Bashful Beauty.
+ * Displays female, male, and junior waxing menus plus membership spotlight.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BookingCTA from '../components/BookingCTA.astro';
+import WatercolorDivider from '../components/WatercolorDivider.astro';
+import { serviceCategories, memberships } from '../data/services';
+import { business } from '../data/business';
+
+const title = 'Waxing Services in Rockwall, TX';
+const description =
+  'Expert waxing for every body at Bashful Beauty Spa. Brazilian, bikini, full body waxing in Rockwall, TX. Membership plans available from $55/month.';
+
+const waxing = serviceCategories.find((c) => c.id === 'waxing')!;
+const female = waxing.subGroups?.find((g) => g.label === 'Female');
+const male = waxing.subGroups?.find((g) => g.label === 'Male');
+const junior = waxing.subGroups?.find((g) => g.label === 'Junior');
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Waxing Services',
+  description,
+  provider: {
+    '@type': 'BeautySalon',
+    name: business.name,
+    telephone: business.phone,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: business.address.street,
+      addressLocality: business.address.city,
+      addressRegion: business.address.state,
+      postalCode: business.address.zip,
+    },
+  },
+  areaServed: business.serviceArea.map((city) => ({
+    '@type': 'City',
+    name: city,
+  })),
+};
+---
+
+<BaseLayout title={title} description={description}>
+  <!-- JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <!-- Hero -->
+  <section class="relative bg-blush-50 overflow-hidden">
+    <div class="max-w-6xl mx-auto px-6 py-16 sm:py-24 lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center">
+      <div>
+        <p class="text-blush-500 font-semibold tracking-wide uppercase text-sm mb-2">Hair Removal</p>
+        <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl text-warm-gray-900 mb-6">
+          Waxing
+        </h1>
+        <p class="text-warm-gray-700 text-lg leading-relaxed mb-8 max-w-xl">
+          Nobody looks forward to a wax. We get it. That's why every wax at Bashful Beauty is
+          designed to be as quick and comfortable as possible — premium hard wax that's gentler on
+          sensitive skin, private treatment rooms in our Rockwall cottage, and estheticians who've
+          done thousands of these. Most clients are in and out wondering why they waited so long to
+          switch from shaving.
+        </p>
+        <a
+          href={business.bookingUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition"
+        >
+          Book a Waxing Appointment
+        </a>
+      </div>
+      <div class="mt-10 lg:mt-0">
+        <img
+          src="/images/services/waxing.jpg"
+          alt="Waxing treatment at Bashful Beauty Spa in Rockwall, TX"
+          class="rounded-2xl shadow-lg w-full object-cover aspect-[4/3]"
+          loading="eager"
+        />
+      </div>
+    </div>
+  </section>
+
+  <WatercolorDivider />
+
+  <!-- Membership Spotlight -->
+  <section class="py-16 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-3">
+        Wax Memberships
+      </h2>
+      <p class="text-warm-gray-700 text-lg mb-10 max-w-xl mx-auto">
+        Save every month with unlimited waxing memberships.
+      </p>
+      <div class="grid sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
+        {memberships.map((m) => (
+          <div class="bg-white border border-gold-soft rounded-2xl p-8 shadow-sm text-center">
+            <div class="inline-block bg-gold-soft/40 text-gold-light rounded-full px-4 py-1 text-sm font-semibold mb-4">
+              Membership
+            </div>
+            <h3 class="font-heading text-2xl text-warm-gray-900 mb-2">{m.name}</h3>
+            <p class="text-3xl font-bold text-warm-gray-900 mb-1">
+              {m.price}<span class="text-base font-normal text-warm-gray-500">/{m.priceNote.replace('per ', '')}</span>
+            </p>
+            <p class="text-warm-gray-700 text-sm mb-6">
+              Unlimited {m.name.replace(' Membership', '')}s every month
+            </p>
+            <a
+              href={business.bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-block bg-blush-500 text-white px-8 py-3 rounded-full font-semibold hover:bg-blush-600 transition"
+            >
+              Book Now
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <WatercolorDivider />
+
+  <!-- Female Waxing Menu -->
+  {female && (
+    <section class="py-16 px-6">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-8 text-center">
+          Female Waxing
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {female.items.map((item, i) => (
+            <div
+              class={`px-5 py-3.5 rounded-xl text-warm-gray-700 text-[15px] ${
+                i % 2 === 0 ? 'bg-blush-50' : 'bg-white'
+              }`}
+            >
+              {item.name}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <WatercolorDivider />
+
+  <!-- Male Waxing Menu -->
+  {male && (
+    <section class="py-16 px-6">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-8 text-center">
+          Male Waxing
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {male.items.map((item, i) => (
+            <div
+              class={`px-5 py-3.5 rounded-xl text-warm-gray-700 text-[15px] ${
+                i % 2 === 0 ? 'bg-blush-50' : 'bg-white'
+              }`}
+            >
+              {item.name}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <WatercolorDivider />
+
+  <!-- Junior Waxing Menu -->
+  {junior && (
+    <section class="py-16 px-6">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-8 text-center">
+          Junior Waxing (13 &amp; Under)
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {junior.items.map((item, i) => (
+            <div
+              class={`px-5 py-3.5 rounded-xl text-warm-gray-700 text-[15px] ${
+                i % 2 === 0 ? 'bg-blush-50' : 'bg-white'
+              }`}
+            >
+              {item.name}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <WatercolorDivider />
+
+  <!-- What to Expect -->
+  <section class="py-16 px-6">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-6 text-center">
+        What to Expect at Your First Wax
+      </h2>
+      <div class="bg-white rounded-2xl p-8 sm:p-10 shadow-sm text-warm-gray-700 text-lg leading-relaxed space-y-4">
+        <p>
+          A waxing appointment at Bashful Beauty typically takes 15–60 minutes depending on the
+          service. We use premium hard wax that adheres to hair, not skin — making the process much
+          more comfortable than strip wax. Your esthetician will walk you through every step.
+        </p>
+        <p>
+          First-timers: we recommend letting hair grow at least 2–3 weeks from your last shave.
+          This gives the wax enough length to grip for the cleanest, longest-lasting results.
+        </p>
+        <p>
+          Have more questions? Check out our
+          <a href="/faq" class="text-blush-500 underline hover:text-blush-600 transition">
+            FAQ page
+          </a>
+          for full pre- and post-wax care tips.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking CTA -->
+  <BookingCTA
+    heading="Ready for Smooth Skin?"
+    subtext="Book your waxing appointment today — first-timers and regulars welcome."
+  />
+</BaseLayout>
