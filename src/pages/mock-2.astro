@@ -1,0 +1,1740 @@
+---
+/**
+ * Mock 2 — Editorial Homepage Concept for Bashful Beauty Spa
+ * Completely self-contained: own HTML shell, styles, header, footer.
+ * Route: /mock-2
+ */
+
+import '@fontsource/playfair-display/400.css';
+import '@fontsource/playfair-display/500.css';
+import '@fontsource/playfair-display/600.css';
+import '@fontsource/playfair-display/700.css';
+import '@fontsource/cormorant-garamond/300-italic.css';
+import '@fontsource/cormorant-garamond/400-italic.css';
+import '@fontsource/cormorant-garamond/600-italic.css';
+import '@fontsource/lato/300.css';
+import '@fontsource/lato/400.css';
+import '@fontsource/lato/700.css';
+
+import { business } from '../data/business';
+import { serviceCategories, memberships } from '../data/services';
+import { testimonials } from '../data/testimonials';
+
+const waxing = serviceCategories.find((c) => c.id === 'waxing')!;
+const facials = serviceCategories.find((c) => c.id === 'facials')!;
+const lashes = serviceCategories.find((c) => c.id === 'lashes')!;
+const brows = serviceCategories.find((c) => c.id === 'brows')!;
+const sprayTans = serviceCategories.find((c) => c.id === 'spray-tans')!;
+const teethWhitening = serviceCategories.find((c) => c.id === 'teeth-whitening')!;
+
+const google = business.reviews.google;
+const mainTestimonial = testimonials.find((t) => t.id === 1)!;
+const secondaryTestimonials = testimonials.filter((t) => t.id === 2 || t.id === 3);
+
+const addr = business.address;
+const fullAddress = `${addr.street}, ${addr.city}, ${addr.state} ${addr.zip}`;
+
+const secondaryServices = [
+  { cat: lashes, image: '/images/services/lashes.jpg', label: 'Lash Lift & Tint' },
+  { cat: brows, image: '/images/services/brows.jpg', label: 'Brows' },
+  { cat: sprayTans, image: '/images/services/spray-tans.jpg', label: 'Spray Tans' },
+  { cat: teethWhitening, image: '/images/services/teeth-whitening.jpg', label: 'Teeth Whitening' },
+];
+---
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{business.name} — {business.tagline}</title>
+  <meta name="description" content={`${business.name}: ${business.tagline}. Waxing, facials, lashes & more in ${addr.city}, ${addr.state}.`} />
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       HEADER — Fixed, minimal, elegant
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <!-- Logo -->
+      <a href="/mock-2" class="logo-stack" aria-label="Bashful Beauty home">
+        <span class="logo-top">bashful</span>
+        <span class="logo-bottom">beauty</span>
+      </a>
+
+      <!-- Nav -->
+      <nav class="header-nav" aria-label="Main navigation">
+        <a href="#services">Waxing</a>
+        <a href="#services">Facials</a>
+        <a href="#services">Beauty Services</a>
+        <a href="#cottage">About</a>
+        <a href="#booking-cta">Contact</a>
+      </nav>
+
+      <!-- Right side: phone + CTA -->
+      <div class="header-right">
+        <a href={business.phoneHref} class="header-phone">{business.phone}</a>
+        <a href={business.bookingUrl} class="header-cta" target="_blank" rel="noopener">Book Now</a>
+      </div>
+
+      <!-- Mobile menu toggle -->
+      <button class="mobile-toggle" aria-label="Open menu" id="mobileToggle">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile nav overlay -->
+  <div class="mobile-nav" id="mobileNav">
+    <nav>
+      <a href="#services">Waxing</a>
+      <a href="#services">Facials</a>
+      <a href="#services">Beauty Services</a>
+      <a href="#cottage">About</a>
+      <a href="#booking-cta">Contact</a>
+      <a href={business.bookingUrl} class="mobile-book-btn" target="_blank" rel="noopener">Book an Appointment</a>
+    </nav>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       HERO — Typography-first statement
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-grid">
+      <!-- Left: text -->
+      <div class="hero-text">
+        <h1 class="hero-heading">
+          <span class="hero-line">Relax.</span>
+          <span class="hero-line">Rejuvenate.</span>
+          <span class="hero-glow">Glow.</span>
+        </h1>
+        <p class="hero-sub">
+          {`${20}+`} years of expertise in the heart of {addr.city}, {addr.state}. Where smooth skin and glowing confidence are crafted, not rushed.
+        </p>
+        <a href={business.bookingUrl} class="btn-outline" target="_blank" rel="noopener">Book an Appointment</a>
+        <p class="hero-reviews">
+          <span class="review-star">&#9733;</span> {google.rating} · {google.count} Google reviews
+        </p>
+      </div>
+
+      <!-- Right: photo -->
+      <div class="hero-image-wrap">
+        <div class="hero-image-bg"></div>
+        <img
+          src="/images/hero/team-group.jpg"
+          alt="The Bashful Beauty team at their cottage studio in Rockwall, TX"
+          class="hero-image"
+          loading="eager"
+          width="720"
+          height="900"
+        />
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       TRUST STRIP
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="trust-strip">
+    <div class="trust-line"></div>
+    <p class="trust-text">
+      <span class="trust-accent">20</span> years of experience
+      &nbsp;·&nbsp;
+      <span class="trust-accent">{google.rating}</span> stars from <span class="trust-accent">{google.count}</span> Google reviews
+      &nbsp;·&nbsp;
+      Downtown {addr.city}, {addr.state}
+    </p>
+    <div class="trust-line"></div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       SERVICES — Editorial sections
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div id="services">
+
+    <!-- Service 01: Waxing -->
+    <section class="service-feature service-left">
+      <span class="section-number" aria-hidden="true">01</span>
+      <div class="service-feature-grid">
+        <div class="service-feature-image-wrap service-image-left">
+          <img
+            src="/images/services/waxing.jpg"
+            alt="Professional waxing treatment at Bashful Beauty"
+            class="service-feature-img"
+            loading="lazy"
+            width="800"
+            height="1000"
+          />
+        </div>
+        <div class="service-feature-text service-text-right">
+          <span class="service-eyebrow">Most Popular</span>
+          <h2 class="service-title">{waxing.name}</h2>
+          <p class="service-desc">{waxing.description}</p>
+          <p class="service-price">
+            Brazilian membership from <span class="highlight">{memberships[0].price}/month</span>
+          </p>
+          <a href="/waxing" class="service-link">Explore Waxing &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Service 02: Facials -->
+    <section class="service-feature service-right">
+      <span class="section-number section-number-right" aria-hidden="true">02</span>
+      <div class="service-feature-grid service-feature-grid-reverse">
+        <div class="service-feature-text service-text-left">
+          <span class="service-eyebrow">Signature Treatments</span>
+          <h2 class="service-title">{facials.name}</h2>
+          <p class="service-desc">{facials.description}</p>
+          <a href="/facials" class="service-link">Explore Facials &rarr;</a>
+        </div>
+        <div class="service-feature-image-wrap service-image-right">
+          <img
+            src="/images/services/facials.jpg"
+            alt="Custom facial treatment at Bashful Beauty"
+            class="service-feature-img"
+            loading="lazy"
+            width="800"
+            height="1000"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Services 03–06: Grid -->
+    <section class="services-grid-section">
+      <div class="services-grid-container">
+        <div class="services-grid">
+          {secondaryServices.map((s, i) => (
+            <div class="service-card">
+              <div class="service-card-img-wrap">
+                <img
+                  src={s.image}
+                  alt={s.label}
+                  class="service-card-img"
+                  loading="lazy"
+                  width="400"
+                  height="533"
+                />
+              </div>
+              <h3 class="service-card-name">{s.label}</h3>
+              <p class="service-card-sub">{s.cat.subtitle}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       MEMBERSHIP
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="membership-section">
+    <div class="membership-container">
+      <div class="membership-header">
+        <span class="membership-label">Save with a</span>
+        <h2 class="membership-title">membership</h2>
+      </div>
+      <div class="membership-cards">
+        {memberships.map((m) => (
+          <div class="membership-card">
+            <span class="membership-badge">&#9733; Member</span>
+            <h3 class="membership-name">{m.name.replace(' Membership', '')}</h3>
+            <div class="membership-price">
+              <span class="membership-amount">{m.price}</span>
+              <span class="membership-period">/{m.priceNote.replace('per ', '')}</span>
+            </div>
+            <p class="membership-perk">Unlimited sessions</p>
+            <a href={business.bookingUrl} class="membership-link" target="_blank" rel="noopener">Book Now &rarr;</a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       TESTIMONIALS — Pull quote
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="testimonials-section">
+    <div class="testimonials-container">
+      <span class="testimonial-deco" aria-hidden="true">&ldquo;</span>
+      <blockquote class="testimonial-main">
+        <p>&ldquo;{mainTestimonial.quote}&rdquo;</p>
+      </blockquote>
+      <div class="testimonial-author">
+        <span class="testimonial-avatar">{mainTestimonial.initials}</span>
+        <span class="testimonial-name">&mdash; {mainTestimonial.name} · {mainTestimonial.source}</span>
+      </div>
+
+      <div class="testimonials-secondary">
+        {secondaryTestimonials.map((t) => (
+          <div class="testimonial-small">
+            <p class="testimonial-small-quote">&ldquo;{t.quote}&rdquo;</p>
+            <div class="testimonial-small-author">
+              <span class="testimonial-avatar testimonial-avatar-sm">{t.initials}</span>
+              <span class="testimonial-small-name">{t.name} · {t.source}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       THE COTTAGE — Full bleed moment
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="cottage-section" id="cottage">
+    <div class="cottage-image-wrap">
+      <img
+        src="/images/cottage/exterior.jpg"
+        alt="Doe's Skincare Cottage — the charming studio behind Bin 303 in Rockwall"
+        class="cottage-image"
+        loading="lazy"
+        width="1600"
+        height="900"
+      />
+      <div class="cottage-overlay"></div>
+      <div class="cottage-text">
+        <span class="cottage-eyebrow">Our Story</span>
+        <h2 class="cottage-heading">
+          Doe's Skincare <span class="cottage-script">Cottage</span>
+        </h2>
+        <p class="cottage-sub">{business.locationNote}</p>
+        <a href="/about" class="cottage-link">Meet Doe &amp; the Team &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       YOUR FIRST VISIT — 3 steps
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="first-visit-section">
+    <div class="first-visit-container">
+      <h2 class="first-visit-heading">Your First <span class="script-accent">Visit</span></h2>
+      <div class="first-visit-grid">
+        <div class="first-visit-step">
+          <span class="step-number">1</span>
+          <h3 class="step-title">Book Online</h3>
+          <p class="step-desc">Pick your service and a time that works. Same-week openings usually available.</p>
+        </div>
+        <div class="first-visit-step">
+          <span class="step-number">2</span>
+          <h3 class="step-title">Arrive &amp; Relax</h3>
+          <p class="step-desc">Find the cute cottage behind Bin 303. We'll walk you through everything before we start.</p>
+        </div>
+        <div class="first-visit-step">
+          <span class="step-number">3</span>
+          <h3 class="step-title">Leave Glowing</h3>
+          <p class="step-desc">Smooth skin, fresh face, and aftercare tips so results last. See you next time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       BOOKING CTA — Final call
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="booking-cta" id="booking-cta">
+    <div class="booking-cta-inner">
+      <h2 class="booking-heading">
+        Ready to feel <span class="script-accent highlight">amazing</span>?
+      </h2>
+      <a href={business.bookingUrl} class="btn-outline btn-outline-lg" target="_blank" rel="noopener">Book an Appointment</a>
+      <p class="booking-phone">
+        Or call us: <a href={business.phoneHref}>{business.phone}</a>
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       FOOTER — Minimal concept footer
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <!-- Logo -->
+      <div class="footer-logo">
+        <span class="logo-top">bashful</span>
+        <span class="logo-bottom">beauty</span>
+      </div>
+
+      <!-- Nav -->
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="/waxing">Waxing</a>
+        <a href="/facials">Facials</a>
+        <a href="/beauty-services">Beauty Services</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/faq">FAQ</a>
+      </nav>
+
+      <!-- Contact -->
+      <div class="footer-contact">
+        <p>{fullAddress}</p>
+        <p><a href={business.phoneHref}>{business.phone}</a></p>
+      </div>
+
+      <!-- Social -->
+      <div class="footer-social">
+        <a href={business.social.instagram} target="_blank" rel="noopener" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href={business.social.tiktok} target="_blank" rel="noopener" aria-label="TikTok">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+        </a>
+        <a href={business.social.facebook} target="_blank" rel="noopener" aria-label="Facebook">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+      </div>
+
+      <p class="footer-copy">&copy; {new Date().getFullYear()} {business.name}. All rights reserved.</p>
+    </div>
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       AMBIENT ORBS — Decorative background
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+</body>
+</html>
+
+
+<style is:global>
+/* ═══════════════════════════════════════════════════════════════════════════
+   MOCK-2 — Editorial Design System
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-script: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Lato', 'Helvetica Neue', sans-serif;
+
+  --cream: #FFF9F5;
+  --blush: #E8607A;
+  --blush-light: #FFE4E8;
+  --blush-soft: #FFF0F3;
+  --rose: #B76E79;
+  --gold: #D4AF37;
+  --text: #2D2520;
+  --text-light: #8A7E74;
+  --text-muted: #B8AFA7;
+}
+
+/* ── Reset & base ──────────────────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: var(--cream);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 17px;
+  overflow-x: hidden;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ── Utility classes ───────────────────────────────────────────────────── */
+
+.highlight {
+  display: inline;
+  background: linear-gradient(to top, var(--blush-light) 35%, transparent 35%);
+  padding: 0 0.15em;
+}
+
+.script-accent {
+  font-family: var(--font-script);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.25em;
+  color: var(--blush);
+}
+
+.section-number {
+  position: absolute;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 10rem;
+  line-height: 1;
+  color: var(--text);
+  opacity: 0.04;
+  user-select: none;
+  pointer-events: none;
+  top: -1rem;
+  left: -1rem;
+  z-index: 0;
+}
+
+.section-number-right {
+  left: auto;
+  right: -1rem;
+}
+
+/* ── Content container ────────────────────────────────────────────────── */
+.container {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HEADER
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  height: 70px;
+  background: rgba(255, 249, 245, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(45, 37, 32, 0.06);
+}
+
+.header-inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-stack {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+  flex-shrink: 0;
+}
+
+.logo-top {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 1.4rem;
+  letter-spacing: 0.15em;
+  color: var(--text);
+  text-transform: lowercase;
+}
+
+.logo-bottom {
+  font-family: var(--font-script);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  color: var(--blush);
+  text-transform: lowercase;
+}
+
+.header-nav {
+  display: none;
+  align-items: center;
+  gap: 2rem;
+}
+
+.header-nav a {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--text-light);
+  letter-spacing: 0.05em;
+  transition: color 0.25s;
+}
+
+.header-nav a:hover {
+  color: var(--text);
+}
+
+.header-right {
+  display: none;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.header-phone {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--text-light);
+  letter-spacing: 0.02em;
+}
+
+.header-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--text);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.header-cta:hover {
+  background: var(--text);
+  color: var(--cream);
+}
+
+/* Mobile hamburger */
+.mobile-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 51;
+}
+
+.mobile-toggle span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--text);
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+/* Mobile nav overlay */
+.mobile-nav {
+  position: fixed;
+  inset: 0;
+  z-index: 49;
+  background: rgba(255, 249, 245, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.mobile-nav.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-nav nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.mobile-nav nav a {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--text);
+  letter-spacing: 0.05em;
+}
+
+.mobile-book-btn {
+  margin-top: 1rem;
+  border: 1px solid var(--text);
+  color: var(--text);
+  font-family: var(--font-body) !important;
+  font-size: 0.75rem !important;
+  font-weight: 400 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  padding: 0.75rem 2rem;
+  border-radius: 9999px;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 70px; /* header offset */
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-grid {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.hero-text {
+  order: 2;
+}
+
+.hero-heading {
+  margin-bottom: 1.5rem;
+}
+
+.hero-line {
+  display: block;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 2.5rem;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.hero-glow {
+  display: block;
+  font-family: var(--font-script);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 5rem;
+  color: var(--blush);
+  line-height: 0.85;
+  margin-top: 0.1em;
+  margin-bottom: 0.15em;
+}
+
+.hero-sub {
+  color: var(--text-light);
+  font-size: 1rem;
+  max-width: 380px;
+  margin-bottom: 2rem;
+  line-height: 1.75;
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--text);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  padding: 0.85rem 1.75rem;
+  border-radius: 9999px;
+  transition: background 0.3s, color 0.3s;
+  cursor: pointer;
+  background: transparent;
+}
+
+.btn-outline:hover {
+  background: var(--text);
+  color: var(--cream);
+}
+
+.btn-outline-lg {
+  padding: 1rem 2.25rem;
+  font-size: 0.75rem;
+}
+
+.hero-reviews {
+  margin-top: 1.25rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+}
+
+.review-star {
+  color: var(--gold);
+}
+
+.hero-image-wrap {
+  order: 1;
+  position: relative;
+  width: 100%;
+}
+
+.hero-image {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 1.25rem;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-image-bg {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: -10px;
+  bottom: -10px;
+  background: var(--blush-soft);
+  border-radius: 1.5rem;
+  z-index: 1;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TRUST STRIP
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.trust-strip {
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+
+.trust-line {
+  width: 100%;
+  height: 1px;
+  background: var(--text-muted);
+  opacity: 0.15;
+}
+
+.trust-text {
+  padding: 2rem 0;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--text-light);
+  letter-spacing: 0.02em;
+}
+
+.trust-accent {
+  font-family: var(--font-script);
+  font-style: italic;
+  font-size: 1.3em;
+  color: var(--text);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SERVICES — Feature sections (01 Waxing, 02 Facials)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.service-feature {
+  position: relative;
+  padding: 4rem 0;
+  overflow: hidden;
+}
+
+.service-feature-grid {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.service-feature-image-wrap {
+  position: relative;
+}
+
+.service-feature-img {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  border-radius: 1.25rem;
+}
+
+.service-feature-text {
+  background: var(--cream);
+  padding: 2rem 0;
+}
+
+.service-eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.service-title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 1.9rem;
+  color: var(--text);
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.service-desc {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+  max-width: 440px;
+}
+
+.service-price {
+  color: var(--text);
+  font-size: 0.95rem;
+  margin-bottom: 1.25rem;
+}
+
+.service-link {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--blush);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.25s;
+}
+
+.service-link:hover {
+  color: var(--rose);
+}
+
+/* ── Services Grid (03–06) ─────────────────────────────────────────────── */
+
+.services-grid-section {
+  padding: 3rem 0 5rem;
+}
+
+.services-grid-container {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.service-card {
+  cursor: pointer;
+}
+
+.service-card-img-wrap {
+  overflow: hidden;
+  border-radius: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.service-card-img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.service-card:hover .service-card-img {
+  transform: scale(1.03);
+}
+
+.service-card-name {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 1.05rem;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+  transition: color 0.25s;
+}
+
+.service-card:hover .service-card-name {
+  color: var(--blush);
+}
+
+.service-card-sub {
+  font-size: 0.82rem;
+  color: var(--text-light);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MEMBERSHIP
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.membership-section {
+  padding: 4rem 0;
+  border-top: 1px solid rgba(45, 37, 32, 0.06);
+}
+
+.membership-container {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  text-align: center;
+}
+
+.membership-header {
+  margin-bottom: 2.5rem;
+}
+
+.membership-label {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+.membership-title {
+  font-family: var(--font-script);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 3rem;
+  color: var(--text);
+  line-height: 1.1;
+}
+
+.membership-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.membership-card {
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 1rem;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.5);
+  transition: box-shadow 0.3s;
+}
+
+.membership-card:hover {
+  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.08);
+}
+
+.membership-badge {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.membership-name {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 1.35rem;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+}
+
+.membership-price {
+  margin-bottom: 0.5rem;
+}
+
+.membership-amount {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 2.25rem;
+  color: var(--text);
+}
+
+.membership-period {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+.membership-perk {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-bottom: 1.25rem;
+}
+
+.membership-link {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--blush);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TESTIMONIALS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.testimonials-section {
+  padding: 5rem 0;
+}
+
+.testimonials-container {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  text-align: center;
+  position: relative;
+}
+
+.testimonial-deco {
+  font-family: var(--font-script);
+  font-style: italic;
+  font-size: 8rem;
+  color: var(--blush-light);
+  line-height: 0.5;
+  display: block;
+  margin-bottom: -1rem;
+  user-select: none;
+}
+
+.testimonial-main p {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: var(--text);
+  max-width: 600px;
+  margin: 0 auto 1.5rem;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 3rem;
+}
+
+.testimonial-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--blush-light);
+  color: var(--blush);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.testimonial-avatar-sm {
+  width: 30px;
+  height: 30px;
+  font-size: 0.62rem;
+}
+
+.testimonial-name {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+.testimonials-secondary {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  border-top: 1px solid rgba(45, 37, 32, 0.06);
+  padding-top: 2.5rem;
+}
+
+.testimonial-small-quote {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--text-light);
+  font-style: italic;
+  margin-bottom: 0.75rem;
+  line-height: 1.7;
+}
+
+.testimonial-small-author {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.testimonial-small-name {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   THE COTTAGE — Full bleed
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.cottage-section {
+  padding: 0;
+}
+
+.cottage-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 50vh;
+  min-height: 350px;
+  overflow: hidden;
+}
+
+.cottage-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cottage-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(255, 249, 245, 0.95) 0%,
+    rgba(255, 249, 245, 0.6) 35%,
+    rgba(255, 249, 245, 0) 70%
+  );
+}
+
+.cottage-text {
+  position: absolute;
+  bottom: 2rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  z-index: 2;
+}
+
+.cottage-eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.cottage-heading {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 1.75rem;
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+.cottage-script {
+  font-family: var(--font-script);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.35em;
+  color: var(--blush);
+}
+
+.cottage-sub {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin-bottom: 0.75rem;
+}
+
+.cottage-link {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--blush);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   YOUR FIRST VISIT
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.first-visit-section {
+  padding: 5rem 0;
+}
+
+.first-visit-container {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  text-align: center;
+}
+
+.first-visit-heading {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 2rem;
+  color: var(--text);
+  margin-bottom: 3rem;
+}
+
+.first-visit-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+}
+
+.first-visit-step {
+  text-align: center;
+}
+
+.step-number {
+  display: block;
+  font-family: var(--font-script);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 3rem;
+  color: var(--blush);
+  line-height: 1;
+  margin-bottom: 0.75rem;
+}
+
+.step-title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 1.15rem;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.step-desc {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  max-width: 280px;
+  margin: 0 auto;
+  line-height: 1.75;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BOOKING CTA
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.booking-cta {
+  padding: 5rem 0 6rem;
+  text-align: center;
+}
+
+.booking-cta-inner {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.booking-heading {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 2.25rem;
+  color: var(--text);
+  margin-bottom: 2rem;
+  line-height: 1.3;
+}
+
+.booking-phone {
+  margin-top: 1.25rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.booking-phone a {
+  color: var(--text-light);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.site-footer {
+  border-top: 1px solid rgba(45, 37, 32, 0.06);
+  padding: 3rem 0 2rem;
+}
+
+.footer-inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.footer-logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+  align-items: center;
+}
+
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.25rem;
+}
+
+.footer-nav a {
+  font-size: 0.82rem;
+  color: var(--text-light);
+  letter-spacing: 0.03em;
+  transition: color 0.25s;
+}
+
+.footer-nav a:hover {
+  color: var(--text);
+}
+
+.footer-contact {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.footer-contact a {
+  color: var(--text-light);
+}
+
+.footer-social {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.footer-social a {
+  color: var(--text-muted);
+  transition: color 0.25s;
+}
+
+.footer-social a:hover {
+  color: var(--blush);
+}
+
+.footer-copy {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   AMBIENT ORBS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.ambient-orbs {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+}
+
+.orb-1 {
+  width: 500px;
+  height: 500px;
+  background: var(--blush-soft);
+  top: -10%;
+  right: -10%;
+  animation: orb-drift-1 20s ease-in-out infinite alternate;
+}
+
+.orb-2 {
+  width: 400px;
+  height: 400px;
+  background: var(--blush-light);
+  bottom: 20%;
+  left: -15%;
+  animation: orb-drift-2 25s ease-in-out infinite alternate;
+}
+
+.orb-3 {
+  width: 300px;
+  height: 300px;
+  background: rgba(212, 175, 55, 0.08);
+  top: 50%;
+  right: 20%;
+  animation: orb-drift-3 18s ease-in-out infinite alternate;
+}
+
+@keyframes orb-drift-1 {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(-60px, 40px) scale(1.1); }
+}
+
+@keyframes orb-drift-2 {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(50px, -30px) scale(1.05); }
+}
+
+@keyframes orb-drift-3 {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(-30px, 20px) scale(0.95); }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DESKTOP — min-width: 768px
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (min-width: 768px) {
+  .mobile-toggle { display: none; }
+  .header-nav { display: flex; }
+  .header-right { display: flex; }
+
+  .hero-grid {
+    grid-template-columns: repeat(12, 1fr);
+    gap: 2rem;
+    padding: 0 2rem;
+  }
+
+  .hero-text {
+    grid-column: 1 / 7;
+    order: 1;
+  }
+
+  .hero-image-wrap {
+    grid-column: 7 / 13;
+    order: 2;
+  }
+
+  .hero-line {
+    font-size: 3.5rem;
+  }
+
+  .hero-glow {
+    font-size: 7.5rem;
+  }
+
+  .hero-image {
+    aspect-ratio: 3/4;
+    border-radius: 2rem;
+  }
+
+  .hero-image-bg {
+    top: 12px;
+    left: 12px;
+    right: -12px;
+    bottom: -12px;
+  }
+
+  /* Service feature — 2 col layout */
+  .service-feature-grid {
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 3rem;
+    padding: 0 2rem;
+  }
+
+  .service-feature-grid-reverse {
+    grid-template-columns: 0.9fr 1.1fr;
+  }
+
+  .service-feature-img {
+    border-radius: 1.5rem;
+  }
+
+  /* Overlap effect: text card overlaps image */
+  .service-text-right {
+    background: var(--cream);
+    padding: 2.5rem;
+    border-radius: 1rem;
+    margin-left: -4rem;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 4px 30px rgba(45, 37, 32, 0.04);
+  }
+
+  .service-text-left {
+    background: var(--cream);
+    padding: 2.5rem;
+    border-radius: 1rem;
+    margin-right: -4rem;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 4px 30px rgba(45, 37, 32, 0.04);
+  }
+
+  .section-number {
+    font-size: 15rem;
+    top: -2rem;
+    left: 2rem;
+  }
+
+  .section-number-right {
+    left: auto;
+    right: 2rem;
+  }
+
+  /* Services grid: 4 col */
+  .services-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  /* Membership cards side by side */
+  .membership-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .membership-title {
+    font-size: 3.5rem;
+  }
+
+  /* Testimonials secondary side by side */
+  .testimonials-secondary {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+  }
+
+  .testimonial-main p {
+    font-size: 2rem;
+  }
+
+  /* Cottage text positioning */
+  .cottage-text {
+    left: 3rem;
+    bottom: 3rem;
+    right: auto;
+    max-width: 500px;
+  }
+
+  .cottage-heading {
+    font-size: 2.5rem;
+  }
+
+  /* First visit 3 cols */
+  .first-visit-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+  }
+
+  .first-visit-heading {
+    font-size: 2.5rem;
+  }
+
+  .booking-heading {
+    font-size: 2.75rem;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LARGE DESKTOP — min-width: 1024px
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (min-width: 1024px) {
+  .hero-line {
+    font-size: 4.5rem;
+  }
+
+  .hero-glow {
+    font-size: 10rem;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+  }
+
+  .service-feature {
+    padding: 6rem 0;
+  }
+
+  .service-feature-grid {
+    gap: 0;
+  }
+
+  .service-feature-grid-reverse {
+    gap: 0;
+  }
+
+  .service-text-right {
+    margin-left: -6rem;
+    padding: 3rem;
+  }
+
+  .service-text-left {
+    margin-right: -6rem;
+    padding: 3rem;
+  }
+
+  .cottage-image-wrap {
+    height: 55vh;
+  }
+
+  .booking-heading {
+    font-size: 3rem;
+  }
+}
+</style>
+
+
+<script>
+  // Mobile nav toggle
+  const toggle = document.getElementById('mobileToggle');
+  const nav = document.getElementById('mobileNav');
+
+  if (toggle && nav) {
+    toggle.addEventListener('click', () => {
+      nav.classList.toggle('active');
+    });
+
+    // Close on link click
+    nav.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('active');
+      });
+    });
+  }
+</script>
