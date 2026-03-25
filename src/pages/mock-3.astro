@@ -1,0 +1,818 @@
+---
+import '@fontsource/antic-didone/400.css';
+import '@fontsource/pinyon-script/400.css';
+import '@fontsource/playfair-display/400.css';
+import '@fontsource/playfair-display/600.css';
+import '@fontsource/playfair-display/700.css';
+import '@fontsource/cormorant-garamond/300-italic.css';
+import '@fontsource/cormorant-garamond/400-italic.css';
+import '@fontsource/cormorant-garamond/600-italic.css';
+import '@fontsource/lato/300.css';
+import '@fontsource/lato/400.css';
+import '@fontsource/lato/700.css';
+
+import { business } from '../data/business';
+import { memberships } from '../data/services';
+import { testimonials } from '../data/testimonials';
+
+const g = business.reviews.google;
+const t1 = testimonials[0];
+const t2 = testimonials[1];
+const t3 = testimonials[2];
+---
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bashful Beauty — Rockwall's Most Trusted Beauty Studio</title>
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header>
+  <div class="h-inner">
+    <a href="/mock-3" class="logo">
+      <span class="logo-serif">bashful</span>
+      <span class="logo-script">beauty</span>
+    </a>
+    <nav class="h-nav">
+      <a href="#services">Waxing</a>
+      <a href="#services">Facials</a>
+      <a href="#services">Beauty Services</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="h-right">
+      <a href={business.phoneHref} class="h-phone">{business.phone}</a>
+      <a href={business.bookingUrl} target="_blank" rel="noopener" class="h-book">Book Now</a>
+    </div>
+  </div>
+</header>
+<div style="height:72px;"></div>
+
+<!-- ============================================================
+     HERO — Typography as the design
+     ============================================================ -->
+<section class="hero">
+  <!-- The massive "Glow" sits BEHIND the photo -->
+  <div class="hero-glow-bg" aria-hidden="true">Glow</div>
+
+  <div class="hero-content">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Rockwall's Most Trusted Beauty Studio</p>
+      <h1 class="hero-h1">
+        <span class="hero-word">Relax.</span>
+        <span class="hero-word">Rejuvenate.</span>
+        <span class="hero-word-script">Glow.</span>
+      </h1>
+      <p class="hero-body">
+        Where <span class="hl">20 years of expertise</span> meets the charm of a downtown cottage. Smooth skin and glowing confidence — crafted, not rushed.
+      </p>
+      <div class="hero-actions">
+        <a href={business.bookingUrl} target="_blank" rel="noopener" class="btn-pill">Book an Appointment</a>
+      </div>
+      <p class="hero-proof">
+        <span class="star">★</span> {g.rating} from {g.count} Google reviews
+      </p>
+    </div>
+    <div class="hero-right">
+      <div class="hero-img-container">
+        <img src="/images/hero/team-group.jpg" alt="The Bashful Beauty team" class="hero-img" />
+        <div class="hero-img-shadow"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TRUST STRIP
+     ============================================================ -->
+<section class="trust">
+  <div class="trust-inner">
+    <span class="trust-item"><em class="trust-num">20</em> years of experience</span>
+    <span class="trust-dot">·</span>
+    <span class="trust-item"><em class="trust-num">{g.rating}</em> stars from <em class="trust-num">{g.count}</em> reviews</span>
+    <span class="trust-dot">·</span>
+    <span class="trust-item">Downtown <em class="trust-num">Rockwall</em>, TX</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     SERVICES — Editorial feature layouts
+     ============================================================ -->
+<section class="services" id="services">
+
+  <!-- WAXING — Big editorial feature -->
+  <div class="svc-feature">
+    <div class="svc-number" aria-hidden="true">01</div>
+    <div class="svc-img-block svc-img-left">
+      <img src="/images/services/waxing.jpg" alt="Waxing at Bashful Beauty" class="svc-img" />
+    </div>
+    <div class="svc-text-card svc-text-right">
+      <span class="svc-label">Most Popular</span>
+      <h2 class="svc-title">Waxing</h2>
+      <p class="svc-desc">
+        Our signature hard wax technique is smooth, fast, and gentle on even the most sensitive skin. Whether it's your first Brazilian or your hundredth — you'll leave silky smooth and bump-free every time.
+      </p>
+      <p class="svc-highlight">
+        Brazilian membership from <span class="hl">{memberships[0].price}/month</span>
+      </p>
+      <a href="/waxing" class="svc-link">Explore Waxing →</a>
+    </div>
+  </div>
+
+  <!-- FACIALS — Mirror layout -->
+  <div class="svc-feature svc-feature-flip">
+    <div class="svc-number svc-number-r" aria-hidden="true">02</div>
+    <div class="svc-text-card svc-text-left">
+      <span class="svc-label">Signature Treatments</span>
+      <h2 class="svc-title">Facials</h2>
+      <p class="svc-desc">
+        Every facial starts with a one-on-one skin analysis so we can tailor the treatment to exactly what your skin needs — from deep-cleansing peels to hydrating oxygen infusions.
+      </p>
+      <a href="/facials" class="svc-link">Explore Facials →</a>
+    </div>
+    <div class="svc-img-block svc-img-right">
+      <img src="/images/services/facials.jpg" alt="Facials at Bashful Beauty" class="svc-img" />
+    </div>
+  </div>
+
+  <!-- REMAINING SERVICES — Compact grid -->
+  <div class="svc-grid">
+    <a href="/beauty-services#lashes" class="svc-card">
+      <div class="svc-card-img-w"><img src="/images/services/lashes.jpg" alt="Lash Lift & Tint" /></div>
+      <h3>Lash Lift <em>&</em> Tint</h3>
+      <p>Lift, curl, and define</p>
+    </a>
+    <a href="/beauty-services#brows" class="svc-card">
+      <div class="svc-card-img-w"><img src="/images/services/brows.jpg" alt="Brows" /></div>
+      <h3>Brows</h3>
+      <p>Shape, tint, laminate</p>
+    </a>
+    <a href="/beauty-services#spray-tans" class="svc-card">
+      <div class="svc-card-img-w"><img src="/images/services/spray-tans.jpg" alt="Spray Tans" /></div>
+      <h3>Spray Tans</h3>
+      <p>Natural golden glow</p>
+    </a>
+    <a href="/beauty-services#teeth-whitening" class="svc-card">
+      <div class="svc-card-img-w"><img src="/images/services/teeth-whitening.jpg" alt="Teeth Whitening" /></div>
+      <h3>Teeth Whitening</h3>
+      <p>Results in one hour</p>
+    </a>
+  </div>
+</section>
+
+<!-- ============================================================
+     MEMBERSHIP
+     ============================================================ -->
+<section class="membership">
+  <p class="m-pre">Save with a</p>
+  <h2 class="m-title">membership</h2>
+  <div class="m-cards">
+    {memberships.map((m) => (
+      <div class="m-card">
+        <span class="m-badge">★ Member</span>
+        <h3 class="m-name">{m.name.replace(' Membership', '')}</h3>
+        <p class="m-price"><strong>{m.price}</strong><span>/month</span></p>
+        <p class="m-perk">Unlimited sessions</p>
+        <a href={business.bookingUrl} target="_blank" rel="noopener" class="m-link">Book Now →</a>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- ============================================================
+     TESTIMONIALS
+     ============================================================ -->
+<section class="reviews">
+  <div class="rev-deco" aria-hidden="true">"</div>
+  <blockquote class="rev-main">"{t1.quote}"</blockquote>
+  <p class="rev-author">
+    <span class="rev-avatar">{t1.initials}</span>
+    — {t1.name} · {t1.source}
+  </p>
+  <div class="rev-secondary">
+    <div class="rev-small">
+      <p>"{t2.quote}"</p>
+      <span class="rev-small-author"><span class="rev-avatar rev-avatar-sm">{t2.initials}</span> {t2.name}</span>
+    </div>
+    <div class="rev-small">
+      <p>"{t3.quote}"</p>
+      <span class="rev-small-author"><span class="rev-avatar rev-avatar-sm">{t3.initials}</span> {t3.name}</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     THE COTTAGE — Full bleed
+     ============================================================ -->
+<section class="cottage" id="about">
+  <img src="/images/cottage/exterior.jpg" alt="Bashful Beauty cottage in downtown Rockwall" class="cottage-img" />
+  <div class="cottage-overlay"></div>
+  <div class="cottage-text">
+    <span class="cottage-label">Our Story</span>
+    <h2 class="cottage-h2">Doe's Skincare <em>Cottage</em></h2>
+    <p class="cottage-sub">The cute little cottage behind Bin 303 in downtown Rockwall</p>
+    <a href="/about" class="cottage-link">Meet Doe & the Team →</a>
+  </div>
+</section>
+
+<!-- ============================================================
+     YOUR FIRST VISIT
+     ============================================================ -->
+<section class="first-visit">
+  <h2 class="fv-h2">Your First <em>Visit</em></h2>
+  <div class="fv-steps">
+    <div class="fv-step">
+      <span class="fv-num">1</span>
+      <h3>Book Online</h3>
+      <p>Pick your service and a time. Same-week openings usually available.</p>
+    </div>
+    <div class="fv-step">
+      <span class="fv-num">2</span>
+      <h3>Arrive & Relax</h3>
+      <p>Find the cottage behind Bin 303. We walk you through everything.</p>
+    </div>
+    <div class="fv-step">
+      <span class="fv-num">3</span>
+      <h3>Leave Glowing</h3>
+      <p>Smooth skin, aftercare tips, and a reason to come back.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BOOKING CTA
+     ============================================================ -->
+<section class="cta" id="contact">
+  <h2 class="cta-h2">Ready to feel <em class="hl">amazing</em>?</h2>
+  <a href={business.bookingUrl} target="_blank" rel="noopener" class="btn-pill btn-pill-lg">Book an Appointment</a>
+  <p class="cta-phone">Or call: <a href={business.phoneHref}>{business.phone}</a></p>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="ft">
+  <div class="ft-inner">
+    <div class="ft-brand">
+      <span class="logo-serif">bashful</span>
+      <span class="logo-script">beauty</span>
+    </div>
+    <nav class="ft-nav">
+      <a href="/waxing">Waxing</a>
+      <a href="/facials">Facials</a>
+      <a href="/beauty-services">Beauty Services</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </nav>
+    <p class="ft-addr">{business.address.street}, {business.address.city}, {business.address.state} {business.address.zip}</p>
+    <p class="ft-phone"><a href={business.phoneHref}>{business.phone}</a></p>
+    <p class="ft-copy">© {new Date().getFullYear()} Bashful Beauty. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Ambient orbs -->
+<div class="orbs" aria-hidden="true">
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="orb o3"></div>
+  <div class="orb o4"></div>
+  <div class="orb o5"></div>
+</div>
+
+<script>
+  // Mobile menu (minimal for concept)
+</script>
+
+</body>
+</html>
+
+<style is:global>
+/* ==========================================================================
+   MOCK-3 — Editorial Concept from Scratch
+   ========================================================================== */
+
+/* --- Variables --- */
+:root {
+  --serif: 'Playfair Display', Georgia, serif;
+  --script: 'Cormorant Garamond', Georgia, serif;
+  --body: 'Lato', sans-serif;
+  --logo-serif: 'Antic Didone', Georgia, serif;
+  --logo-script: 'Pinyon Script', cursive;
+  --cream: #FFF9F5;
+  --blush: #E8607A;
+  --blush-lt: #FFE4E8;
+  --blush-soft: #FFF0F3;
+  --rose: #B76E79;
+  --gold: #D4AF37;
+  --ink: #2D2520;
+  --ink-lt: #8A7E74;
+  --ink-muted: #C0B8B0;
+}
+
+/* --- Reset --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--cream); -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+body { font-family: var(--body); color: var(--ink); font-size: 17px; line-height: 1.7; overflow-x: hidden; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+
+/* --- Highlight --- */
+.hl {
+  background: linear-gradient(to top, var(--blush-lt) 38%, transparent 38%);
+  padding: 0 0.1em;
+}
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 72px;
+  background: rgba(255,249,245,0.92);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(45,37,32,0.05);
+}
+.h-inner {
+  max-width: 1280px; margin: 0 auto; padding: 0 2rem;
+  height: 100%; display: flex; align-items: center; gap: 2rem;
+}
+.logo { display: flex; flex-direction: column; line-height: 1.1; flex-shrink: 0; }
+.logo-serif {
+  font-family: var(--logo-serif); font-weight: 400; font-size: 1.4rem;
+  letter-spacing: 0.08em; color: var(--ink);
+}
+.logo-script {
+  font-family: var(--logo-script); font-weight: 400;
+  font-size: 1.25rem; color: var(--blush);
+  margin-top: -4px; margin-left: 0.15em;
+}
+.h-nav {
+  display: none; /* hidden mobile, shown md */
+  align-items: center; gap: 2.25rem; margin-left: auto;
+}
+.h-nav a {
+  font-size: 0.82rem; color: var(--ink-lt); letter-spacing: 0.03em;
+  transition: color 0.2s;
+}
+.h-nav a:hover { color: var(--ink); }
+.h-right { display: none; align-items: center; gap: 1.5rem; margin-left: 2rem; }
+.h-phone { font-size: 0.8rem; color: var(--ink-lt); }
+.h-book {
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--ink); color: var(--ink);
+  font-size: 0.65rem; font-weight: 400; text-transform: uppercase;
+  letter-spacing: 0.2em; padding: 0.55rem 1.4rem; border-radius: 999px;
+  transition: all 0.3s;
+}
+.h-book:hover { background: var(--ink); color: var(--cream); }
+
+@media (min-width: 768px) {
+  .h-nav, .h-right { display: flex; }
+}
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+.hero {
+  position: relative; min-height: 100vh; min-height: 100dvh;
+  display: flex; align-items: center;
+  padding: 72px 0 0; overflow: hidden;
+}
+
+/* The massive "Glow" word behind everything */
+.hero-glow-bg {
+  position: absolute;
+  font-family: var(--script); font-style: italic; font-weight: 300;
+  font-size: 28vw; line-height: 0.8; color: var(--blush);
+  opacity: 0.06; pointer-events: none; user-select: none;
+  right: -5%; bottom: -5%;
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative; z-index: 1;
+  max-width: 1280px; margin: 0 auto; padding: 4rem 2rem;
+  width: 100%;
+  display: grid; grid-template-columns: 1fr; gap: 3rem;
+  align-items: center;
+}
+
+.hero-left { order: 2; }
+.hero-right { order: 1; }
+
+.hero-eyebrow {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em;
+  color: var(--ink-muted); margin-bottom: 1.5rem;
+}
+
+.hero-h1 { margin-bottom: 2rem; }
+
+.hero-word {
+  display: block; font-family: var(--serif); font-weight: 400;
+  font-size: clamp(2.8rem, 6vw, 5.5rem); line-height: 1.05;
+  letter-spacing: -0.02em; color: var(--ink);
+}
+
+.hero-word-script {
+  display: block; font-family: var(--script); font-style: italic;
+  font-weight: 300; font-size: clamp(5rem, 12vw, 12rem);
+  line-height: 0.8; color: var(--blush);
+  margin-top: -0.05em;
+  /* This word is SO large it becomes a visual element, not just text */
+}
+
+.hero-body {
+  font-size: 1.05rem; color: var(--ink-lt); max-width: 420px;
+  line-height: 1.8; margin-bottom: 2.5rem;
+}
+
+.btn-pill {
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--ink); color: var(--ink); background: transparent;
+  font-family: var(--body); font-size: 0.68rem; font-weight: 400;
+  text-transform: uppercase; letter-spacing: 0.22em;
+  padding: 1rem 2rem; border-radius: 999px;
+  transition: all 0.3s; cursor: pointer;
+}
+.btn-pill:hover { background: var(--ink); color: var(--cream); }
+.btn-pill-lg { padding: 1.1rem 2.5rem; font-size: 0.72rem; }
+
+.hero-actions { margin-bottom: 1.5rem; }
+
+.hero-proof { font-size: 0.78rem; color: var(--ink-muted); }
+.star { color: var(--gold); }
+
+/* Hero image with depth shadow */
+.hero-img-container { position: relative; }
+.hero-img {
+  width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center top;
+  border-radius: 1.5rem; position: relative; z-index: 2;
+}
+.hero-img-shadow {
+  position: absolute; inset: 12px -12px -12px 12px;
+  background: var(--blush-lt); border-radius: 1.75rem; z-index: 1;
+  opacity: 0.5;
+}
+
+/* Desktop hero: side by side */
+@media (min-width: 768px) {
+  .hero-content {
+    grid-template-columns: 5fr 6fr; gap: 4rem; padding: 0 2rem;
+  }
+  .hero-left { order: 1; }
+  .hero-right { order: 2; }
+  .hero-img { aspect-ratio: 4/5; border-radius: 2rem 2rem 2rem 0; }
+  .hero-img-shadow { inset: 16px -16px -16px 16px; border-radius: 2.25rem 2.25rem 2.25rem 0; }
+  .hero-glow-bg { font-size: 22vw; right: -2%; bottom: 5%; }
+}
+
+@media (min-width: 1024px) {
+  .hero-content { grid-template-columns: 5fr 7fr; gap: 5rem; }
+}
+
+/* ==========================================================================
+   TRUST STRIP
+   ========================================================================== */
+.trust {
+  padding: 2.5rem 2rem; text-align: center;
+  border-top: 1px solid rgba(45,37,32,0.06);
+  border-bottom: 1px solid rgba(45,37,32,0.06);
+}
+.trust-inner { max-width: 800px; margin: 0 auto; }
+.trust-item { font-size: 0.85rem; color: var(--ink-lt); }
+.trust-num { font-family: var(--script); font-style: italic; font-size: 1.2em; color: var(--ink); }
+.trust-dot { color: var(--ink-muted); margin: 0 0.75rem; }
+
+@media (max-width: 640px) {
+  .trust-inner { display: flex; flex-direction: column; gap: 0.5rem; }
+  .trust-dot { display: none; }
+}
+
+/* ==========================================================================
+   SERVICES
+   ========================================================================== */
+.services { padding: 5rem 0; }
+
+/* --- Feature service (01 Waxing, 02 Facials) --- */
+.svc-feature {
+  position: relative; max-width: 1280px; margin: 0 auto 5rem;
+  padding: 0 2rem;
+  display: grid; grid-template-columns: 1fr; gap: 2rem;
+  align-items: center;
+}
+.svc-number {
+  position: absolute; font-family: var(--serif); font-weight: 700;
+  font-size: clamp(8rem, 18vw, 16rem); line-height: 1; color: var(--ink);
+  opacity: 0.03; pointer-events: none; user-select: none;
+  top: -2rem; left: 0; z-index: 0;
+}
+.svc-number-r { left: auto; right: 0; }
+
+.svc-img-block { position: relative; z-index: 1; }
+.svc-img {
+  width: 100%; aspect-ratio: 4/5; object-fit: cover;
+  border-radius: 1.25rem;
+}
+
+/* The text card overlaps the image on desktop */
+.svc-text-card {
+  position: relative; z-index: 2;
+  background: rgba(255,249,245,0.92);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  padding: 2.5rem 2rem; border-radius: 1.25rem;
+}
+
+.svc-label {
+  display: inline-block; font-size: 0.65rem; font-weight: 400;
+  text-transform: uppercase; letter-spacing: 0.2em; color: var(--ink-muted);
+  margin-bottom: 0.75rem;
+}
+.svc-title {
+  font-family: var(--serif); font-weight: 400; font-size: 2rem;
+  color: var(--ink); margin-bottom: 1rem; letter-spacing: -0.01em;
+}
+.svc-desc {
+  font-size: 0.95rem; color: var(--ink-lt); line-height: 1.85;
+  margin-bottom: 1.25rem; max-width: 420px;
+}
+.svc-highlight { font-size: 0.95rem; color: var(--ink); margin-bottom: 1.25rem; }
+.svc-link {
+  font-size: 0.85rem; color: var(--blush);
+  text-decoration: underline; text-underline-offset: 4px;
+  transition: color 0.2s;
+}
+.svc-link:hover { color: var(--rose); }
+
+/* Desktop: overlapping image + text card */
+@media (min-width: 768px) {
+  .svc-feature { grid-template-columns: 1fr 1fr; gap: 0; }
+
+  /* Waxing: image left, text overlaps from right */
+  .svc-img-left { grid-column: 1; grid-row: 1; }
+  .svc-text-right {
+    grid-column: 2; grid-row: 1;
+    margin-left: -4rem; /* OVERLAP the image */
+    align-self: center;
+  }
+
+  /* Facials: flipped */
+  .svc-feature-flip { grid-template-columns: 1fr 1fr; }
+  .svc-img-right { grid-column: 2; grid-row: 1; }
+  .svc-text-left {
+    grid-column: 1; grid-row: 1;
+    margin-right: -4rem; /* OVERLAP the image */
+    align-self: center;
+    text-align: right;
+  }
+  .svc-text-left .svc-desc { margin-left: auto; }
+  .svc-text-left .svc-label,
+  .svc-text-left .svc-link { /* right-align */ }
+}
+
+@media (min-width: 1024px) {
+  .svc-feature { grid-template-columns: 55% 45%; }
+  .svc-feature-flip { grid-template-columns: 45% 55%; }
+  .svc-text-right { margin-left: -6rem; padding: 3rem 2.5rem; }
+  .svc-text-left { margin-right: -6rem; padding: 3rem 2.5rem; }
+}
+
+/* --- Service grid (03-06) --- */
+.svc-grid {
+  max-width: 1280px; margin: 0 auto; padding: 0 2rem;
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;
+}
+.svc-card { display: block; }
+.svc-card-img-w {
+  overflow: hidden; border-radius: 0.75rem; margin-bottom: 0.85rem;
+}
+.svc-card-img-w img {
+  width: 100%; aspect-ratio: 3/4; object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.svc-card:hover img { transform: scale(1.04); }
+.svc-card h3 {
+  font-family: var(--serif); font-weight: 400; font-size: 1.1rem;
+  color: var(--ink); margin-bottom: 0.2rem;
+  transition: color 0.2s;
+}
+.svc-card h3 em { font-family: var(--script); font-style: italic; color: var(--blush); }
+.svc-card:hover h3 { color: var(--blush); }
+.svc-card p { font-size: 0.82rem; color: var(--ink-lt); }
+
+@media (min-width: 768px) {
+  .svc-grid { grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+}
+
+/* ==========================================================================
+   MEMBERSHIP
+   ========================================================================== */
+.membership {
+  max-width: 700px; margin: 0 auto;
+  padding: 4rem 2rem; text-align: center;
+  border-top: 1px solid rgba(45,37,32,0.06);
+}
+.m-pre { font-size: 0.85rem; color: var(--ink-lt); margin-bottom: 0.25rem; }
+.m-title {
+  font-family: var(--script); font-style: italic; font-weight: 400;
+  font-size: 3.5rem; color: var(--ink); line-height: 1; margin-bottom: 2.5rem;
+}
+.m-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.m-card {
+  border: 1px solid rgba(212,175,55,0.25); border-radius: 1rem;
+  padding: 2rem 1.5rem; background: rgba(255,255,255,0.4);
+  transition: box-shadow 0.3s;
+}
+.m-card:hover { box-shadow: 0 8px 30px rgba(212,175,55,0.08); }
+.m-badge {
+  font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.15em; color: var(--gold); display: block; margin-bottom: 0.75rem;
+}
+.m-name {
+  font-family: var(--serif); font-weight: 400; font-size: 1.2rem;
+  color: var(--ink); margin-bottom: 0.5rem;
+}
+.m-price strong {
+  font-family: var(--serif); font-weight: 600; font-size: 2.5rem; color: var(--ink);
+}
+.m-price span { font-size: 0.85rem; color: var(--ink-lt); }
+.m-perk { font-size: 0.82rem; color: var(--ink-lt); margin: 0.5rem 0 1rem; }
+.m-link {
+  font-size: 0.82rem; color: var(--blush); text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 500px) {
+  .m-cards { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================================
+   TESTIMONIALS
+   ========================================================================== */
+.reviews {
+  max-width: 700px; margin: 0 auto; padding: 5rem 2rem;
+  text-align: center; position: relative;
+}
+.rev-deco {
+  font-family: var(--script); font-style: italic; font-size: 10rem;
+  line-height: 0.5; color: var(--blush-lt); position: absolute;
+  top: 2.5rem; left: 50%; transform: translateX(-50%);
+  pointer-events: none; user-select: none;
+}
+.rev-main {
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: clamp(1.5rem, 3vw, 2rem); color: var(--ink);
+  line-height: 1.5; margin-bottom: 1.5rem; position: relative;
+}
+.rev-author { font-size: 0.85rem; color: var(--ink-lt); margin-bottom: 3rem; }
+.rev-avatar {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--blush-lt); color: var(--blush); font-size: 0.7rem;
+  font-weight: 600; margin-right: 0.5rem; vertical-align: middle;
+}
+.rev-avatar-sm { width: 26px; height: 26px; font-size: 0.6rem; }
+
+.rev-secondary {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+  text-align: left;
+}
+.rev-small p {
+  font-size: 0.92rem; color: var(--ink-lt); font-style: italic;
+  line-height: 1.6; margin-bottom: 0.75rem;
+}
+.rev-small-author { font-size: 0.78rem; color: var(--ink-muted); }
+
+@media (max-width: 600px) {
+  .rev-secondary { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================================
+   THE COTTAGE — Full bleed
+   ========================================================================== */
+.cottage {
+  position: relative; width: 100%; height: 55vh; min-height: 350px;
+  overflow: hidden; margin: 2rem 0;
+}
+.cottage-img {
+  width: 100%; height: 100%; object-fit: cover; object-position: center;
+}
+.cottage-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(45,37,32,0.6) 0%, transparent 60%);
+}
+.cottage-text {
+  position: absolute; bottom: 0; left: 0; padding: 2.5rem 2rem;
+  color: #fff; z-index: 2; max-width: 600px;
+}
+.cottage-label {
+  font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em;
+  opacity: 0.7; margin-bottom: 0.75rem; display: block;
+}
+.cottage-h2 {
+  font-family: var(--serif); font-weight: 400; font-size: 2.5rem;
+  color: #fff; margin-bottom: 0.5rem;
+}
+.cottage-h2 em {
+  font-family: var(--script); font-style: italic; font-size: 1.15em;
+}
+.cottage-sub { font-size: 0.9rem; opacity: 0.8; margin-bottom: 1rem; }
+.cottage-link {
+  font-size: 0.85rem; color: #fff; text-decoration: underline;
+  text-underline-offset: 4px; opacity: 0.9;
+}
+.cottage-link:hover { opacity: 1; }
+
+/* ==========================================================================
+   YOUR FIRST VISIT
+   ========================================================================== */
+.first-visit {
+  max-width: 900px; margin: 0 auto; padding: 5rem 2rem; text-align: center;
+}
+.fv-h2 {
+  font-family: var(--serif); font-weight: 400; font-size: 2.25rem;
+  color: var(--ink); margin-bottom: 3rem;
+}
+.fv-h2 em {
+  font-family: var(--script); font-style: italic; font-size: 1.2em; color: var(--blush);
+}
+.fv-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; }
+.fv-num {
+  display: block; font-family: var(--script); font-style: italic;
+  font-size: 3rem; color: var(--blush); line-height: 1; margin-bottom: 0.75rem;
+}
+.fv-step h3 {
+  font-family: var(--serif); font-weight: 400; font-size: 1.1rem;
+  color: var(--ink); margin-bottom: 0.5rem;
+}
+.fv-step p { font-size: 0.88rem; color: var(--ink-lt); line-height: 1.7; }
+
+@media (max-width: 640px) {
+  .fv-steps { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+/* ==========================================================================
+   BOOKING CTA
+   ========================================================================== */
+.cta {
+  padding: 5rem 2rem; text-align: center;
+}
+.cta-h2 {
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(2rem, 4vw, 3rem); color: var(--ink);
+  margin-bottom: 2rem;
+}
+.cta-h2 em {
+  font-family: var(--script); font-style: italic; font-size: 1.2em;
+}
+.cta-phone {
+  margin-top: 1.25rem; font-size: 0.85rem; color: var(--ink-muted);
+}
+.cta-phone a { color: var(--ink-lt); text-decoration: underline; text-underline-offset: 3px; }
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.ft {
+  border-top: 1px solid rgba(45,37,32,0.06);
+  padding: 3rem 2rem 2rem; text-align: center;
+}
+.ft-inner { max-width: 600px; margin: 0 auto; }
+.ft-brand { margin-bottom: 1.5rem; }
+.ft-brand .logo-serif { display: block; font-family: var(--logo-serif); font-size: 1.2rem; letter-spacing: 0.08em; }
+.ft-brand .logo-script { display: block; font-family: var(--logo-script); font-size: 1.15rem; color: var(--blush); margin-top: -2px; }
+.ft-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin-bottom: 1.5rem; }
+.ft-nav a { font-size: 0.8rem; color: var(--ink-lt); transition: color 0.2s; }
+.ft-nav a:hover { color: var(--ink); }
+.ft-addr, .ft-phone { font-size: 0.8rem; color: var(--ink-muted); }
+.ft-phone { margin-top: 0.25rem; }
+.ft-phone a { color: var(--ink-lt); }
+.ft-copy { font-size: 0.7rem; color: var(--ink-muted); margin-top: 1.5rem; }
+
+/* ==========================================================================
+   AMBIENT ORBS
+   ========================================================================== */
+.orbs {
+  position: fixed; inset: 0; z-index: -1; overflow: hidden;
+  pointer-events: none;
+}
+.orb {
+  position: absolute; border-radius: 50%; filter: blur(120px);
+  will-change: transform;
+}
+.o1 { width: 700px; height: 700px; top: -10%; left: -5%; background: rgba(255,180,200,0.18); animation: d1 40s ease-in-out infinite; }
+.o2 { width: 600px; height: 600px; top: 25%; right: -8%; background: rgba(248,164,178,0.15); animation: d2 45s ease-in-out infinite; }
+.o3 { width: 650px; height: 650px; bottom: 5%; left: 15%; background: rgba(255,220,120,0.07); animation: d3 50s ease-in-out infinite; }
+.o4 { width: 550px; height: 550px; top: 50%; left: 40%; background: rgba(183,110,121,0.1); animation: d4 38s ease-in-out infinite; }
+.o5 { width: 600px; height: 600px; top: 10%; left: 60%; background: rgba(255,225,220,0.12); animation: d5 42s ease-in-out infinite; }
+
+@keyframes d1 { 0%{transform:translate(0,0)} 25%{transform:translate(60vw,30vh)} 50%{transform:translate(30vw,70vh)} 75%{transform:translate(-10vw,40vh)} 100%{transform:translate(0,0)} }
+@keyframes d2 { 0%{transform:translate(0,0)} 25%{transform:translate(-55vw,40vh)} 50%{transform:translate(-20vw,-25vh)} 75%{transform:translate(45vw,55vh)} 100%{transform:translate(0,0)} }
+@keyframes d3 { 0%{transform:translate(0,0)} 25%{transform:translate(50vw,-55vh)} 50%{transform:translate(70vw,15vh)} 75%{transform:translate(15vw,-35vh)} 100%{transform:translate(0,0)} }
+@keyframes d4 { 0%{transform:translate(0,0)} 25%{transform:translate(-40vw,-45vh)} 50%{transform:translate(30vw,-15vh)} 75%{transform:translate(55vw,40vh)} 100%{transform:translate(0,0)} }
+@keyframes d5 { 0%{transform:translate(0,0)} 25%{transform:translate(-50vw,30vh)} 50%{transform:translate(20vw,50vh)} 75%{transform:translate(-30vw,-20vh)} 100%{transform:translate(0,0)} }
+</style>

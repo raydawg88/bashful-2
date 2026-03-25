@@ -12,8 +12,10 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@fontsource/antic-didone": "^5.2.8",
     "@fontsource/cormorant-garamond": "^5.2.11",
     "@fontsource/lato": "^5.2.7",
+    "@fontsource/pinyon-script": "^5.2.8",
     "@fontsource/playfair-display": "^5.2.8",
     "@lucide/astro": "^1.6.0",
     "@tailwindcss/vite": "^4.2.2",
