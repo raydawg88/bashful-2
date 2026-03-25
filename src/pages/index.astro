@@ -6,7 +6,6 @@
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ServiceCard from '../components/ServiceCard.astro';
-import WatercolorDivider from '../components/WatercolorDivider.astro';
 import FloralAccent from '../components/FloralAccent.astro';
 import BookingCTA from '../components/BookingCTA.astro';
 import { business } from '../data/business';
@@ -178,7 +177,7 @@ const jsonLd = {
   <!-- ================================================================== -->
   <!-- 2. Why Bashful — Trust signals                                     -->
   <!-- ================================================================== -->
-  <section class="py-16 md:py-24 px-6 bg-blush-50">
+  <section class="pt-8 pb-12 md:pt-12 md:pb-16 px-6 bg-blush-50">
     <div class="max-w-4xl mx-auto">
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-8 text-center">
         <!-- Prop 1: Experience -->
@@ -206,7 +205,7 @@ const jsonLd = {
   <!-- ================================================================== -->
   <!-- 3. Services — Editorial layout                                     -->
   <!-- ================================================================== -->
-  <section id="services" class="py-16 md:py-24 px-6">
+  <section id="services" class="py-12 md:py-16 px-6">
     <div class="max-w-7xl mx-auto">
       <!-- Section heading -->
       <div class="text-center mb-14 md:mb-20 animate-fade-up">
@@ -288,12 +287,12 @@ const jsonLd = {
     </div>
   </section>
 
-  <WatercolorDivider variant="blush" />
+  <div class="max-w-20 h-0.5 bg-blush-300/40 mx-auto my-8" aria-hidden="true"></div>
 
   <!-- ================================================================== -->
   <!-- 4. Membership Spotlight — Textured, warm                           -->
   <!-- ================================================================== -->
-  <section class="relative py-16 md:py-24 px-6 overflow-hidden">
+  <section class="relative py-12 md:py-16 px-6 overflow-hidden">
     <!-- Watercolor wash background texture -->
     <div
       class="absolute inset-0 bg-cover bg-center opacity-20 pointer-events-none"
@@ -358,7 +357,7 @@ const jsonLd = {
   <!-- ================================================================== -->
   <!-- 5. Testimonials — Featured pull-quote + supporting quotes          -->
   <!-- ================================================================== -->
-  <section class="py-16 md:py-24 px-6">
+  <section class="py-12 md:py-16 px-6">
     <div class="max-w-6xl mx-auto">
       <!-- Section header -->
       <div class="text-center mb-12 md:mb-16 animate-fade-up">
@@ -443,12 +442,12 @@ const jsonLd = {
     </div>
   </section>
 
-  <WatercolorDivider variant="sage" />
+  <div class="max-w-20 h-0.5 bg-blush-300/40 mx-auto my-8" aria-hidden="true"></div>
 
   <!-- ================================================================== -->
   <!-- 6. The Cottage / About Teaser — Emotional editorial moment         -->
   <!-- ================================================================== -->
-  <section class="relative py-16 md:py-24 overflow-hidden">
+  <section class="relative py-12 md:py-16 overflow-hidden">
     <!-- Subtle linen background -->
     <div class="absolute inset-0 bg-linen pointer-events-none" aria-hidden="true"></div>
 
@@ -497,7 +496,7 @@ const jsonLd = {
   <!-- ================================================================== -->
   <!-- 7. "New Here?" — First-time visitor reassurance                    -->
   <!-- ================================================================== -->
-  <section class="py-16 md:py-24 px-6 bg-cream">
+  <section class="py-12 md:py-16 px-6 bg-cream">
     <div class="max-w-4xl mx-auto">
       <div class="text-center mb-12 animate-fade-up">
         <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-3">

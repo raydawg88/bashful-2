@@ -3,7 +3,6 @@
  * FAQ — Frequently asked questions, pre-wax care, post-wax care, and spray tan prep.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import WatercolorDivider from '../components/WatercolorDivider.astro';
 import BookingCTA from '../components/BookingCTA.astro';
 import { faqs, preWaxCare, postWaxCare } from '../data/faq';
 import { business } from '../data/business';
@@ -123,7 +122,7 @@ const sprayTanTips = [
     </div>
   </section>
 
-  <WatercolorDivider />
+  <div class="max-w-20 h-0.5 bg-blush-300/40 mx-auto my-10" aria-hidden="true"></div>
 
   <!-- ================================================================== -->
   <!-- Pre-Wax Care                                                        -->
@@ -155,7 +154,7 @@ const sprayTanTips = [
     </div>
   </section>
 
-  <WatercolorDivider />
+  <div class="max-w-20 h-0.5 bg-blush-300/40 mx-auto my-10" aria-hidden="true"></div>
 
   <!-- ================================================================== -->
   <!-- Post-Wax Care                                                       -->
@@ -187,7 +186,7 @@ const sprayTanTips = [
     </div>
   </section>
 
-  <WatercolorDivider variant="gold" />
+  <div class="max-w-20 h-0.5 bg-blush-300/40 mx-auto my-10" aria-hidden="true"></div>
 
   <!-- ================================================================== -->
   <!-- Spray Tan Prep Tips                                                 -->
