@@ -51,6 +51,47 @@
   /* --- Fonts --- */
   --font-heading: 'Playfair Display', Georgia, serif;
   --font-body: 'Lato', 'Helvetica Neue', sans-serif;
+
+  /* --- Animation timing --- */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-soft: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-in-out-gentle: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* --- Spacing (section padding) --- */
+  --section-padding-y: 4rem;
+  --section-padding-y-lg: 6rem;
+  --section-padding-x: 1.5rem;
+  --section-padding-x-lg: 2rem;
+}
+
+/* ================================================
+   Scroll-driven animation keyframes
+   ================================================ */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* ================================================
@@ -64,6 +105,15 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    overflow-x: hidden;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  body {
+    overflow-x: hidden;
+    min-height: 100dvh;
   }
 
   /* Selection highlight */
@@ -78,28 +128,80 @@
     font-weight: 600;
     line-height: 1.2;
     color: var(--color-warm-gray-900);
+    letter-spacing: -0.01em;
+  }
+
+  h1, h2 {
+    text-wrap: balance;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  h2 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  h3 {
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+  }
+
+  /* Body text */
+  p {
+    text-wrap: pretty;
   }
 
   /* Links */
   a {
     color: var(--color-blush-500);
     text-decoration: none;
-    transition: color 0.2s ease;
+    transition: color 0.2s var(--ease-out-soft);
   }
 
   a:hover {
     color: var(--color-blush-600);
   }
 
-  /* Buttons */
+  /* Focus-visible for accessibility */
+  :focus-visible {
+    outline: 2px solid var(--color-blush-500);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Buttons — better touch targets */
+  button, [role="button"], a[href] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
   button {
-    transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+    transition:
+      background-color 0.2s var(--ease-out-soft),
+      color 0.2s var(--ease-out-soft),
+      box-shadow 0.2s var(--ease-out-soft),
+      transform 0.15s var(--ease-out-soft);
+  }
+
+  button:active {
+    transform: scale(0.98);
   }
 
   /* Images */
   img {
     max-width: 100%;
     height: auto;
+  }
+
+  /* Reduced motion — respect user preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
@@ -137,5 +239,71 @@
         transparent 60%
       );
     mix-blend-mode: multiply;
+  }
+}
+
+/* --- Scroll-driven entrance animations --- */
+@utility animate-fade-up {
+  animation: fade-up 0.8s var(--ease-out-expo) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 30%;
+}
+
+@utility animate-fade-in {
+  animation: fade-in 0.8s var(--ease-out-expo) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 30%;
+}
+
+@utility animate-scale-in {
+  animation: scale-in 0.8s var(--ease-out-expo) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 30%;
+}
+
+/* --- Stagger delays --- */
+@utility stagger-1 {
+  animation-delay: 0.1s;
+}
+
+@utility stagger-2 {
+  animation-delay: 0.2s;
+}
+
+@utility stagger-3 {
+  animation-delay: 0.3s;
+}
+
+@utility stagger-4 {
+  animation-delay: 0.4s;
+}
+
+/* --- Glass morphism --- */
+@utility glass {
+  backdrop-filter: blur(12px) saturate(1.5);
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
+  background-color: rgba(255, 249, 245, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* --- Organic shapes --- */
+@utility organic-blob {
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+}
+
+@utility image-frame-organic {
+  border-radius: 60% 40% 50% 50% / 50% 55% 45% 50%;
+}
+
+/* ================================================
+   Fallback for browsers without scroll-driven
+   animations — elements just appear normally
+   ================================================ */
+@supports not (animation-timeline: view()) {
+  .animate-fade-up,
+  .animate-fade-in,
+  .animate-scale-in {
+    opacity: 1;
+    transform: none;
   }
 }

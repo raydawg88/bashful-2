@@ -1,0 +1,30 @@
+---
+/**
+ * SectionReveal — Wrapper that adds scroll-triggered entrance animation to children.
+ *
+ * Uses CSS scroll-driven animations (animation-timeline: view()). Falls back to
+ * fully visible content in browsers that don't support it.
+ *
+ * @prop animation - The entrance animation: "fade-up", "fade-in", or "scale-in"
+ * @prop delay     - Optional stagger group (1-4) for staggered entrances
+ * @prop class     - Additional CSS classes to merge
+ */
+interface Props {
+  animation?: "fade-up" | "fade-in" | "scale-in";
+  delay?: 1 | 2 | 3 | 4;
+  class?: string;
+}
+
+const {
+  animation = "fade-up",
+  delay,
+  class: className = "",
+} = Astro.props;
+
+const animationClass = `animate-${animation}`;
+const staggerClass = delay ? `stagger-${delay}` : "";
+---
+
+<div class:list={[animationClass, staggerClass, className]}>
+  <slot />
+</div>

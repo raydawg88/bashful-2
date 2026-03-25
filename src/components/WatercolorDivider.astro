@@ -1,13 +1,98 @@
 ---
 /**
- * WatercolorDivider — Decorative section divider with a soft watercolor gradient.
+ * WatercolorDivider — An organic SVG watercolor wash used as a section divider.
+ *
+ * @prop variant - Color mood: "blush" (default), "sage", or "gold"
+ * @prop class   - Additional CSS classes
  */
+interface Props {
+  variant?: "blush" | "sage" | "gold";
+  class?: string;
+}
+
+const { variant = "blush", class: className = "" } = Astro.props;
+
+/** Color maps for each variant */
+const colorMap = {
+  blush: {
+    a: "#FFE4E8",
+    b: "#F0E6C8",
+    c: "#FFF5F6",
+    d: "#FFCCD4",
+  },
+  sage: {
+    a: "#C8D8C0",
+    b: "#D8E0D0",
+    c: "#E8F0E4",
+    d: "#A8B5A0",
+  },
+  gold: {
+    a: "#F0E6C8",
+    b: "#E8DDB8",
+    c: "#FFF5E6",
+    d: "#D4AF37",
+  },
+};
+
+const c = colorMap[variant];
+
+/**
+ * Three shape arrangements so dividers don't look identical.
+ * Each is a set of ellipse configs: [cx, cy, rx, ry, opacity].
+ */
+const variations = [
+  [
+    { cx: 250, cy: 38, rx: 280, ry: 32, opacity: 0.5, fill: c.a },
+    { cx: 750, cy: 32, rx: 220, ry: 28, opacity: 0.4, fill: c.b },
+    { cx: 500, cy: 44, rx: 200, ry: 22, opacity: 0.55, fill: c.c },
+    { cx: 1000, cy: 36, rx: 160, ry: 26, opacity: 0.35, fill: c.d },
+  ],
+  [
+    { cx: 180, cy: 42, rx: 240, ry: 28, opacity: 0.45, fill: c.b },
+    { cx: 600, cy: 36, rx: 300, ry: 34, opacity: 0.5, fill: c.a },
+    { cx: 950, cy: 40, rx: 200, ry: 24, opacity: 0.4, fill: c.c },
+    { cx: 400, cy: 34, rx: 140, ry: 20, opacity: 0.3, fill: c.d },
+  ],
+  [
+    { cx: 350, cy: 36, rx: 260, ry: 30, opacity: 0.5, fill: c.c },
+    { cx: 850, cy: 42, rx: 240, ry: 26, opacity: 0.45, fill: c.a },
+    { cx: 150, cy: 38, rx: 180, ry: 24, opacity: 0.35, fill: c.d },
+    { cx: 600, cy: 44, rx: 190, ry: 28, opacity: 0.4, fill: c.b },
+  ],
+];
+
+/** Pick a pseudo-random variation based on position on page */
+const variationIndex = Math.floor(Math.random() * variations.length);
+const shapes = variations[variationIndex];
+const filterId = `watercolor-blur-${variant}-${variationIndex}`;
 ---
 
-<div class="my-12 flex justify-center" aria-hidden="true">
-  <div
-    class="h-1 w-full max-w-xs rounded-full opacity-40"
-    style="background: linear-gradient(90deg, transparent, var(--color-blush-100) 30%, var(--color-blush-200) 50%, var(--color-blush-100) 70%, transparent);"
+<div
+  class:list={["my-16 w-full select-none", className]}
+  aria-hidden="true"
+  role="separator"
+>
+  <svg
+    viewBox="0 0 1200 80"
+    preserveAspectRatio="none"
+    class="h-16 w-full sm:h-20"
+    xmlns="http://www.w3.org/2000/svg"
   >
-  </div>
+    <defs>
+      <filter id={filterId}>
+        <feGaussianBlur stdDeviation="22" />
+      </filter>
+    </defs>
+    {shapes.map((s) => (
+      <ellipse
+        cx={s.cx}
+        cy={s.cy}
+        rx={s.rx}
+        ry={s.ry}
+        fill={s.fill}
+        opacity={s.opacity}
+        filter={`url(#${filterId})`}
+      />
+    ))}
+  </svg>
 </div>

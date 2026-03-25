@@ -1,7 +1,7 @@
 ---
 /**
- * Beauty Services — Lashes, Brows, Skin Lightening, Spray Tans, Teeth Whitening
- * Each category gets its own anchored section with alternating layouts.
+ * Beauty Services — Lashes, Brows, Skin Lightening, Spray Tans, Teeth Whitening.
+ * Each category as an editorial section with alternating image positions.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import WatercolorDivider from '../components/WatercolorDivider.astro';
@@ -9,93 +9,134 @@ import BookingCTA from '../components/BookingCTA.astro';
 import { business } from '../data/business';
 import { serviceCategories } from '../data/services';
 
-/** Pull service data by category id */
 const lashes = serviceCategories.find((c) => c.id === 'lashes')!;
 const brows = serviceCategories.find((c) => c.id === 'brows')!;
 const skinLightening = serviceCategories.find((c) => c.id === 'skin-lightening')!;
 const sprayTans = serviceCategories.find((c) => c.id === 'spray-tans')!;
 const teethWhitening = serviceCategories.find((c) => c.id === 'teeth-whitening')!;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Beauty Services',
+  description: 'Lash lifts, brow lamination, spray tans, skin lightening, and teeth whitening at Bashful Beauty Spa in Rockwall, TX.',
+  provider: {
+    '@type': 'BeautySalon',
+    name: business.name,
+    telephone: business.phone,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: business.address.street,
+      addressLocality: business.address.city,
+      addressRegion: business.address.state,
+      postalCode: business.address.zip,
+    },
+  },
+  areaServed: business.serviceArea.map((city) => ({
+    '@type': 'City',
+    name: city,
+  })),
+};
 ---
 
 <BaseLayout
   title="Lashes, Brows, Spray Tans & More | Rockwall, TX"
   description="Lash lifts, brow lamination, spray tans, skin lightening, and teeth whitening at Bashful Beauty Spa in Rockwall, TX."
 >
-  <!-- ================================================================== -->
-  <!-- Hero                                                                -->
-  <!-- ================================================================== -->
-  <section class="relative overflow-hidden bg-gradient-to-br from-cream via-blush-50 to-linen">
-    <div class="max-w-4xl mx-auto px-6 py-20 md:py-28 text-center">
-      <h1 class="font-heading text-5xl md:text-6xl text-warm-gray-900 leading-tight mb-6">
-        Beauty Services
-      </h1>
-      <p class="text-warm-gray-700 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
-        Complete head-to-toe beauty at Bashful Beauty
-      </p>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <!-- ============================================================= -->
+  <!-- Hero                                                           -->
+  <!-- ============================================================= -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-cream via-blush-50 to-linen"></div>
+    <div class="relative max-w-6xl mx-auto px-6 py-24 sm:py-32 lg:py-40">
+      <div class="max-w-2xl mx-auto text-center animate-fade-up">
+        <p class="text-blush-500 font-semibold tracking-widest uppercase text-xs mb-3">
+          Head to Toe
+        </p>
+        <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl text-warm-gray-900 mb-6">
+          Beauty Services
+        </h1>
+        <p class="text-warm-gray-700 text-lg leading-relaxed max-w-xl mx-auto mb-8">
+          Complete your look with lash lifts, brow shaping, spray tans, and more — all under
+          one roof at our Rockwall cottage.
+        </p>
+        <a
+          href={business.bookingUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition min-h-[44px]"
+        >
+          Book Now
+        </a>
+      </div>
     </div>
   </section>
 
-  <!-- ================================================================== -->
-  <!-- Lash Lift & Tint                                                    -->
-  <!-- ================================================================== -->
-  <section id="lashes" class="py-20 px-6">
+  <!-- ============================================================= -->
+  <!-- Lashes — image RIGHT                                           -->
+  <!-- ============================================================= -->
+  <section id="lashes" class="py-16 sm:py-20 px-6">
     <div class="max-w-6xl mx-auto">
-      <div class="grid md:grid-cols-2 gap-12 items-start">
-        <!-- Text -->
-        <div>
-          <p class="text-blush-500 font-semibold text-sm uppercase tracking-wider mb-2">The Eyes</p>
+      <div class="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div class="animate-fade-up">
+          <p class="text-blush-500 font-semibold text-xs uppercase tracking-widest mb-2">The Eyes</p>
           <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-6">
             Lash Lift &amp; Tint
           </h2>
           <p class="text-warm-gray-700 text-lg leading-relaxed mb-6">
-            Not everyone has a lush set of lashes, but you'd be amazed at what a lift and tint can do. Get the look of extensions without the maintenance — using your natural lashes.
+            Not everyone has a lush set of lashes, but you'd be amazed at what a lift and tint
+            can do. Get the look of extensions without the maintenance — using your natural
+            lashes.
           </p>
 
-          <!-- Key benefits -->
-          <ul class="space-y-3 mb-8">
+          <ul class="space-y-2.5 mb-8">
             <li class="flex items-start gap-3">
-              <span class="text-blush-500 mt-1">&#10003;</span>
+              <svg class="w-5 h-5 text-blush-400 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
               <span class="text-warm-gray-700">Dramatic, eye-catching results</span>
             </li>
             <li class="flex items-start gap-3">
-              <span class="text-blush-500 mt-1">&#10003;</span>
+              <svg class="w-5 h-5 text-blush-400 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
               <span class="text-warm-gray-700">Uses your natural lashes — no extensions</span>
             </li>
             <li class="flex items-start gap-3">
-              <span class="text-blush-500 mt-1">&#10003;</span>
+              <svg class="w-5 h-5 text-blush-400 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
               <span class="text-warm-gray-700">No maintenance hassle</span>
             </li>
           </ul>
 
-          <!-- Service list -->
-          <div class="bg-blush-50 rounded-2xl p-6 mb-8">
-            <h3 class="font-heading text-lg text-warm-gray-900 mb-4">Services</h3>
-            <ul class="space-y-2">
-              {lashes.items!.map((item) => (
-                <li class="text-warm-gray-700 flex items-center gap-2">
-                  <span class="w-1.5 h-1.5 rounded-full bg-blush-300 shrink-0"></span>
-                  {item.name}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <!-- Service list as blush-dot bullets -->
+          <ul class="space-y-2 mb-8">
+            {lashes.items!.map((item) => (
+              <li class="flex items-center gap-2.5 text-warm-gray-700">
+                <span class="w-1.5 h-1.5 rounded-full bg-blush-400 shrink-0"></span>
+                {item.name}
+              </li>
+            ))}
+          </ul>
 
           <a
             href={business.bookingUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition"
+            class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition min-h-[44px]"
           >
             Book a Lash Appointment
           </a>
         </div>
 
-        <!-- Image -->
-        <div class="flex justify-center md:justify-end">
+        <div>
           <img
             src="/images/services/lashes.jpg"
             alt="Lash lift and tint treatment at Bashful Beauty"
-            class="w-full max-w-md rounded-2xl shadow-lg object-cover aspect-[4/5]"
+            class="w-full rounded-[2rem_0.5rem_2rem_0.5rem] shadow-lg object-cover aspect-[4/5]"
             loading="lazy"
           />
         </div>
@@ -105,50 +146,48 @@ const teethWhitening = serviceCategories.find((c) => c.id === 'teeth-whitening')
 
   <WatercolorDivider />
 
-  <!-- ================================================================== -->
-  <!-- Brows                                                               -->
-  <!-- ================================================================== -->
-  <section id="brows" class="py-20 px-6">
+  <!-- ============================================================= -->
+  <!-- Brows — image LEFT                                             -->
+  <!-- ============================================================= -->
+  <section id="brows" class="py-16 sm:py-20 px-6">
     <div class="max-w-6xl mx-auto">
-      <div class="grid md:grid-cols-2 gap-12 items-start">
-        <!-- Image (left on desktop) -->
-        <div class="order-2 md:order-1 flex justify-center md:justify-start">
+      <div class="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div class="order-2 md:order-1">
           <img
             src="/images/services/brows.jpg"
             alt="Professional brow shaping and lamination at Bashful Beauty"
-            class="w-full max-w-md rounded-2xl shadow-lg object-cover aspect-[4/5]"
+            class="w-full rounded-[0.5rem_2rem_0.5rem_2rem] shadow-lg object-cover aspect-[4/5]"
             loading="lazy"
           />
         </div>
 
-        <!-- Text -->
-        <div class="order-1 md:order-2">
-          <p class="text-blush-500 font-semibold text-sm uppercase tracking-wider mb-2">Shaping, Tinting &amp; Lamination</p>
+        <div class="order-1 md:order-2 animate-fade-up">
+          <p class="text-blush-500 font-semibold text-xs uppercase tracking-widest mb-2">
+            Shaping, Tinting &amp; Lamination
+          </p>
           <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-6">
             Brows
           </h2>
           <p class="text-warm-gray-700 text-lg leading-relaxed mb-6">
-            Achieve your ideal brows with our range of professional services. Whether you want a sleek lamination, a pop of color with tinting, or precise shaping — we tailor each treatment to enhance your natural beauty.
+            Great brows frame everything. Whether you want a clean shape-up, a bold lamination,
+            or a natural tint, we sculpt brows that complement your face and hold their shape
+            between visits.
           </p>
 
-          <!-- Service list -->
-          <div class="bg-blush-50 rounded-2xl p-6 mb-8">
-            <h3 class="font-heading text-lg text-warm-gray-900 mb-4">Services</h3>
-            <ul class="space-y-2">
-              {brows.items!.map((item) => (
-                <li class="text-warm-gray-700 flex items-center gap-2">
-                  <span class="w-1.5 h-1.5 rounded-full bg-blush-300 shrink-0"></span>
-                  {item.name}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ul class="space-y-2 mb-8">
+            {brows.items!.map((item) => (
+              <li class="flex items-center gap-2.5 text-warm-gray-700">
+                <span class="w-1.5 h-1.5 rounded-full bg-blush-400 shrink-0"></span>
+                {item.name}
+              </li>
+            ))}
+          </ul>
 
           <a
             href={business.bookingUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition"
+            class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition min-h-[44px]"
           >
             Book a Brow Appointment
           </a>
@@ -159,51 +198,67 @@ const teethWhitening = serviceCategories.find((c) => c.id === 'teeth-whitening')
 
   <WatercolorDivider />
 
-  <!-- ================================================================== -->
-  <!-- Skin Lightening                                                     -->
-  <!-- ================================================================== -->
-  <section id="skin-lightening" class="py-20 px-6">
+  <!-- ============================================================= -->
+  <!-- Skin Lightening — image RIGHT                                  -->
+  <!-- ============================================================= -->
+  <section id="skin-lightening" class="py-16 sm:py-20 px-6">
     <div class="max-w-6xl mx-auto">
-      <div class="grid md:grid-cols-2 gap-12 items-start">
-        <!-- Text -->
-        <div>
-          <p class="text-blush-500 font-semibold text-sm uppercase tracking-wider mb-2">The Body</p>
+      <div class="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div class="animate-fade-up">
+          <p class="text-blush-500 font-semibold text-xs uppercase tracking-widest mb-2">Even Tone</p>
           <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-6">
             Skin Lightening
           </h2>
           <p class="text-warm-gray-700 text-lg leading-relaxed mb-6">
-            Reveal a brighter, more even skin tone. Our professional treatments reduce dark spots and hyperpigmentation, rejuvenating your skin for a radiant, youthful glow.
+            Target dark spots, hyperpigmentation, and uneven skin tone with professional-grade
+            lightening treatments. We recommend a package for the best, most consistent results.
           </p>
 
-          <!-- Service list -->
-          <div class="bg-blush-50 rounded-2xl p-6 mb-8">
-            <h3 class="font-heading text-lg text-warm-gray-900 mb-4">Services</h3>
-            <ul class="space-y-2">
-              {skinLightening.items!.map((item) => (
-                <li class="text-warm-gray-700 flex items-center gap-2">
-                  <span class="w-1.5 h-1.5 rounded-full bg-blush-300 shrink-0"></span>
-                  {item.name}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ul class="space-y-2.5 mb-8">
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-blush-400 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+              <span class="text-warm-gray-700">Reduces hyperpigmentation and dark spots</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-blush-400 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+              <span class="text-warm-gray-700">Professional-grade products for visible results</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-blush-400 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+              <span class="text-warm-gray-700">Package option for best value</span>
+            </li>
+          </ul>
+
+          <ul class="space-y-2 mb-8">
+            {skinLightening.items!.map((item) => (
+              <li class="flex items-center gap-2.5 text-warm-gray-700">
+                <span class="w-1.5 h-1.5 rounded-full bg-blush-400 shrink-0"></span>
+                {item.name}
+              </li>
+            ))}
+          </ul>
 
           <a
             href={business.bookingUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition"
+            class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition min-h-[44px]"
           >
             Book a Skin Lightening Appointment
           </a>
         </div>
 
-        <!-- Image -->
-        <div class="flex justify-center md:justify-end">
+        <div>
           <img
             src="/images/services/skin-lightening.jpg"
             alt="Skin lightening treatment at Bashful Beauty"
-            class="w-full max-w-md rounded-2xl shadow-lg object-cover aspect-[4/5]"
+            class="w-full rounded-[2rem_0.5rem_2rem_0.5rem] shadow-lg object-cover aspect-[4/5]"
             loading="lazy"
           />
         </div>
@@ -213,36 +268,36 @@ const teethWhitening = serviceCategories.find((c) => c.id === 'teeth-whitening')
 
   <WatercolorDivider />
 
-  <!-- ================================================================== -->
-  <!-- Spray Tans                                                          -->
-  <!-- ================================================================== -->
-  <section id="spray-tans" class="py-20 px-6">
+  <!-- ============================================================= -->
+  <!-- Spray Tans — image LEFT                                        -->
+  <!-- ============================================================= -->
+  <section id="spray-tans" class="py-16 sm:py-20 px-6">
     <div class="max-w-6xl mx-auto">
-      <div class="grid md:grid-cols-2 gap-12 items-start">
-        <!-- Image (left on desktop) -->
-        <div class="order-2 md:order-1 flex justify-center md:justify-start">
+      <div class="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div class="order-2 md:order-1">
           <img
             src="/images/services/spray-tans.jpg"
             alt="Custom spray tan at Bashful Beauty"
-            class="w-full max-w-md rounded-2xl shadow-lg object-cover aspect-[4/5]"
+            class="w-full rounded-[0.5rem_2rem_0.5rem_2rem] shadow-lg object-cover aspect-[4/5]"
             loading="lazy"
           />
         </div>
 
-        <!-- Text -->
-        <div class="order-1 md:order-2">
-          <p class="text-blush-500 font-semibold text-sm uppercase tracking-wider mb-2">UV-Safe Tanning</p>
+        <div class="order-1 md:order-2 animate-fade-up">
+          <p class="text-blush-500 font-semibold text-xs uppercase tracking-widest mb-2">UV-Safe Tanning</p>
           <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-6">
             Spray Tans
           </h2>
           <p class="text-warm-gray-700 text-lg leading-relaxed mb-6">
-            An all-natural, anti-aging sunless tan made with antioxidants and pure botanicals. Rinse in as little as 2 hours with our rapid solution — your tan can last up to a week with proper care.
+            An all-natural, anti-aging sunless tan made with antioxidants and pure botanicals.
+            Rinse in as little as 2 hours with our rapid solution — your tan can last up to a
+            week with proper care.
           </p>
 
-          <!-- Great for -->
+          <!-- Great for pills -->
           <div class="mb-6">
-            <p class="font-semibold text-warm-gray-900 mb-3">Great for:</p>
-            <div class="flex flex-wrap gap-3">
+            <p class="font-semibold text-warm-gray-900 text-sm mb-3">Great for:</p>
+            <div class="flex flex-wrap gap-2">
               {['Vacations', 'Weddings', 'Bodybuilding', 'Everyday confidence'].map((use) => (
                 <span class="bg-blush-50 text-blush-500 px-4 py-1.5 rounded-full text-sm font-medium">
                   {use}
@@ -251,24 +306,20 @@ const teethWhitening = serviceCategories.find((c) => c.id === 'teeth-whitening')
             </div>
           </div>
 
-          <!-- Service list -->
-          <div class="bg-blush-50 rounded-2xl p-6 mb-8">
-            <h3 class="font-heading text-lg text-warm-gray-900 mb-4">Services</h3>
-            <ul class="space-y-2">
-              {sprayTans.items!.map((item) => (
-                <li class="text-warm-gray-700 flex items-center gap-2">
-                  <span class="w-1.5 h-1.5 rounded-full bg-blush-300 shrink-0"></span>
-                  {item.name}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ul class="space-y-2 mb-8">
+            {sprayTans.items!.map((item) => (
+              <li class="flex items-center gap-2.5 text-warm-gray-700">
+                <span class="w-1.5 h-1.5 rounded-full bg-blush-400 shrink-0"></span>
+                {item.name}
+              </li>
+            ))}
+          </ul>
 
           <a
             href={business.bookingUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition"
+            class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition min-h-[44px]"
           >
             Book a Spray Tan
           </a>
@@ -279,34 +330,39 @@ const teethWhitening = serviceCategories.find((c) => c.id === 'teeth-whitening')
 
   <WatercolorDivider />
 
-  <!-- ================================================================== -->
-  <!-- Teeth Whitening                                                     -->
-  <!-- ================================================================== -->
-  <section id="teeth-whitening" class="py-20 px-6">
+  <!-- ============================================================= -->
+  <!-- Teeth Whitening — image RIGHT                                  -->
+  <!-- ============================================================= -->
+  <section id="teeth-whitening" class="py-16 sm:py-20 px-6">
     <div class="max-w-6xl mx-auto">
-      <div class="grid md:grid-cols-2 gap-12 items-start">
-        <!-- Text -->
-        <div>
-          <p class="text-blush-500 font-semibold text-sm uppercase tracking-wider mb-2">Gorgeous Teeth</p>
+      <div class="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div class="animate-fade-up">
+          <p class="text-blush-500 font-semibold text-xs uppercase tracking-widest mb-2">Brighter Smile</p>
           <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-6">
             Teeth Whitening
           </h2>
           <p class="text-warm-gray-700 text-lg leading-relaxed mb-6">
-            Our in-house treatment delivers dramatic results in as little as one hour. It's painless, relaxing, and far more effective than what you'll find on store shelves.
+            Our in-house treatment delivers dramatic results in as little as one hour. It's
+            painless, relaxing, and far more effective than what you'll find on store shelves.
           </p>
 
-          <!-- Key benefits -->
-          <ul class="space-y-3 mb-8">
+          <ul class="space-y-2.5 mb-8">
             <li class="flex items-start gap-3">
-              <span class="text-blush-500 mt-1">&#10003;</span>
+              <svg class="w-5 h-5 text-blush-400 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
               <span class="text-warm-gray-700">Visible results in one hour</span>
             </li>
             <li class="flex items-start gap-3">
-              <span class="text-blush-500 mt-1">&#10003;</span>
+              <svg class="w-5 h-5 text-blush-400 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
               <span class="text-warm-gray-700">Completely painless process</span>
             </li>
             <li class="flex items-start gap-3">
-              <span class="text-blush-500 mt-1">&#10003;</span>
+              <svg class="w-5 h-5 text-blush-400 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
               <span class="text-warm-gray-700">Hands-off — just sit back and relax</span>
             </li>
           </ul>
@@ -315,18 +371,17 @@ const teethWhitening = serviceCategories.find((c) => c.id === 'teeth-whitening')
             href={business.bookingUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition"
+            class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition min-h-[44px]"
           >
             Book Teeth Whitening
           </a>
         </div>
 
-        <!-- Image -->
-        <div class="flex justify-center md:justify-end">
+        <div>
           <img
             src="/images/services/teeth-whitening.jpg"
             alt="Professional teeth whitening at Bashful Beauty"
-            class="w-full max-w-md rounded-2xl shadow-lg object-cover aspect-[4/5]"
+            class="w-full rounded-[2rem_0.5rem_2rem_0.5rem] shadow-lg object-cover aspect-[4/5]"
             loading="lazy"
           />
         </div>
@@ -334,8 +389,8 @@ const teethWhitening = serviceCategories.find((c) => c.id === 'teeth-whitening')
     </div>
   </section>
 
-  <!-- ================================================================== -->
-  <!-- Booking CTA                                                         -->
-  <!-- ================================================================== -->
+  <!-- ============================================================= -->
+  <!-- Booking CTA                                                    -->
+  <!-- ============================================================= -->
   <BookingCTA />
 </BaseLayout>

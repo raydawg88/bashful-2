@@ -1,0 +1,142 @@
+---
+/**
+ * FloralAccent — A delicate botanical line-art SVG used as a decorative accent.
+ *
+ * Positioned absolutely within a relative parent container. Renders a minimal
+ * branch-and-leaf illustration at low opacity for subtle warmth.
+ *
+ * @prop position - Corner placement: "top-left", "top-right", "bottom-left", "bottom-right"
+ * @prop size     - Scale: "sm" (80px), "md" (140px), "lg" (200px)
+ * @prop opacity  - CSS opacity, default 0.15
+ * @prop class    - Additional CSS classes
+ */
+interface Props {
+  position?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
+  size?: "sm" | "md" | "lg";
+  opacity?: number;
+  class?: string;
+}
+
+const {
+  position = "top-right",
+  size = "md",
+  opacity = 0.15,
+  class: className = "",
+} = Astro.props;
+
+const sizeMap = {
+  sm: "w-20 h-20",
+  md: "w-36 h-36",
+  lg: "w-52 h-52",
+};
+
+const positionMap = {
+  "top-left": "top-0 left-0",
+  "top-right": "top-0 right-0",
+  "bottom-left": "bottom-0 left-0",
+  "bottom-right": "bottom-0 right-0",
+};
+
+/** Mirror horizontally for right-side placements */
+const isRight = position.includes("right");
+/** Flip vertically for bottom placements */
+const isBottom = position.includes("bottom");
+
+let transform = "";
+if (isRight && isBottom) transform = "scale(-1, -1)";
+else if (isRight) transform = "scale(-1, 1)";
+else if (isBottom) transform = "scale(1, -1)";
+---
+
+<div
+  class:list={[
+    "pointer-events-none absolute select-none",
+    positionMap[position],
+    sizeMap[size],
+    className,
+  ]}
+  style={`opacity: ${opacity};`}
+  aria-hidden="true"
+>
+  <svg
+    viewBox="0 0 200 200"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    class="h-full w-full"
+    style={transform ? `transform: ${transform};` : ""}
+  >
+    {/* Main curving stem */}
+    <path
+      d="M 30 180 C 50 140, 60 110, 80 80 C 95 58, 110 45, 140 30"
+      stroke="#F8A4B2"
+      stroke-width="1.5"
+      stroke-linecap="round"
+    />
+
+    {/* Leaf 1 — lower left, angled out */}
+    <path
+      d="M 52 138 C 36 125, 28 112, 32 98 C 48 108, 56 122, 52 138 Z"
+      stroke="#F8A4B2"
+      stroke-width="1"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    {/* Leaf 1 center vein */}
+    <path
+      d="M 52 138 C 44 124, 38 112, 35 102"
+      stroke="#F8A4B2"
+      stroke-width="0.7"
+      stroke-linecap="round"
+    />
+
+    {/* Leaf 2 — mid right, curving right */}
+    <path
+      d="M 82 80 C 100 72, 116 68, 126 76 C 112 82, 96 82, 82 80 Z"
+      stroke="#F8A4B2"
+      stroke-width="1"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    {/* Leaf 2 center vein */}
+    <path
+      d="M 82 80 C 96 76, 108 74, 120 76"
+      stroke="#F8A4B2"
+      stroke-width="0.7"
+      stroke-linecap="round"
+    />
+
+    {/* Leaf 3 — upper, angled left */}
+    <path
+      d="M 100 64 C 84 52, 76 38, 82 26 C 92 34, 100 48, 100 64 Z"
+      stroke="#F8A4B2"
+      stroke-width="1"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    {/* Leaf 3 center vein */}
+    <path
+      d="M 100 64 C 92 50, 86 40, 84 30"
+      stroke="#F8A4B2"
+      stroke-width="0.7"
+      stroke-linecap="round"
+    />
+
+    {/* Small bud at the tip */}
+    <path
+      d="M 140 30 C 148 24, 156 22, 160 28 C 154 32, 146 32, 140 30 Z"
+      stroke="#F8A4B2"
+      stroke-width="1"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    {/* Tiny leaf 4 — accent near base */}
+    <path
+      d="M 42 158 C 54 154, 62 148, 58 140 C 50 146, 44 152, 42 158 Z"
+      stroke="#F8A4B2"
+      stroke-width="0.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+</div>

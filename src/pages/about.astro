@@ -1,12 +1,23 @@
 ---
 /**
- * About — Doe's story, the cottage, the team, and social proof.
+ * About — Editorial storytelling: Doe's story, the cottage, the team, and social proof.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import WatercolorDivider from '../components/WatercolorDivider.astro';
 import BookingCTA from '../components/BookingCTA.astro';
 import { business } from '../data/business';
 import { team } from '../data/team';
+import { testimonials } from '../data/testimonials';
+
+/** Pull a featured quote for the pull-quote section */
+const featuredQuote = testimonials.find((t) => t.verified) ?? testimonials[0];
+
+/** Doe is always first in the team array */
+const doe = team.find((m) => m.name === 'Doe Hernandez');
+const otherMembers = team.filter((m) => m.name !== 'Doe Hernandez');
+
+/** Placeholder count — show 3 placeholders if we only have Doe */
+const placeholderCount = otherMembers.length === 0 ? 3 : 0;
 ---
 
 <BaseLayout
@@ -14,64 +25,93 @@ import { team } from '../data/team';
   description="Meet Doe Hernandez and the Bashful Beauty team. Over 20 years of expertise in the heart of downtown Rockwall, TX."
 >
   <!-- ================================================================== -->
-  <!-- Hero                                                                -->
+  <!-- Hero — Full-width team photo with overlay heading                   -->
   <!-- ================================================================== -->
-  <section class="relative overflow-hidden bg-gradient-to-br from-cream via-blush-50 to-linen">
-    <div class="max-w-4xl mx-auto px-6 py-20 md:py-28 text-center">
-      <h1 class="font-heading text-5xl md:text-6xl text-warm-gray-900 leading-tight mb-8">
-        Our Story
-      </h1>
+  <section class="relative overflow-hidden">
+    <div class="relative h-[50vh] md:h-[60vh] lg:h-[65vh]">
+      <img
+        src="/images/hero/team-group.jpg"
+        alt="The Bashful Beauty team together at the downtown Rockwall cottage"
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+      <!-- Gradient overlay -->
+      <div class="absolute inset-0 bg-gradient-to-t from-warm-gray-900/70 via-warm-gray-900/20 to-transparent"></div>
+      <!-- Heading overlaid -->
+      <div class="absolute bottom-0 left-0 right-0 px-6 pb-8 md:pb-12 md:pl-12 text-center md:text-left">
+        <h1 class="font-heading text-4xl sm:text-5xl md:text-6xl text-white leading-tight drop-shadow-lg">
+          Our Story
+        </h1>
+      </div>
     </div>
   </section>
 
-  <!-- Full-width team photo -->
-  <div class="max-w-5xl mx-auto px-6 -mt-10 relative z-10">
-    <img
-      src="/images/hero/team-group.jpg"
-      alt="The Bashful Beauty team together at the downtown Rockwall cottage"
-      class="w-full rounded-2xl shadow-xl object-cover aspect-[16/9]"
-    />
-  </div>
-
   <!-- ================================================================== -->
-  <!-- Doe's Story                                                         -->
+  <!-- Doe's Story — Editorial layout with float + pull quote              -->
   <!-- ================================================================== -->
-  <section class="py-20 px-6">
-    <div class="max-w-6xl mx-auto">
-      <div class="grid md:grid-cols-2 gap-12 items-center">
-        <!-- Text -->
-        <div>
-          <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-6">
-            Doe's Skincare Cottage
-          </h2>
-          <p class="text-warm-gray-700 text-lg leading-relaxed mb-6">
-            With over 20 years of experience in the beauty and anti-aging industry, Doe Hernandez brings a unique, scientifically-based approach to skincare. She assembled the most talented team in Texas and is proud to call the heart of downtown Rockwall home.
-          </p>
-          <p class="text-warm-gray-700 text-lg leading-relaxed mb-6">
-            Featured in <strong class="text-warm-gray-900">Voyage Dallas Magazine</strong>, Doe's passion for client care has earned Bashful Beauty its 4.9-star reputation. Every client who walks through the cottage door gets the same thing — undivided attention and results you can see.
-          </p>
-          <p class="text-warm-gray-600 text-base leading-relaxed">
-            <span class="text-gold-light">&#9733;</span>
-            {business.reviews.google.rating} stars from {business.reviews.google.count} Google reviews
-          </p>
-        </div>
+  <section class="py-16 md:py-24 px-6 animate-fade-up">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="font-heading text-3xl sm:text-4xl md:text-5xl text-warm-gray-900 mb-8 md:mb-10">
+        Meet Doe Hernandez
+      </h2>
 
-        <!-- Photo -->
-        <div class="flex justify-center md:justify-end">
-          <div class="relative w-full max-w-sm">
-            <img
-              src="/images/team/doe.jpg"
-              alt="Doe Hernandez, Owner and Lead Esthetician at Bashful Beauty"
-              class="w-full rounded-2xl shadow-lg object-cover aspect-[3/4]"
-              loading="lazy"
-            />
-            <div
-              class="absolute -z-10 -bottom-4 -right-4 w-full h-full rounded-2xl bg-blush-100 opacity-50"
-              aria-hidden="true"
-            ></div>
-          </div>
-        </div>
+      <!-- Mobile: photo above text -->
+      <div class="mb-8 md:hidden">
+        <img
+          src="/images/team/doe.jpg"
+          alt="Doe Hernandez, Owner and Lead Esthetician at Bashful Beauty"
+          class="w-full max-w-sm mx-auto image-frame-organic object-cover aspect-[3/4] shadow-lg"
+          loading="lazy"
+        />
       </div>
+
+      <!-- Desktop: floated photo on right -->
+      <div class="hidden md:block float-right ml-10 mb-6 w-[320px] lg:w-[360px]">
+        <img
+          src="/images/team/doe.jpg"
+          alt="Doe Hernandez, Owner and Lead Esthetician at Bashful Beauty"
+          class="w-full image-frame-organic object-cover aspect-[3/4] shadow-lg"
+          loading="lazy"
+        />
+        <!-- Featured-in badge -->
+        <p class="mt-4 text-center text-warm-gray-500 text-sm tracking-wide uppercase">
+          As featured in <strong class="text-warm-gray-700">Voyage Dallas Magazine</strong>
+        </p>
+      </div>
+
+      <div class="text-warm-gray-700 text-lg leading-relaxed space-y-6">
+        <p>
+          Twenty years ago, Doe Hernandez fell in love with skin. Not the surface-level kind of love — the deep, nerdy, "let me understand why this ingredient works at the cellular level" kind. That curiosity turned into a career, and that career turned into Bashful Beauty.
+        </p>
+        <p>
+          What sets Doe apart is her scientifically-based approach to beauty. While trends come and go, she builds every treatment on evidence — what actually works, why it works, and how to make results last. It's the reason clients trust her with everything from a first-time Brazilian to a custom anti-aging facial.
+        </p>
+        <p>
+          Over two decades, she's built something rare: a studio where you feel like family from the moment you walk in. Where the results speak for themselves, and where no question is too awkward to ask. She assembled a team of talented estheticians who share her standards, and together they've made Bashful Beauty Rockwall's most trusted name in beauty.
+        </p>
+
+        <!-- Pull quote -->
+        <blockquote class="relative my-10 py-6 px-6 md:px-10 border-l-4 border-blush-300 bg-blush-50/50 rounded-r-xl">
+          <span class="absolute -top-4 left-4 text-blush-200 text-6xl font-heading leading-none select-none" aria-hidden="true">&ldquo;</span>
+          <p class="font-heading text-xl md:text-2xl text-warm-gray-800 italic leading-relaxed">
+            {featuredQuote.quote}
+          </p>
+          <cite class="block mt-3 text-warm-gray-500 text-sm not-italic">
+            &mdash; {featuredQuote.source}
+          </cite>
+        </blockquote>
+
+        <p>
+          The reputation followed naturally. A 4.9-star Google rating from {business.reviews.google.count} reviews. Features in Voyage Dallas Magazine. And a waitlist that keeps growing — because once people experience the cottage, they don't go anywhere else.
+        </p>
+      </div>
+
+      <!-- Mobile featured-in badge -->
+      <p class="mt-6 md:hidden text-warm-gray-500 text-sm tracking-wide uppercase text-center">
+        As featured in <strong class="text-warm-gray-700">Voyage Dallas Magazine</strong>
+      </p>
+
+      <!-- Clear the float -->
+      <div class="clear-both"></div>
     </div>
   </section>
 
@@ -80,35 +120,48 @@ import { team } from '../data/team';
   <!-- ================================================================== -->
   <!-- The Cottage                                                         -->
   <!-- ================================================================== -->
-  <section class="py-20 px-6 bg-linen">
-    <div class="max-w-6xl mx-auto">
-      <div class="grid md:grid-cols-2 gap-12 items-center">
-        <!-- Image -->
-        <div class="order-2 md:order-1">
+  <section class="py-16 md:py-24 px-6 bg-blush-50/40 animate-fade-up">
+    <div class="max-w-5xl mx-auto">
+      <!-- Mobile: image first -->
+      <div class="mb-8 md:hidden">
+        <img
+          src="/images/cottage/exterior.jpg"
+          alt="Bashful Beauty's charming cottage studio in downtown Rockwall"
+          class="w-full image-frame-organic object-cover aspect-[4/3] shadow-lg"
+          loading="lazy"
+        />
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-10 md:gap-14 items-center">
+        <!-- Image — desktop only (mobile already shown above) -->
+        <div class="hidden md:block">
           <img
             src="/images/cottage/exterior.jpg"
             alt="Bashful Beauty's charming cottage studio in downtown Rockwall"
-            class="w-full rounded-2xl shadow-lg object-cover aspect-[4/3]"
+            class="w-full image-frame-organic object-cover aspect-[4/3] shadow-lg"
             loading="lazy"
           />
         </div>
 
         <!-- Text -->
-        <div class="order-1 md:order-2">
+        <div>
           <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-6">
             The Cottage
           </h2>
-          <p class="text-warm-gray-700 text-lg leading-relaxed mb-6">
-            Tucked behind Bin 303 in the heart of downtown Rockwall, our cottage studio is nothing like a typical spa. It feels like walking into a friend's house — warm, cozy, and completely relaxing.
-          </p>
-          <p class="text-warm-gray-700 text-lg leading-relaxed mb-6">
-            Every treatment room is designed for comfort and privacy. Whether you're here for a quick brow shape or a full facial, the cottage is your escape from the everyday.
-          </p>
+          <div class="text-warm-gray-700 text-lg leading-relaxed space-y-5">
+            <p>
+              Tucked behind Bin 303 in the heart of downtown Rockwall, Bashful Beauty lives in a place that feels nothing like a typical spa. It's a cottage — warm wood, soft light, and the kind of quiet that makes you exhale the moment you step inside.
+            </p>
+            <p>
+              Every treatment room is designed for comfort and privacy. Whether you're here for a quick brow shape or a full custom facial, the cottage is your escape from the everyday. Clients often say it feels like walking into a friend's house — and that's exactly the point.
+            </p>
+          </div>
           <a
             href="/contact"
-            class="text-blush-500 font-semibold text-lg hover:text-blush-600 transition"
+            class="inline-flex items-center gap-2 mt-6 text-blush-500 font-semibold text-lg hover:text-blush-600 transition"
           >
-            Get Directions &rarr;
+            Get Directions
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
           </a>
         </div>
       </div>
@@ -118,12 +171,12 @@ import { team } from '../data/team';
   <!-- ================================================================== -->
   <!-- Meet the Team                                                       -->
   <!-- ================================================================== -->
-  <section class="py-20 px-6">
-    <div class="max-w-6xl mx-auto">
+  <section class="py-16 md:py-24 px-6 animate-fade-up">
+    <div class="max-w-5xl mx-auto">
       <!-- Section header -->
       <div class="text-center mb-14">
         <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-4">
-          Meet the Team
+          The Team
         </h2>
         <p class="text-warm-gray-700 text-lg max-w-2xl mx-auto leading-relaxed">
           The talented group of estheticians behind Bashful Beauty.
@@ -131,35 +184,51 @@ import { team } from '../data/team';
       </div>
 
       <!-- Team grid -->
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {team.map((member) => (
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+        <!-- Doe — feature card spanning 2 columns -->
+        {doe && (
+          <div class="col-span-2 bg-linen rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row gap-6 items-center sm:items-start shadow-sm">
+            <img
+              src={doe.image}
+              alt={doe.name}
+              class="w-28 h-28 sm:w-36 sm:h-36 rounded-full object-cover shadow-md shrink-0"
+              loading="lazy"
+            />
+            <div class="text-center sm:text-left">
+              <h3 class="font-heading text-xl md:text-2xl text-warm-gray-900 mb-1">{doe.name}</h3>
+              <p class="text-blush-500 text-sm font-semibold mb-3">{doe.role}</p>
+              <p class="text-warm-gray-700 leading-relaxed">{doe.bio}</p>
+            </div>
+          </div>
+        )}
+
+        <!-- Other team members -->
+        {otherMembers.map((member) => (
           <div class="text-center">
             {member.image ? (
               <img
                 src={member.image}
                 alt={member.name}
-                class="w-32 h-32 mx-auto rounded-full object-cover shadow-md mb-4"
+                class="w-24 h-24 md:w-28 md:h-28 mx-auto rounded-full object-cover shadow-md mb-4"
                 loading="lazy"
               />
             ) : (
-              <div class="w-32 h-32 mx-auto rounded-full bg-blush-50 flex items-center justify-center mb-4 shadow-md">
-                <span class="text-blush-300 text-3xl font-heading">{member.name.charAt(0)}</span>
+              <div class="w-24 h-24 md:w-28 md:h-28 mx-auto rounded-full bg-blush-50 flex items-center justify-center mb-4 shadow-md">
+                <span class="text-blush-300 text-2xl md:text-3xl font-heading">{member.name.charAt(0)}</span>
               </div>
             )}
-            <h3 class="font-heading text-lg text-warm-gray-900 mb-1">{member.name}</h3>
-            <p class="text-blush-500 text-sm font-medium mb-2">{member.role}</p>
-            <p class="text-warm-gray-600 text-sm leading-relaxed">{member.bio}</p>
+            <h3 class="font-heading text-base md:text-lg text-warm-gray-900 mb-1">{member.name}</h3>
+            <p class="text-blush-500 text-xs md:text-sm font-medium">{member.role}</p>
           </div>
         ))}
 
         <!-- Placeholder cards for upcoming team members -->
-        {Array.from({ length: 3 }).map(() => (
+        {Array.from({ length: placeholderCount }).map(() => (
           <div class="text-center">
-            <div class="w-32 h-32 mx-auto rounded-full bg-blush-50 flex items-center justify-center mb-4 shadow-md">
-              <span class="text-blush-200 text-3xl">+</span>
+            <div class="w-24 h-24 md:w-28 md:h-28 mx-auto rounded-full bg-blush-50 flex items-center justify-center mb-4 shadow-sm">
+              <span class="text-blush-200 text-2xl">+</span>
             </div>
-            <h3 class="font-heading text-lg text-warm-gray-400 mb-1">Coming Soon</h3>
-            <p class="text-warm-gray-300 text-sm">Team member bio coming soon</p>
+            <h3 class="font-heading text-base text-warm-gray-400 mb-1">Coming Soon</h3>
           </div>
         ))}
       </div>
@@ -169,64 +238,29 @@ import { team } from '../data/team';
   <WatercolorDivider />
 
   <!-- ================================================================== -->
-  <!-- Social Proof                                                        -->
+  <!-- Social Proof Bar                                                    -->
   <!-- ================================================================== -->
-  <section class="py-20 px-6 bg-blush-50">
-    <div class="max-w-4xl mx-auto text-center">
-      <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-10">
-        Trusted by Rockwall
-      </h2>
-
-      <!-- Review stats -->
-      <div class="grid grid-cols-3 gap-6 mb-12">
-        <div>
-          <p class="text-3xl font-bold text-warm-gray-900">{business.reviews.google.rating}</p>
-          <p class="text-warm-gray-600 text-sm mt-1">Google ({business.reviews.google.count} reviews)</p>
+  <section class="py-10 md:py-12 px-6 bg-blush-50 animate-fade-up">
+    <div class="max-w-4xl mx-auto">
+      <!-- Review stats — horizontal on desktop, stacked on mobile -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-center">
+        <div class="flex items-center gap-2">
+          <span class="text-gold-light text-xl">&#9733;</span>
+          <span class="text-warm-gray-900 font-semibold text-lg">{business.reviews.google.rating}</span>
+          <span class="text-warm-gray-600 text-sm">Google ({business.reviews.google.count})</span>
         </div>
-        <div>
-          <p class="text-3xl font-bold text-warm-gray-900">{business.reviews.facebook.rating}</p>
-          <p class="text-warm-gray-600 text-sm mt-1">Facebook ({business.reviews.facebook.count} reviews)</p>
+        <span class="hidden sm:inline text-warm-gray-300" aria-hidden="true">&middot;</span>
+        <div class="flex items-center gap-2">
+          <span class="text-gold-light text-xl">&#9733;</span>
+          <span class="text-warm-gray-900 font-semibold text-lg">{business.reviews.facebook.rating}</span>
+          <span class="text-warm-gray-600 text-sm">Facebook ({business.reviews.facebook.count})</span>
         </div>
-        <div>
-          <p class="text-3xl font-bold text-warm-gray-900">{business.reviews.yelp.rating}</p>
-          <p class="text-warm-gray-600 text-sm mt-1">Yelp ({business.reviews.yelp.count} reviews)</p>
+        <span class="hidden sm:inline text-warm-gray-300" aria-hidden="true">&middot;</span>
+        <div class="flex items-center gap-2">
+          <span class="text-gold-light text-xl">&#9733;</span>
+          <span class="text-warm-gray-900 font-semibold text-lg">{business.reviews.yelp.rating}</span>
+          <span class="text-warm-gray-600 text-sm">Yelp ({business.reviews.yelp.count})</span>
         </div>
-      </div>
-
-      <!-- Featured in -->
-      <p class="text-warm-gray-700 text-lg mb-10">
-        As featured in <strong class="text-warm-gray-900">Voyage Dallas Magazine</strong>
-      </p>
-
-      <!-- Social links -->
-      <div class="flex justify-center gap-6">
-        <a
-          href={business.social.instagram}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="flex items-center gap-2 text-warm-gray-700 hover:text-blush-500 transition font-medium"
-        >
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C16.67.014 16.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-          Instagram
-        </a>
-        <a
-          href={business.social.facebook}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="flex items-center gap-2 text-warm-gray-700 hover:text-blush-500 transition font-medium"
-        >
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-          Facebook
-        </a>
-        <a
-          href={business.social.tiktok}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="flex items-center gap-2 text-warm-gray-700 hover:text-blush-500 transition font-medium"
-        >
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
-          TikTok
-        </a>
       </div>
     </div>
   </section>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 200" preserveAspectRatio="none">
+  <defs>
+    <filter id="ww-blur-blush-lg">
+      <feGaussianBlur stdDeviation="30"/>
+    </filter>
+    <filter id="ww-blur-blush-sm">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+  </defs>
+
+  <!-- Large soft washes -->
+  <ellipse cx="200"  cy="100" rx="360" ry="80"  fill="#FFE4E8" opacity="0.4"  filter="url(#ww-blur-blush-lg)"/>
+  <ellipse cx="700"  cy="90"  rx="400" ry="90"  fill="#FFF5F6" opacity="0.5"  filter="url(#ww-blur-blush-lg)"/>
+  <ellipse cx="1200" cy="110" rx="340" ry="75"  fill="#FFCCD4" opacity="0.35" filter="url(#ww-blur-blush-lg)"/>
+
+  <!-- Mid-layer detail -->
+  <ellipse cx="400"  cy="80"  rx="220" ry="50"  fill="#F0E6C8" opacity="0.3"  filter="url(#ww-blur-blush-sm)"/>
+  <ellipse cx="900"  cy="120" rx="260" ry="55"  fill="#FFE4E8" opacity="0.35" filter="url(#ww-blur-blush-sm)"/>
+  <ellipse cx="1350" cy="85"  rx="180" ry="45"  fill="#FFF5F6" opacity="0.3"  filter="url(#ww-blur-blush-sm)"/>
+
+  <!-- Small accent spots -->
+  <ellipse cx="550"  cy="105" rx="140" ry="35"  fill="#F8A4B2" opacity="0.15" filter="url(#ww-blur-blush-sm)"/>
+  <ellipse cx="1050" cy="95"  rx="120" ry="30"  fill="#F0E6C8" opacity="0.25" filter="url(#ww-blur-blush-sm)"/>
+</svg>

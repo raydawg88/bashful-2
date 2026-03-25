@@ -1,42 +1,39 @@
 ---
 /**
- * TestimonialCard — Displays a customer review with star rating.
+ * TestimonialCard — Pull-quote style review card with left accent border.
+ * All displayed reviews are 5-star. Author is a real name string.
  */
 interface Props {
   quote: string;
   author: string;
   source?: string;
-  rating: number;
 }
 
-const { quote, author, source = 'Google Review', rating } = Astro.props;
-
-/** Generate an array of filled/empty star indicators */
-const stars = Array.from({ length: 5 }, (_, i) => i < Math.round(rating));
+const { quote, author, source = 'Google Review' } = Astro.props;
 ---
 
-<div class="bg-white rounded-xl p-6 shadow-sm">
-  <!-- Star rating -->
-  <div class="flex gap-0.5 mb-4" aria-label={`${rating} out of 5 stars`}>
-    {stars.map((filled) => (
-      <svg
-        class={`w-5 h-5 ${filled ? 'text-gold-light' : 'text-warm-gray-200'}`}
-        fill="currentColor"
-        viewBox="0 0 20 20"
-      >
-        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-      </svg>
-    ))}
+<div class="bg-white rounded-xl p-6 sm:p-8 border-l-[3px] border-blush-300 w-full">
+  <!-- Decorative quote mark + stars row -->
+  <div class="flex items-start justify-between mb-4">
+    <span class="text-5xl leading-none text-blush-200 font-heading -mt-2 select-none" aria-hidden="true">&ldquo;</span>
+    <!-- 5 filled stars -->
+    <div class="flex gap-0.5" aria-label="5 out of 5 stars">
+      {Array.from({ length: 5 }).map(() => (
+        <svg class="w-4 h-4 text-gold-light" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+      ))}
+    </div>
   </div>
 
   <!-- Quote -->
-  <blockquote class="text-warm-gray-700 italic leading-relaxed mb-4">
-    &ldquo;{quote}&rdquo;
+  <blockquote class="text-warm-gray-700 text-lg leading-relaxed mb-5">
+    {quote}
   </blockquote>
 
   <!-- Attribution -->
-  <div class="text-sm">
-    <p class="font-semibold text-warm-gray-900">{author}</p>
-    <p class="text-warm-gray-500">{source}</p>
+  <div>
+    <p class="text-warm-gray-500 text-sm">&mdash; {author}</p>
+    <p class="text-warm-gray-500/70 text-xs mt-0.5">{source}</p>
   </div>
 </div>

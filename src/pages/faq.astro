@@ -1,11 +1,12 @@
 ---
 /**
- * FAQ — Frequently asked questions, pre-wax care, and post-wax care instructions.
+ * FAQ — Frequently asked questions, pre-wax care, post-wax care, and spray tan prep.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import WatercolorDivider from '../components/WatercolorDivider.astro';
 import BookingCTA from '../components/BookingCTA.astro';
 import { faqs, preWaxCare, postWaxCare } from '../data/faq';
+import { business } from '../data/business';
 
 /** FAQPage JSON-LD */
 const faqJsonLd = {
@@ -48,6 +49,26 @@ const postWaxHowTo = {
     text: step.description,
   })),
 };
+
+/** Spray tan prep tips */
+const sprayTanTips = [
+  {
+    title: 'Exfoliate the day before',
+    description: 'Use a gentle scrub or exfoliating mitt all over. Pay extra attention to elbows, knees, ankles, and wrists where skin is drier and tan can build up unevenly.',
+  },
+  {
+    title: 'Skip moisturizer, deodorant, and perfume',
+    description: 'Come to your appointment with clean, bare skin. Lotions, oils, and fragrances create barriers that can cause streaking or uneven color.',
+  },
+  {
+    title: 'Wear dark, loose clothing',
+    description: 'Dark, loose-fitting clothes protect your tan while it develops. Avoid tight waistbands, bra straps, and anything that could leave marks.',
+  },
+  {
+    title: 'Wait before showering',
+    description: 'Let your tan develop for at least 8 to 10 hours before your first rinse. When you do shower, use lukewarm water and skip the soap on the first rinse.',
+  },
+];
 ---
 
 <BaseLayout
@@ -62,38 +83,42 @@ const postWaxHowTo = {
   <!-- ================================================================== -->
   <!-- Hero                                                                -->
   <!-- ================================================================== -->
-  <section class="bg-gradient-to-br from-cream via-blush-50 to-linen">
-    <div class="max-w-4xl mx-auto px-6 py-20 md:py-28 text-center">
-      <h1 class="font-heading text-5xl md:text-6xl text-warm-gray-900 leading-tight mb-6">
+  <section class="bg-blush-50">
+    <div class="max-w-4xl mx-auto px-6 py-16 md:py-24 text-center">
+      <h1 class="font-heading text-4xl sm:text-5xl md:text-6xl text-warm-gray-900 leading-tight mb-5">
         Frequently Asked Questions
       </h1>
       <p class="text-warm-gray-700 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
-        Everything you need to know before your visit. Can't find your answer? Call or text us anytime.
+        Everything you need to know before your visit.
       </p>
     </div>
   </section>
 
   <!-- ================================================================== -->
-  <!-- General FAQ                                                         -->
+  <!-- FAQ Accordion                                                       -->
   <!-- ================================================================== -->
-  <section class="py-20 px-6">
+  <section class="py-16 md:py-24 px-6 animate-fade-up">
     <div class="max-w-3xl mx-auto">
-      <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-10 text-center">
-        Common Questions
-      </h2>
-
       <div class="space-y-0">
         {faqs.map((faq) => (
-          <details class="group border-b border-warm-gray-200">
-            <summary class="flex items-center justify-between cursor-pointer py-5 text-left">
-              <span class="font-heading text-lg text-warm-gray-900 pr-4">{faq.question}</span>
-              <span class="text-blush-500 shrink-0 transition-transform group-open:rotate-45 text-2xl leading-none">+</span>
+          <details class="group border-b border-warm-gray-200/50">
+            <summary class="flex items-center justify-between cursor-pointer px-4 py-5 md:py-6 text-left select-none">
+              <span class="font-heading text-lg md:text-xl text-warm-gray-900 pr-4 leading-snug">{faq.question}</span>
+              <span class="shrink-0 w-7 h-7 flex items-center justify-center rounded-full border border-blush-300 text-blush-500 transition-transform duration-300 group-open:rotate-45 text-xl leading-none font-light" aria-hidden="true">+</span>
             </summary>
-            <div class="pb-5 pr-8">
-              <p class="text-warm-gray-700 leading-relaxed">{faq.answer}</p>
+            <div class="px-4 pb-6 pr-12 faq-answer">
+              <p class="text-warm-gray-700 text-base leading-relaxed max-w-prose">{faq.answer}</p>
             </div>
           </details>
         ))}
+      </div>
+
+      <!-- Can't find your answer? -->
+      <div class="mt-10 text-center">
+        <p class="text-warm-gray-600">
+          Can't find your answer? Call or text us anytime at{' '}
+          <a href={business.phoneHref} class="text-blush-500 font-semibold hover:text-blush-600 transition">{business.phone}</a>
+        </p>
       </div>
     </div>
   </section>
@@ -103,25 +128,25 @@ const postWaxHowTo = {
   <!-- ================================================================== -->
   <!-- Pre-Wax Care                                                        -->
   <!-- ================================================================== -->
-  <section class="py-20 px-6 bg-blush-50">
+  <section class="py-16 md:py-24 px-6 bg-blush-50/50 animate-fade-up">
     <div class="max-w-3xl mx-auto">
       <div class="text-center mb-12">
-        <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-4">
-          Pre-Wax Care Instructions
+        <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-3">
+          Before Your Wax
         </h2>
         <p class="text-warm-gray-700 text-lg leading-relaxed">
-          Follow these steps before your waxing appointment for the best results.
+          Follow these steps for the best results.
         </p>
       </div>
 
-      <div class="space-y-6">
+      <div class="space-y-4">
         {preWaxCare.map((step, i) => (
-          <div class="bg-white rounded-xl p-6 shadow-sm flex gap-4">
-            <div class="shrink-0 w-8 h-8 rounded-full bg-blush-500 text-white flex items-center justify-center font-semibold text-sm">
+          <div class="bg-white rounded-xl px-5 py-5 md:px-6 md:py-6 shadow-sm flex gap-4 items-start">
+            <div class="shrink-0 w-7 h-7 rounded-full bg-blush-500 text-white flex items-center justify-center font-semibold text-sm mt-0.5">
               {i + 1}
             </div>
             <div>
-              <h3 class="font-heading text-lg text-blush-500 mb-1">{step.title}</h3>
+              <h3 class="font-heading text-lg text-warm-gray-900 mb-1">{step.title}</h3>
               <p class="text-warm-gray-700 leading-relaxed">{step.description}</p>
             </div>
           </div>
@@ -135,26 +160,58 @@ const postWaxHowTo = {
   <!-- ================================================================== -->
   <!-- Post-Wax Care                                                       -->
   <!-- ================================================================== -->
-  <section class="py-20 px-6">
+  <section class="py-16 md:py-24 px-6 bg-linen animate-fade-up">
     <div class="max-w-3xl mx-auto">
       <div class="text-center mb-12">
-        <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-4">
-          Post-Wax Care Instructions
+        <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-3">
+          After Your Wax
         </h2>
         <p class="text-warm-gray-700 text-lg leading-relaxed">
-          Take care of your skin after your wax to keep it smooth and irritation-free.
+          Take care of your skin to stay smooth and irritation-free.
         </p>
       </div>
 
-      <div class="space-y-6">
+      <div class="space-y-4">
         {postWaxCare.map((step, i) => (
-          <div class="bg-white rounded-xl p-6 shadow-sm flex gap-4">
-            <div class="shrink-0 w-8 h-8 rounded-full bg-blush-500 text-white flex items-center justify-center font-semibold text-sm">
+          <div class="bg-white rounded-xl px-5 py-5 md:px-6 md:py-6 shadow-sm flex gap-4 items-start">
+            <div class="shrink-0 w-7 h-7 rounded-full bg-blush-500 text-white flex items-center justify-center font-semibold text-sm mt-0.5">
               {i + 1}
             </div>
             <div>
-              <h3 class="font-heading text-lg text-blush-500 mb-1">{step.title}</h3>
+              <h3 class="font-heading text-lg text-warm-gray-900 mb-1">{step.title}</h3>
               <p class="text-warm-gray-700 leading-relaxed">{step.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <WatercolorDivider variant="gold" />
+
+  <!-- ================================================================== -->
+  <!-- Spray Tan Prep Tips                                                 -->
+  <!-- ================================================================== -->
+  <section class="py-16 md:py-24 px-6 animate-fade-up">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-3">
+          Spray Tan Prep
+        </h2>
+        <p class="text-warm-gray-700 text-lg leading-relaxed">
+          A few simple steps for an even, long-lasting glow.
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        {sprayTanTips.map((tip, i) => (
+          <div class="bg-linen rounded-xl px-5 py-5 md:px-6 md:py-6 flex gap-4 items-start">
+            <div class="shrink-0 w-7 h-7 rounded-full bg-gold-light text-white flex items-center justify-center font-semibold text-sm mt-0.5">
+              {i + 1}
+            </div>
+            <div>
+              <h3 class="font-heading text-lg text-warm-gray-900 mb-1">{tip.title}</h3>
+              <p class="text-warm-gray-700 leading-relaxed">{tip.description}</p>
             </div>
           </div>
         ))}
@@ -166,7 +223,27 @@ const postWaxHowTo = {
   <!-- Booking CTA                                                         -->
   <!-- ================================================================== -->
   <BookingCTA
-    heading="Ready to Book?"
-    subtext="Now that you know what to expect, book your appointment and let us take care of the rest."
+    heading="Have More Questions? Just Ask."
+    subtext="Book your appointment and we'll walk you through everything."
   />
 </BaseLayout>
+
+<style>
+  /* Smooth reveal animation for FAQ answers */
+  details .faq-answer {
+    animation: faq-reveal 0.3s ease-out;
+  }
+
+  @keyframes faq-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Chevron transition is handled by group-open:rotate-45 in Tailwind */
+</style>
