@@ -4,6 +4,7 @@
  * Provides the HTML shell, global styles, Header, Footer, and MobileBookingBar.
  */
 import '../styles/global.css';
+import AmbientBackground from '../components/AmbientBackground.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import MobileBookingBar from '../components/MobileBookingBar.astro';
@@ -42,6 +43,7 @@ const ogImageUrl = ogImage ?? '/images/og-default.jpg';
     <meta name="generator" content={Astro.generator} />
   </head>
   <body class="bg-cream text-warm-gray-900 font-body">
+    <AmbientBackground variant="blush" intensity="subtle" />
     <Header />
     <main>
       <slot />

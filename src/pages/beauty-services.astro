@@ -4,7 +4,6 @@
  * Each category as an editorial section with alternating image positions.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import WatercolorDivider from '../components/WatercolorDivider.astro';
 import BookingCTA from '../components/BookingCTA.astro';
 import { business } from '../data/business';
 import { serviceCategories } from '../data/services';
@@ -14,6 +13,9 @@ const brows = serviceCategories.find((c) => c.id === 'brows')!;
 const skinLightening = serviceCategories.find((c) => c.id === 'skin-lightening')!;
 const sprayTans = serviceCategories.find((c) => c.id === 'spray-tans')!;
 const teethWhitening = serviceCategories.find((c) => c.id === 'teeth-whitening')!;
+
+/** Services that get a "Popular" badge */
+const popularServices = new Set(['Lash Lift/Tint Combo', 'Brow Lamination (includes tinting, shaping, trimming)']);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -50,15 +52,15 @@ const jsonLd = {
   <!-- ============================================================= -->
   <section class="relative overflow-hidden">
     <div class="absolute inset-0 bg-gradient-to-br from-cream via-blush-50 to-linen"></div>
-    <div class="relative max-w-6xl mx-auto px-6 py-24 sm:py-32 lg:py-40">
+    <div class="relative max-w-6xl mx-auto px-6 py-12 md:py-16">
       <div class="max-w-2xl mx-auto text-center animate-fade-up">
-        <p class="text-blush-500 font-semibold tracking-widest uppercase text-xs mb-3">
+        <p class="font-body text-xs font-bold uppercase tracking-widest text-blush-500 mb-3">
           Head to Toe
         </p>
-        <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl text-warm-gray-900 mb-6">
+        <h1 class="font-heading text-5xl md:text-6xl text-warm-gray-900 mb-6">
           Beauty Services
         </h1>
-        <p class="text-warm-gray-700 text-lg leading-relaxed max-w-xl mx-auto mb-8">
+        <p class="font-body text-base md:text-lg text-warm-gray-600 leading-relaxed max-w-xl mx-auto mb-8">
           Complete your look with lash lifts, brow shaping, spray tans, and more — all under
           one roof at our Rockwall cottage.
         </p>
@@ -66,7 +68,7 @@ const jsonLd = {
           href={business.bookingUrl}
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition min-h-[44px]"
+          class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full font-semibold text-base hover:bg-blush-600 transition min-h-[48px]"
         >
           Book Now
         </a>
@@ -77,47 +79,59 @@ const jsonLd = {
   <!-- ============================================================= -->
   <!-- Lashes — image RIGHT                                           -->
   <!-- ============================================================= -->
-  <section id="lashes" class="py-16 sm:py-20 px-6">
-    <div class="max-w-6xl mx-auto">
-      <div class="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
-        <div class="animate-fade-up">
-          <p class="text-blush-500 font-semibold text-xs uppercase tracking-widest mb-2">The Eyes</p>
-          <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-6">
+  <section id="lashes" class="py-12 md:py-16 px-6">
+    <div class="max-w-6xl mx-auto animate-fade-up">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div>
+          <!-- Level 6 — Category Label -->
+          <p class="font-body text-xs uppercase tracking-widest text-blush-500 font-bold mb-2">The Eyes</p>
+          <!-- Level 2 — Section Title -->
+          <h2 class="font-heading text-3xl md:text-4xl text-warm-gray-900 mb-6">
             Lash Lift &amp; Tint
           </h2>
-          <p class="text-warm-gray-700 text-lg leading-relaxed mb-6">
+          <div class="h-[2px] w-[60px] bg-blush-300 mb-6"></div>
+          <!-- Level 5 — Body text -->
+          <p class="font-body text-base md:text-lg text-warm-gray-600 leading-relaxed max-w-2xl mb-6">
             Not everyone has a lush set of lashes, but you'd be amazed at what a lift and tint
             can do. Get the look of extensions without the maintenance — using your natural
             lashes.
           </p>
 
+          <!-- Key benefits -->
           <ul class="space-y-2.5 mb-8">
             <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-blush-400 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
               </svg>
-              <span class="text-warm-gray-700">Dramatic, eye-catching results</span>
+              <span class="font-body text-base md:text-lg text-warm-gray-700">Dramatic, eye-catching results</span>
             </li>
             <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-blush-400 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
               </svg>
-              <span class="text-warm-gray-700">Uses your natural lashes — no extensions</span>
+              <span class="font-body text-base md:text-lg text-warm-gray-700">Uses your natural lashes — no extensions</span>
             </li>
             <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-blush-400 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
               </svg>
-              <span class="text-warm-gray-700">No maintenance hassle</span>
+              <span class="font-body text-base md:text-lg text-warm-gray-700">No maintenance hassle</span>
             </li>
           </ul>
 
-          <!-- Service list as blush-dot bullets -->
+          <!-- Service list with blush-dot bullets -->
           <ul class="space-y-2 mb-8">
             {lashes.items!.map((item) => (
-              <li class="flex items-center gap-2.5 text-warm-gray-700">
+              <li class="flex items-center gap-2.5">
                 <span class="w-1.5 h-1.5 rounded-full bg-blush-400 shrink-0"></span>
-                {item.name}
+                <span class="font-body text-base md:text-lg text-warm-gray-700">
+                  {item.name}
+                  {popularServices.has(item.name) && (
+                    <span class="bg-blush-500 text-white text-xs px-3 py-1 rounded-full inline-block ml-2">
+                      Popular
+                    </span>
+                  )}
+                </span>
               </li>
             ))}
           </ul>
@@ -126,7 +140,7 @@ const jsonLd = {
             href={business.bookingUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition min-h-[44px]"
+            class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full font-semibold text-base hover:bg-blush-600 transition min-h-[48px]"
           >
             Book a Lash Appointment
           </a>
@@ -136,7 +150,7 @@ const jsonLd = {
           <img
             src="/images/services/lashes.jpg"
             alt="Lash lift and tint treatment at Bashful Beauty"
-            class="w-full rounded-[2rem_0.5rem_2rem_0.5rem] shadow-lg object-cover aspect-[4/5]"
+            class="w-full rounded-2xl shadow-lg object-cover aspect-[4/5]"
             loading="lazy"
           />
         </div>
@@ -144,41 +158,54 @@ const jsonLd = {
     </div>
   </section>
 
-  <WatercolorDivider />
+  <!-- Divider -->
+  <div class="max-w-[80px] h-[2px] bg-blush-300/50 mx-auto my-12"></div>
 
   <!-- ============================================================= -->
   <!-- Brows — image LEFT                                             -->
   <!-- ============================================================= -->
-  <section id="brows" class="py-16 sm:py-20 px-6">
-    <div class="max-w-6xl mx-auto">
-      <div class="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
+  <section id="brows" class="py-12 md:py-16 px-6">
+    <div class="max-w-6xl mx-auto animate-fade-up">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center">
         <div class="order-2 md:order-1">
           <img
             src="/images/services/brows.jpg"
             alt="Professional brow shaping and lamination at Bashful Beauty"
-            class="w-full rounded-[0.5rem_2rem_0.5rem_2rem] shadow-lg object-cover aspect-[4/5]"
+            class="w-full rounded-2xl shadow-lg object-cover aspect-[4/5]"
             loading="lazy"
           />
         </div>
 
-        <div class="order-1 md:order-2 animate-fade-up">
-          <p class="text-blush-500 font-semibold text-xs uppercase tracking-widest mb-2">
-            Shaping, Tinting &amp; Lamination
+        <div class="order-1 md:order-2">
+          <!-- Level 6 — Category Label -->
+          <p class="font-body text-xs uppercase tracking-widest text-blush-500 font-bold mb-2">
+            The Brows
           </p>
-          <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-6">
+          <!-- Level 2 — Section Title -->
+          <h2 class="font-heading text-3xl md:text-4xl text-warm-gray-900 mb-6">
             Brows
           </h2>
-          <p class="text-warm-gray-700 text-lg leading-relaxed mb-6">
+          <div class="h-[2px] w-[60px] bg-blush-300 mb-6"></div>
+          <!-- Level 5 — Body text -->
+          <p class="font-body text-base md:text-lg text-warm-gray-600 leading-relaxed max-w-2xl mb-6">
             Great brows frame everything. Whether you want a clean shape-up, a bold lamination,
             or a natural tint, we sculpt brows that complement your face and hold their shape
             between visits.
           </p>
 
+          <!-- Service list with blush-dot bullets -->
           <ul class="space-y-2 mb-8">
             {brows.items!.map((item) => (
-              <li class="flex items-center gap-2.5 text-warm-gray-700">
+              <li class="flex items-center gap-2.5">
                 <span class="w-1.5 h-1.5 rounded-full bg-blush-400 shrink-0"></span>
-                {item.name}
+                <span class="font-body text-base md:text-lg text-warm-gray-700">
+                  {item.name}
+                  {popularServices.has(item.name) && (
+                    <span class="bg-blush-500 text-white text-xs px-3 py-1 rounded-full inline-block ml-2">
+                      Popular
+                    </span>
+                  )}
+                </span>
               </li>
             ))}
           </ul>
@@ -187,7 +214,7 @@ const jsonLd = {
             href={business.bookingUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition min-h-[44px]"
+            class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full font-semibold text-base hover:bg-blush-600 transition min-h-[48px]"
           >
             Book a Brow Appointment
           </a>
@@ -196,50 +223,57 @@ const jsonLd = {
     </div>
   </section>
 
-  <WatercolorDivider />
+  <!-- Divider -->
+  <div class="max-w-[80px] h-[2px] bg-blush-300/50 mx-auto my-12"></div>
 
   <!-- ============================================================= -->
   <!-- Skin Lightening — image RIGHT                                  -->
   <!-- ============================================================= -->
-  <section id="skin-lightening" class="py-16 sm:py-20 px-6">
-    <div class="max-w-6xl mx-auto">
-      <div class="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
-        <div class="animate-fade-up">
-          <p class="text-blush-500 font-semibold text-xs uppercase tracking-widest mb-2">Even Tone</p>
-          <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-6">
+  <section id="skin-lightening" class="py-12 md:py-16 px-6">
+    <div class="max-w-6xl mx-auto animate-fade-up">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div>
+          <!-- Level 6 — Category Label -->
+          <p class="font-body text-xs uppercase tracking-widest text-warm-gray-500 font-bold mb-2">Even Tone</p>
+          <!-- Level 2 — Section Title -->
+          <h2 class="font-heading text-3xl md:text-4xl text-warm-gray-900 mb-6">
             Skin Lightening
           </h2>
-          <p class="text-warm-gray-700 text-lg leading-relaxed mb-6">
+          <div class="h-[2px] w-[60px] bg-blush-300 mb-6"></div>
+          <!-- Level 5 — Body text -->
+          <p class="font-body text-base md:text-lg text-warm-gray-600 leading-relaxed max-w-2xl mb-6">
             Target dark spots, hyperpigmentation, and uneven skin tone with professional-grade
             lightening treatments. We recommend a package for the best, most consistent results.
           </p>
 
+          <!-- Key benefits -->
           <ul class="space-y-2.5 mb-8">
             <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-blush-400 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
               </svg>
-              <span class="text-warm-gray-700">Reduces hyperpigmentation and dark spots</span>
+              <span class="font-body text-base md:text-lg text-warm-gray-700">Reduces hyperpigmentation and dark spots</span>
             </li>
             <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-blush-400 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
               </svg>
-              <span class="text-warm-gray-700">Professional-grade products for visible results</span>
+              <span class="font-body text-base md:text-lg text-warm-gray-700">Professional-grade products for visible results</span>
             </li>
             <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-blush-400 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
               </svg>
-              <span class="text-warm-gray-700">Package option for best value</span>
+              <span class="font-body text-base md:text-lg text-warm-gray-700">Package option for best value</span>
             </li>
           </ul>
 
+          <!-- Service list with blush-dot bullets -->
           <ul class="space-y-2 mb-8">
             {skinLightening.items!.map((item) => (
-              <li class="flex items-center gap-2.5 text-warm-gray-700">
+              <li class="flex items-center gap-2.5">
                 <span class="w-1.5 h-1.5 rounded-full bg-blush-400 shrink-0"></span>
-                {item.name}
+                <span class="font-body text-base md:text-lg text-warm-gray-700">{item.name}</span>
               </li>
             ))}
           </ul>
@@ -248,7 +282,7 @@ const jsonLd = {
             href={business.bookingUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition min-h-[44px]"
+            class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full font-semibold text-base hover:bg-blush-600 transition min-h-[48px]"
           >
             Book a Skin Lightening Appointment
           </a>
@@ -258,7 +292,7 @@ const jsonLd = {
           <img
             src="/images/services/skin-lightening.jpg"
             alt="Skin lightening treatment at Bashful Beauty"
-            class="w-full rounded-[2rem_0.5rem_2rem_0.5rem] shadow-lg object-cover aspect-[4/5]"
+            class="w-full rounded-2xl shadow-lg object-cover aspect-[4/5]"
             loading="lazy"
           />
         </div>
@@ -266,29 +300,34 @@ const jsonLd = {
     </div>
   </section>
 
-  <WatercolorDivider />
+  <!-- Divider -->
+  <div class="max-w-[80px] h-[2px] bg-blush-300/50 mx-auto my-12"></div>
 
   <!-- ============================================================= -->
   <!-- Spray Tans — image LEFT                                        -->
   <!-- ============================================================= -->
-  <section id="spray-tans" class="py-16 sm:py-20 px-6">
-    <div class="max-w-6xl mx-auto">
-      <div class="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
+  <section id="spray-tans" class="py-12 md:py-16 px-6">
+    <div class="max-w-6xl mx-auto animate-fade-up">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center">
         <div class="order-2 md:order-1">
           <img
             src="/images/services/spray-tans.jpg"
             alt="Custom spray tan at Bashful Beauty"
-            class="w-full rounded-[0.5rem_2rem_0.5rem_2rem] shadow-lg object-cover aspect-[4/5]"
+            class="w-full rounded-2xl shadow-lg object-cover aspect-[4/5]"
             loading="lazy"
           />
         </div>
 
-        <div class="order-1 md:order-2 animate-fade-up">
-          <p class="text-blush-500 font-semibold text-xs uppercase tracking-widest mb-2">UV-Safe Tanning</p>
-          <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-6">
+        <div class="order-1 md:order-2">
+          <!-- Level 6 — Category Label -->
+          <p class="font-body text-xs uppercase tracking-widest text-blush-500 font-bold mb-2">UV-Safe Tanning</p>
+          <!-- Level 2 — Section Title -->
+          <h2 class="font-heading text-3xl md:text-4xl text-warm-gray-900 mb-6">
             Spray Tans
           </h2>
-          <p class="text-warm-gray-700 text-lg leading-relaxed mb-6">
+          <div class="h-[2px] w-[60px] bg-blush-300 mb-6"></div>
+          <!-- Level 5 — Body text -->
+          <p class="font-body text-base md:text-lg text-warm-gray-600 leading-relaxed max-w-2xl mb-6">
             An all-natural, anti-aging sunless tan made with antioxidants and pure botanicals.
             Rinse in as little as 2 hours with our rapid solution — your tan can last up to a
             week with proper care.
@@ -296,7 +335,7 @@ const jsonLd = {
 
           <!-- Great for pills -->
           <div class="mb-6">
-            <p class="font-semibold text-warm-gray-900 text-sm mb-3">Great for:</p>
+            <p class="font-body font-bold text-warm-gray-800 text-sm mb-3">Great for:</p>
             <div class="flex flex-wrap gap-2">
               {['Vacations', 'Weddings', 'Bodybuilding', 'Everyday confidence'].map((use) => (
                 <span class="bg-blush-50 text-blush-500 px-4 py-1.5 rounded-full text-sm font-medium">
@@ -306,11 +345,12 @@ const jsonLd = {
             </div>
           </div>
 
+          <!-- Service list with blush-dot bullets -->
           <ul class="space-y-2 mb-8">
             {sprayTans.items!.map((item) => (
-              <li class="flex items-center gap-2.5 text-warm-gray-700">
+              <li class="flex items-center gap-2.5">
                 <span class="w-1.5 h-1.5 rounded-full bg-blush-400 shrink-0"></span>
-                {item.name}
+                <span class="font-body text-base md:text-lg text-warm-gray-700">{item.name}</span>
               </li>
             ))}
           </ul>
@@ -319,7 +359,7 @@ const jsonLd = {
             href={business.bookingUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition min-h-[44px]"
+            class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full font-semibold text-base hover:bg-blush-600 transition min-h-[48px]"
           >
             Book a Spray Tan
           </a>
@@ -328,42 +368,49 @@ const jsonLd = {
     </div>
   </section>
 
-  <WatercolorDivider />
+  <!-- Divider -->
+  <div class="max-w-[80px] h-[2px] bg-blush-300/50 mx-auto my-12"></div>
 
   <!-- ============================================================= -->
   <!-- Teeth Whitening — image RIGHT                                  -->
   <!-- ============================================================= -->
-  <section id="teeth-whitening" class="py-16 sm:py-20 px-6">
-    <div class="max-w-6xl mx-auto">
-      <div class="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
-        <div class="animate-fade-up">
-          <p class="text-blush-500 font-semibold text-xs uppercase tracking-widest mb-2">Brighter Smile</p>
-          <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-6">
+  <!-- TODO: Replace teeth-whitening.jpg with a softer smiling photo -->
+  <section id="teeth-whitening" class="py-12 md:py-16 px-6">
+    <div class="max-w-6xl mx-auto animate-fade-up">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div>
+          <!-- Level 6 — Category Label -->
+          <p class="font-body text-xs uppercase tracking-widest text-blush-500 font-bold mb-2">Brighter Smile</p>
+          <!-- Level 2 — Section Title -->
+          <h2 class="font-heading text-3xl md:text-4xl text-warm-gray-900 mb-6">
             Teeth Whitening
           </h2>
-          <p class="text-warm-gray-700 text-lg leading-relaxed mb-6">
+          <div class="h-[2px] w-[60px] bg-blush-300 mb-6"></div>
+          <!-- Level 5 — Body text -->
+          <p class="font-body text-base md:text-lg text-warm-gray-600 leading-relaxed max-w-2xl mb-6">
             Our in-house treatment delivers dramatic results in as little as one hour. It's
             painless, relaxing, and far more effective than what you'll find on store shelves.
           </p>
 
+          <!-- Key benefits -->
           <ul class="space-y-2.5 mb-8">
             <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-blush-400 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
               </svg>
-              <span class="text-warm-gray-700">Visible results in one hour</span>
+              <span class="font-body text-base md:text-lg text-warm-gray-700">Visible results in one hour</span>
             </li>
             <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-blush-400 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
               </svg>
-              <span class="text-warm-gray-700">Completely painless process</span>
+              <span class="font-body text-base md:text-lg text-warm-gray-700">Completely painless process</span>
             </li>
             <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-blush-400 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
               </svg>
-              <span class="text-warm-gray-700">Hands-off — just sit back and relax</span>
+              <span class="font-body text-base md:text-lg text-warm-gray-700">Hands-off — just sit back and relax</span>
             </li>
           </ul>
 
@@ -371,7 +418,7 @@ const jsonLd = {
             href={business.bookingUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition min-h-[44px]"
+            class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full font-semibold text-base hover:bg-blush-600 transition min-h-[48px]"
           >
             Book Teeth Whitening
           </a>
@@ -381,7 +428,7 @@ const jsonLd = {
           <img
             src="/images/services/teeth-whitening.jpg"
             alt="Professional teeth whitening at Bashful Beauty"
-            class="w-full rounded-[2rem_0.5rem_2rem_0.5rem] shadow-lg object-cover aspect-[4/5]"
+            class="w-full rounded-2xl shadow-lg object-cover aspect-[4/5]"
             loading="lazy"
           />
         </div>

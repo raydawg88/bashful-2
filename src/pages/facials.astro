@@ -5,7 +5,6 @@
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BookingCTA from '../components/BookingCTA.astro';
-import WatercolorDivider from '../components/WatercolorDivider.astro';
 import { serviceCategories } from '../data/services';
 import { business } from '../data/business';
 
@@ -79,6 +78,9 @@ const treatmentGroups = [
   },
 ];
 
+/** Services that get a "Popular" badge */
+const popularFacials = new Set(['Custom Facial', 'Custom Hydra-facial', 'Anti Aging Peptide Facial']);
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Service',
@@ -120,15 +122,15 @@ const jsonLd = {
       <div class="absolute inset-0 bg-gradient-to-t from-cream via-cream/70 to-blush-500/10"></div>
     </div>
 
-    <div class="relative max-w-6xl mx-auto px-6 py-24 sm:py-32 lg:py-40">
+    <div class="relative max-w-6xl mx-auto px-6 py-12 md:py-16">
       <div class="max-w-xl animate-fade-up">
-        <p class="text-blush-500 font-semibold tracking-widest uppercase text-xs mb-3">
+        <p class="font-body text-xs font-bold uppercase tracking-widest text-blush-500 mb-3">
           Customized Skincare
         </p>
-        <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl text-warm-gray-900 mb-6">
+        <h1 class="font-heading text-5xl md:text-6xl text-warm-gray-900 mb-6">
           Facials
         </h1>
-        <p class="text-warm-gray-700 text-lg leading-relaxed mb-8">
+        <p class="font-body text-base md:text-lg text-warm-gray-600 leading-relaxed max-w-2xl mb-8">
           Every face is different — that's why every facial at Bashful Beauty is fully
           customized. Your esthetician analyzes your skin, selects the right products, and
           builds a treatment plan around your specific goals. Whether you're fighting
@@ -138,7 +140,7 @@ const jsonLd = {
           href={business.bookingUrl}
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition min-h-[44px]"
+          class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full font-semibold text-base hover:bg-blush-600 transition min-h-[48px]"
         >
           Book a Facial
         </a>
@@ -146,35 +148,38 @@ const jsonLd = {
     </div>
   </section>
 
-  <WatercolorDivider />
-
   <!-- ============================================================= -->
   <!-- Skin Concern Guide                                             -->
   <!-- ============================================================= -->
-  <section class="py-16 sm:py-20 px-6">
+  <section class="pt-8 md:pt-12 pb-12 md:pb-16 px-6">
     <div class="max-w-4xl mx-auto animate-fade-up">
       <div class="text-center mb-10">
-        <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-3">
+        <h2 class="font-heading text-3xl md:text-4xl text-warm-gray-900 mb-3">
           Not Sure Which Facial? Start Here.
         </h2>
-        <p class="text-warm-gray-600 text-lg max-w-2xl mx-auto">
+        <div class="mx-auto mt-3 mb-6 h-[2px] w-[60px] bg-blush-300"></div>
+        <p class="font-body text-base md:text-lg text-warm-gray-600 leading-relaxed max-w-2xl mx-auto">
           Tell us your skin concern and we'll point you in the right direction.
         </p>
       </div>
 
-      <div class="grid sm:grid-cols-2 gap-5">
+      <!-- 2x2 desktop, single column mobile -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
         {skinConcerns.map((sc) => (
-          <div class="bg-blush-50 rounded-2xl p-6 sm:p-8">
+          <div class="bg-white rounded-2xl shadow-sm p-6">
+            <!-- Level 3 subheader for concern -->
             <div class="flex items-center gap-3 mb-4">
-              <span class="w-2 h-2 rounded-full bg-blush-400 shrink-0"></span>
-              <h3 class="font-heading text-xl text-warm-gray-900">{sc.concern}</h3>
+              <span class="w-[20px] h-[3px] bg-blush-300 shrink-0"></span>
+              <h3 class="font-body text-sm font-bold uppercase tracking-widest text-blush-500">
+                {sc.concern}
+              </h3>
             </div>
-            <p class="text-warm-gray-500 text-xs uppercase tracking-widest font-semibold mb-2">
+            <p class="font-body text-xs uppercase tracking-widest text-warm-gray-500 font-bold mb-2">
               We recommend
             </p>
             <ul class="space-y-1.5">
               {sc.recommendations.map((rec) => (
-                <li class="text-warm-gray-700 text-[15px] leading-snug">{rec}</li>
+                <li class="font-body text-base md:text-lg text-warm-gray-600 leading-relaxed">{rec}</li>
               ))}
             </ul>
           </div>
@@ -183,36 +188,55 @@ const jsonLd = {
     </div>
   </section>
 
-  <WatercolorDivider />
+  <!-- Divider -->
+  <div class="max-w-[80px] h-[2px] bg-blush-300/50 mx-auto my-12"></div>
 
   <!-- ============================================================= -->
   <!-- Facial Treatments Menu                                         -->
   <!-- ============================================================= -->
-  <section class="py-16 sm:py-20 px-6">
+  <section class="py-12 md:py-16 px-6">
     <div class="max-w-4xl mx-auto animate-fade-up">
-      <div class="text-center mb-12">
-        <p class="text-blush-500 font-semibold tracking-widest uppercase text-xs mb-2">
+      <div class="text-center mb-8">
+        <p class="font-body text-xs font-bold uppercase tracking-widest text-blush-500 mb-2">
           The Menu
         </p>
-        <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900">
+        <h2 class="font-heading text-3xl md:text-4xl text-warm-gray-900">
           Facial Treatments
         </h2>
+        <div class="mx-auto mt-3 h-[2px] w-[60px] bg-blush-300"></div>
       </div>
+
+      <!-- Placeholder image before the treatments list -->
+      <img
+        src="/images/services/facials.jpg"
+        alt="Facial treatments at Bashful Beauty Spa"
+        class="w-full max-h-[300px] object-cover rounded-2xl mb-10"
+        loading="lazy"
+      />
 
       <div class="space-y-10">
         {treatmentGroups.map((group) => (
           <div>
-            <div class="flex items-center gap-3 mb-4">
-              <span class="w-6 h-px bg-blush-300"></span>
-              <h3 class="font-heading text-lg text-blush-500">{group.heading}</h3>
+            <!-- Level 3 — Category Subheader -->
+            <div class="flex items-center gap-3 mt-10 mb-4">
+              <span class="w-[20px] h-[3px] bg-blush-300 shrink-0"></span>
+              <h3 class="font-body text-sm font-bold uppercase tracking-widest text-blush-500">
+                {group.heading}
+              </h3>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2">
+            <!-- Level 4 — Service names, 2-col desktop -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8">
               {group.services.map((service) => (
-                <div class="py-3 px-1 border-b border-warm-gray-200/50">
-                  <span class="font-body text-base font-medium text-warm-gray-900">
+                <div class="py-3 border-b border-warm-gray-200/40">
+                  <span class="font-body text-base md:text-lg font-medium text-warm-gray-800">
                     {service}
                   </span>
+                  {popularFacials.has(service) && (
+                    <span class="bg-blush-500 text-white text-xs px-3 py-1 rounded-full inline-block ml-2">
+                      Most Booked
+                    </span>
+                  )}
                 </div>
               ))}
             </div>
@@ -222,19 +246,24 @@ const jsonLd = {
     </div>
   </section>
 
-  <WatercolorDivider />
-
   <!-- ============================================================= -->
   <!-- Upgrades                                                       -->
   <!-- ============================================================= -->
   {upgrades && (
-    <section class="py-16 sm:py-20 px-6">
+    <section class="pt-8 md:pt-12 pb-12 md:pb-16 px-6">
       <div class="max-w-3xl mx-auto animate-fade-up">
         <div class="text-center mb-8">
-          <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-3">
+          <!-- Level 3 subheader style for upgrades heading -->
+          <div class="flex items-center justify-center gap-3 mb-4">
+            <span class="w-[20px] h-[3px] bg-blush-300 shrink-0"></span>
+            <h3 class="font-body text-sm font-bold uppercase tracking-widest text-blush-500">
+              Upgrades
+            </h3>
+          </div>
+          <h2 class="font-heading text-3xl md:text-4xl text-warm-gray-900 mb-3">
             Facial Upgrades
           </h2>
-          <p class="text-warm-gray-600 text-lg">
+          <p class="font-body text-base md:text-lg text-warm-gray-600 leading-relaxed">
             Enhance any facial with these add-ons.
           </p>
         </div>
@@ -245,7 +274,7 @@ const jsonLd = {
               <svg class="w-4 h-4 text-blush-400 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
               </svg>
-              <span class="text-warm-gray-700 text-[15px]">{item.name}</span>
+              <span class="font-body text-base text-warm-gray-700">{item.name}</span>
             </div>
           ))}
         </div>
@@ -253,17 +282,16 @@ const jsonLd = {
     </section>
   )}
 
-  <WatercolorDivider />
-
   <!-- ============================================================= -->
   <!-- What to Expect                                                 -->
   <!-- ============================================================= -->
-  <section class="py-16 sm:py-20 px-6">
+  <section class="py-12 md:py-16 px-6">
     <div class="max-w-3xl mx-auto animate-fade-up">
-      <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-8 text-center">
+      <h2 class="font-heading text-3xl md:text-4xl text-warm-gray-900 mb-6 text-center">
         What to Expect at Your Facial
       </h2>
-      <div class="border-l-[3px] border-blush-300 bg-linen rounded-r-2xl p-8 sm:p-10 text-warm-gray-700 text-lg leading-relaxed space-y-4">
+      <div class="mx-auto mb-8 h-[2px] w-[60px] bg-blush-300"></div>
+      <div class="border-l-[3px] border-blush-300 bg-linen rounded-r-2xl p-8 sm:p-10 text-warm-gray-700 text-base md:text-lg leading-relaxed space-y-4">
         <p>
           Every facial at Bashful Beauty begins with a one-on-one skin analysis. Your
           esthetician will examine your skin under proper lighting, ask about your goals and

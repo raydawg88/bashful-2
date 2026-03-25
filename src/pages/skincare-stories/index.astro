@@ -1,0 +1,90 @@
+---
+/**
+ * Skincare Stories — Blog listing page for Bashful Beauty.
+ * Displays all blog posts as a responsive card grid.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BookingCTA from '../../components/BookingCTA.astro';
+import { blogPosts } from '../../data/blog-posts';
+
+/** Sort posts by date, newest first */
+const sortedPosts = [...blogPosts].sort(
+  (a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime()
+);
+
+/**
+ * Format an ISO date string to a human-readable format.
+ * @param dateStr - ISO date string (e.g. "2026-03-10")
+ * @returns Formatted date string (e.g. "March 10, 2026")
+ */
+function formatDate(dateStr: string): string {
+  return new Date(dateStr).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+---
+
+<BaseLayout
+  title="Skincare Stories"
+  description="Expert skincare tips, waxing guides, and beauty advice from Bashful Beauty Spa in Rockwall, TX."
+>
+  <!-- Hero -->
+  <section class="py-16 md:py-24 px-6 text-center">
+    <div class="max-w-3xl mx-auto animate-fade-up">
+      <h1 class="font-heading text-4xl sm:text-5xl md:text-6xl text-warm-gray-900 mb-4 leading-tight">
+        Skincare Stories
+      </h1>
+      <p class="text-warm-gray-700 text-lg sm:text-xl leading-relaxed max-w-xl mx-auto">
+        Tips, guides, and insider knowledge from our estheticians.
+      </p>
+    </div>
+  </section>
+
+  <!-- Blog Post Grid -->
+  <section class="px-6 pb-16 md:pb-24">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {sortedPosts.map((post, i) => (
+          <a
+            href={`/skincare-stories/${post.slug}`}
+            class:list={[
+              'group block bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300 animate-fade-up',
+              `stagger-${i + 1}`,
+            ]}
+          >
+            <div class="aspect-[16/9] overflow-hidden">
+              <img
+                src={post.heroImage}
+                alt={post.title}
+                class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                loading="lazy"
+              />
+            </div>
+            <div class="p-6">
+              <span class="inline-block bg-blush-50 text-blush-500 text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-3">
+                {post.category}
+              </span>
+              <h2 class="font-heading text-xl text-warm-gray-900 mb-2 leading-snug group-hover:text-blush-500 transition-colors">
+                {post.title}
+              </h2>
+              <p class="text-base text-warm-gray-600 leading-relaxed mb-4">
+                {post.excerpt}
+              </p>
+              <p class="text-sm text-warm-gray-500">
+                {post.readTime} &middot; {formatDate(post.publishDate)}
+              </p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking CTA -->
+  <BookingCTA
+    heading="Have a Skincare Question?"
+    subtext="Our estheticians are happy to help. Book a consultation or your next appointment."
+  />
+</BaseLayout>

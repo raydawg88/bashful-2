@@ -1,0 +1,120 @@
+---
+/**
+ * Cancellation Policy — Standard spa cancellation, late arrival,
+ * and membership policy for Bashful Beauty.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BookingCTA from '../components/BookingCTA.astro';
+import { business } from '../data/business';
+---
+
+<BaseLayout
+  title="Cancellation Policy"
+  description="Bashful Beauty's cancellation policy for appointments, late arrivals, and memberships in Rockwall, TX."
+>
+  <!-- Page Header -->
+  <section class="py-16 md:py-24 px-6">
+    <div class="max-w-3xl mx-auto animate-fade-up">
+      <h1 class="font-heading text-4xl sm:text-5xl text-warm-gray-900 mb-4 leading-tight text-center">
+        Cancellation Policy
+      </h1>
+      <p class="text-warm-gray-500 text-sm text-center">
+        Last updated: March 2026
+      </p>
+    </div>
+  </section>
+
+  <!-- Policy Content -->
+  <section class="px-6 pb-16 md:pb-24">
+    <div class="max-w-3xl mx-auto space-y-12 animate-fade-up">
+
+      <!-- Appointments -->
+      <div>
+        <h2 class="font-heading text-2xl text-warm-gray-900 mb-4">Appointments</h2>
+        <div class="space-y-3">
+          <p class="text-lg text-warm-gray-700 leading-relaxed">
+            We require at least <strong>24 hours notice</strong> for cancellations or rescheduling. We understand that plans change, and we're happy to help you find a new time — just give us enough notice so we can offer your spot to another client.
+          </p>
+          <ul class="space-y-3 text-lg text-warm-gray-700">
+            <li class="pl-6 relative">
+              <span class="absolute left-0 top-[0.65em] w-1.5 h-1.5 rounded-full bg-blush-300"></span>
+              <strong>Late cancellations</strong> (less than 24 hours notice) may be subject to a fee equal to 50% of the service price.
+            </li>
+            <li class="pl-6 relative">
+              <span class="absolute left-0 top-[0.65em] w-1.5 h-1.5 rounded-full bg-blush-300"></span>
+              <strong>No-shows</strong> may be charged the full service price.
+            </li>
+          </ul>
+          <p class="text-lg text-warm-gray-700 leading-relaxed">
+            We know life happens. If there's an emergency, just reach out — we'll always work with you.
+          </p>
+        </div>
+      </div>
+
+      <!-- Late Arrivals -->
+      <div>
+        <h2 class="font-heading text-2xl text-warm-gray-900 mb-4">Late Arrivals</h2>
+        <div class="space-y-3">
+          <p class="text-lg text-warm-gray-700 leading-relaxed">
+            We understand things happen — traffic, parking, the usual. If you're running a few minutes late, don't stress. Here's what to know:
+          </p>
+          <ul class="space-y-3 text-lg text-warm-gray-700">
+            <li class="pl-6 relative">
+              <span class="absolute left-0 top-[0.65em] w-1.5 h-1.5 rounded-full bg-blush-300"></span>
+              If you arrive late, we'll do our best to accommodate your full service within the remaining time.
+            </li>
+            <li class="pl-6 relative">
+              <span class="absolute left-0 top-[0.65em] w-1.5 h-1.5 rounded-full bg-blush-300"></span>
+              If we're unable to provide your full service due to a late arrival, we may need to modify the treatment or help you reschedule.
+            </li>
+            <li class="pl-6 relative">
+              <span class="absolute left-0 top-[0.65em] w-1.5 h-1.5 rounded-full bg-blush-300"></span>
+              Arriving more than <strong>15 minutes late</strong> may be treated as a no-show.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Memberships -->
+      <div>
+        <h2 class="font-heading text-2xl text-warm-gray-900 mb-4">Memberships</h2>
+        <ul class="space-y-3 text-lg text-warm-gray-700">
+          <li class="pl-6 relative">
+            <span class="absolute left-0 top-[0.65em] w-1.5 h-1.5 rounded-full bg-blush-300"></span>
+            Membership benefits are for the member only and are <strong>non-transferable</strong>.
+          </li>
+          <li class="pl-6 relative">
+            <span class="absolute left-0 top-[0.65em] w-1.5 h-1.5 rounded-full bg-blush-300"></span>
+            You may cancel your membership at any time with <strong>30 days written notice</strong>.
+          </li>
+          <li class="pl-6 relative">
+            <span class="absolute left-0 top-[0.65em] w-1.5 h-1.5 rounded-full bg-blush-300"></span>
+            Unused monthly services <strong>do not roll over</strong> to the following month.
+          </li>
+        </ul>
+      </div>
+
+      <!-- How to Cancel or Reschedule -->
+      <div>
+        <h2 class="font-heading text-2xl text-warm-gray-900 mb-4">How to Cancel or Reschedule</h2>
+        <p class="text-lg text-warm-gray-700 leading-relaxed mb-4">
+          There are two easy ways to cancel or reschedule your appointment:
+        </p>
+        <ul class="space-y-3 text-lg text-warm-gray-700">
+          <li class="pl-6 relative">
+            <span class="absolute left-0 top-[0.65em] w-1.5 h-1.5 rounded-full bg-blush-300"></span>
+            <strong>Call or text us</strong> at <a href={business.phoneHref} class="text-blush-500 hover:text-blush-600 transition underline">{business.phone}</a>
+          </li>
+          <li class="pl-6 relative">
+            <span class="absolute left-0 top-[0.65em] w-1.5 h-1.5 rounded-full bg-blush-300"></span>
+            <strong>Cancel online</strong> through your <a href={business.bookingUrl} target="_blank" rel="noopener noreferrer" class="text-blush-500 hover:text-blush-600 transition underline">Square Appointments booking link</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Booking CTA -->
+  <BookingCTA />
+</BaseLayout>

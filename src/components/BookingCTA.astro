@@ -1,7 +1,7 @@
 ---
 /**
  * BookingCTA — Reusable call-to-action section for booking.
- * Uses watercolor overlay texture and social proof for personality.
+ * Reusable booking CTA with social proof.
  */
 import { business } from '../data/business';
 
@@ -19,7 +19,7 @@ const googleReviews = business.reviews.google;
 ---
 
 <section class="py-14 sm:py-16 px-6">
-  <div class="max-w-2xl mx-auto text-center bg-gradient-to-br from-cream via-blush-50 to-linen rounded-3xl px-6 py-12 sm:px-12 sm:py-14 watercolor-overlay relative overflow-hidden">
+  <div class="max-w-2xl mx-auto text-center bg-gradient-to-br from-cream via-blush-50 to-linen rounded-3xl px-6 py-12 sm:px-12 sm:py-14 relative overflow-hidden">
     <h2 class="font-heading text-3xl sm:text-4xl lg:text-[2.75rem] text-warm-gray-900 mb-4 leading-tight">
       {heading}
     </h2>
@@ -30,7 +30,7 @@ const googleReviews = business.reviews.google;
       href={business.bookingUrl}
       target="_blank"
       rel="noopener noreferrer"
-      class="inline-block w-full sm:w-auto bg-blush-500 text-white px-10 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition"
+      class="inline-flex items-center justify-center w-full sm:w-auto bg-blush-500 text-white px-10 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition"
     >
       Book Now
     </a>

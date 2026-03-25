@@ -107,13 +107,20 @@
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
     overflow-x: hidden;
-    font-size: 16px;
-    line-height: 1.6;
+    font-size: 17px;
+    line-height: 1.7;
   }
 
   body {
+    font-size: 17px;
+    line-height: 1.7;
     overflow-x: hidden;
     min-height: 100dvh;
+  }
+
+  /* Ensure nothing goes below 13px */
+  small, .text-xs {
+    font-size: max(0.8125rem, 13px);
   }
 
   /* Selection highlight */
@@ -212,36 +219,6 @@
   text-wrap: balance;
 }
 
-@utility watercolor-overlay {
-  position: relative;
-  isolation: isolate;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    opacity: 0.35;
-    pointer-events: none;
-    background: radial-gradient(
-        ellipse 60% 50% at 15% 20%,
-        var(--color-blush-100),
-        transparent 70%
-      ),
-      radial-gradient(
-        ellipse 50% 60% at 85% 75%,
-        var(--color-gold-soft),
-        transparent 70%
-      ),
-      radial-gradient(
-        ellipse 40% 40% at 50% 50%,
-        var(--color-blush-50),
-        transparent 60%
-      );
-    mix-blend-mode: multiply;
-  }
-}
-
 /* --- Scroll-driven entrance animations --- */
 @utility animate-fade-up {
   animation: fade-up 0.8s var(--ease-out-expo) both;
@@ -293,6 +270,16 @@
 
 @utility image-frame-organic {
   border-radius: 60% 40% 50% 50% / 50% 55% 45% 50%;
+}
+
+/* Tame organic shapes on mobile — avoid content-obscuring blobs */
+@media (max-width: 640px) {
+  .image-frame-organic {
+    border-radius: 1.5rem !important; /* Standard rounded-2xl on mobile */
+  }
+  .organic-blob {
+    border-radius: 1.5rem !important;
+  }
 }
 
 /* ================================================

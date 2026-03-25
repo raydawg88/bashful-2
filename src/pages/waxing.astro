@@ -5,7 +5,6 @@
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BookingCTA from '../components/BookingCTA.astro';
-import WatercolorDivider from '../components/WatercolorDivider.astro';
 import { memberships } from '../data/services';
 import { business } from '../data/business';
 
@@ -119,6 +118,10 @@ const juniorServices = [
   'Unibrow',
 ];
 
+/** Services that get a "Popular" badge */
+const popularFemale = new Set(['Brazilian', 'Full Body Wax']);
+const popularMale = new Set(['Man-Zilian (Brazilian for Males)', 'Grooming Package']);
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Service',
@@ -160,15 +163,15 @@ const jsonLd = {
       <div class="absolute inset-0 bg-gradient-to-t from-cream via-cream/70 to-blush-500/10"></div>
     </div>
 
-    <div class="relative max-w-6xl mx-auto px-6 py-24 sm:py-32 lg:py-40">
+    <div class="relative max-w-6xl mx-auto px-6 py-12 md:py-16">
       <div class="max-w-xl animate-fade-up">
-        <p class="text-blush-500 font-semibold tracking-widest uppercase text-xs mb-3">
+        <p class="font-body text-xs font-bold uppercase tracking-widest text-blush-500 mb-3">
           Hair Removal
         </p>
-        <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl text-warm-gray-900 mb-6">
+        <h1 class="font-heading text-5xl md:text-6xl text-warm-gray-900 mb-6">
           Waxing
         </h1>
-        <p class="text-warm-gray-700 text-lg leading-relaxed mb-8">
+        <p class="font-body text-base md:text-lg text-warm-gray-600 leading-relaxed max-w-2xl mb-8">
           Nobody looks forward to a wax. We get it. That's why every wax at Bashful Beauty is
           designed to be as quick and comfortable as possible — premium hard wax that's gentler
           on sensitive skin, private treatment rooms in our Rockwall cottage, and estheticians
@@ -179,7 +182,7 @@ const jsonLd = {
           href={business.bookingUrl}
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-blush-600 transition min-h-[44px]"
+          class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full font-semibold text-base hover:bg-blush-600 transition min-h-[48px]"
         >
           Book a Waxing Appointment
         </a>
@@ -187,18 +190,17 @@ const jsonLd = {
     </div>
   </section>
 
-  <WatercolorDivider />
-
   <!-- ============================================================= -->
   <!-- Membership Spotlight                                           -->
   <!-- ============================================================= -->
-  <section class="py-16 sm:py-20 px-6">
+  <section class="pt-8 md:pt-12 pb-12 md:pb-16 px-6">
     <div class="max-w-3xl mx-auto animate-fade-up">
-      <div class="text-center mb-10">
-        <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-3">
+      <div class="text-center mb-6">
+        <h2 class="font-heading text-3xl md:text-4xl text-warm-gray-900 mb-3">
           Wax Memberships
         </h2>
-        <p class="text-warm-gray-600 text-lg max-w-xl mx-auto">
+        <div class="mx-auto mt-3 mb-6 h-[2px] w-[60px] bg-blush-300"></div>
+        <p class="font-body text-base md:text-lg text-warm-gray-600 leading-relaxed max-w-xl mx-auto">
           Consistent results at a price that makes sense. Lock in your monthly rate and never
           think about it again.
         </p>
@@ -217,14 +219,14 @@ const jsonLd = {
               <p class="text-4xl font-bold text-warm-gray-900 mb-1">
                 {m.price}<span class="text-base font-normal text-warm-gray-500">/{m.priceNote.replace('per ', '')}</span>
               </p>
-              <p class="text-warm-gray-600 text-sm mb-8">
+              <p class="font-body text-warm-gray-600 text-sm mb-8">
                 Unlimited sessions every month
               </p>
               <a
                 href={business.bookingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-block bg-blush-500 text-white px-8 py-3 rounded-full font-semibold hover:bg-blush-600 transition min-h-[44px]"
+                class="inline-block bg-blush-500 text-white px-8 py-3.5 rounded-full font-semibold text-base hover:bg-blush-600 transition min-h-[48px]"
               >
                 Book Now
               </a>
@@ -235,36 +237,53 @@ const jsonLd = {
     </div>
   </section>
 
-  <WatercolorDivider />
+  <!-- Divider -->
+  <div class="max-w-[80px] h-[2px] bg-blush-300/50 mx-auto my-12"></div>
 
   <!-- ============================================================= -->
   <!-- Female Waxing Menu                                             -->
   <!-- ============================================================= -->
-  <section class="py-16 sm:py-20 px-6">
+  <section class="py-12 md:py-16 px-6">
     <div class="max-w-4xl mx-auto animate-fade-up">
-      <div class="text-center mb-12">
-        <p class="text-blush-500 font-semibold tracking-widest uppercase text-xs mb-2">For Her</p>
-        <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900">
+      <div class="text-center mb-8">
+        <p class="font-body text-xs font-bold uppercase tracking-widest text-blush-500 mb-2">For Her</p>
+        <h2 class="font-heading text-3xl md:text-4xl text-warm-gray-900">
           Female Waxing
         </h2>
+        <div class="mx-auto mt-3 h-[2px] w-[60px] bg-blush-300"></div>
       </div>
+
+      <!-- Lifestyle image to break up text -->
+      <img
+        src="/images/services/waxing.jpg"
+        alt="Waxing services at Bashful Beauty Spa"
+        class="w-full max-h-[300px] object-cover rounded-2xl mb-10"
+        loading="lazy"
+      />
 
       <div class="space-y-10">
         {femaleGroups.map((group) => (
           <div>
-            <!-- Sub-group heading -->
-            <div class="flex items-center gap-3 mb-4">
-              <span class="w-6 h-px bg-blush-300"></span>
-              <h3 class="font-heading text-lg text-blush-500">{group.heading}</h3>
+            <!-- Level 3 — Category Subheader -->
+            <div class="flex items-center gap-3 mt-10 mb-4">
+              <span class="w-[20px] h-[3px] bg-blush-300 shrink-0"></span>
+              <h3 class="font-body text-sm font-bold uppercase tracking-widest text-blush-500">
+                {group.heading}
+              </h3>
             </div>
 
-            <!-- Menu items — single col mobile, 2 col desktop -->
-            <div class="grid grid-cols-1 md:grid-cols-2">
+            <!-- Level 4 — Service names, 2-col desktop -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8">
               {group.services.map((service) => (
-                <div class="py-3 px-1 border-b border-warm-gray-200/50">
-                  <span class="font-body text-base font-medium text-warm-gray-900">
+                <div class="py-3 border-b border-warm-gray-200/40">
+                  <span class="font-body text-base md:text-lg font-medium text-warm-gray-800">
                     {service}
                   </span>
+                  {popularFemale.has(service) && (
+                    <span class="bg-blush-500 text-white text-xs px-3 py-1 rounded-full inline-block ml-2">
+                      Popular
+                    </span>
+                  )}
                 </div>
               ))}
             </div>
@@ -274,34 +293,53 @@ const jsonLd = {
     </div>
   </section>
 
-  <WatercolorDivider />
+  <!-- Divider -->
+  <div class="max-w-[80px] h-[2px] bg-blush-300/50 mx-auto my-12"></div>
 
   <!-- ============================================================= -->
   <!-- Male Waxing Menu                                               -->
   <!-- ============================================================= -->
-  <section class="py-16 sm:py-20 px-6">
+  <section class="py-12 md:py-16 px-6">
     <div class="max-w-4xl mx-auto animate-fade-up">
-      <div class="text-center mb-12">
-        <p class="text-blush-500 font-semibold tracking-widest uppercase text-xs mb-2">For Him</p>
-        <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900">
+      <div class="text-center mb-8">
+        <p class="font-body text-xs font-bold uppercase tracking-widest text-blush-500 mb-2">For Him</p>
+        <h2 class="font-heading text-3xl md:text-4xl text-warm-gray-900">
           Male Waxing
         </h2>
+        <div class="mx-auto mt-3 h-[2px] w-[60px] bg-blush-300"></div>
       </div>
+
+      <!-- Placeholder image between female and male sections -->
+      <img
+        src="/images/services/waxing.jpg"
+        alt="Male waxing services at Bashful Beauty Spa"
+        class="w-full max-h-[240px] object-cover rounded-2xl mb-10"
+        loading="lazy"
+      />
 
       <div class="space-y-10">
         {maleGroups.map((group) => (
           <div>
-            <div class="flex items-center gap-3 mb-4">
-              <span class="w-6 h-px bg-blush-300"></span>
-              <h3 class="font-heading text-lg text-blush-500">{group.heading}</h3>
+            <!-- Level 3 — Category Subheader -->
+            <div class="flex items-center gap-3 mt-10 mb-4">
+              <span class="w-[20px] h-[3px] bg-blush-300 shrink-0"></span>
+              <h3 class="font-body text-sm font-bold uppercase tracking-widest text-blush-500">
+                {group.heading}
+              </h3>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2">
+            <!-- Level 4 — Service names, 2-col desktop -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8">
               {group.services.map((service) => (
-                <div class="py-3 px-1 border-b border-warm-gray-200/50">
-                  <span class="font-body text-base font-medium text-warm-gray-900">
+                <div class="py-3 border-b border-warm-gray-200/40">
+                  <span class="font-body text-base md:text-lg font-medium text-warm-gray-800">
                     {service}
                   </span>
+                  {popularMale.has(service) && (
+                    <span class="bg-blush-500 text-white text-xs px-3 py-1 rounded-full inline-block ml-2">
+                      Popular
+                    </span>
+                  )}
                 </div>
               ))}
             </div>
@@ -311,43 +349,52 @@ const jsonLd = {
     </div>
   </section>
 
-  <WatercolorDivider />
+  <!-- Divider -->
+  <div class="max-w-[80px] h-[2px] bg-blush-300/50 mx-auto my-12"></div>
 
   <!-- ============================================================= -->
   <!-- Junior Waxing                                                  -->
   <!-- ============================================================= -->
-  <section class="py-16 sm:py-20 px-6">
+  <section class="py-12 md:py-16 px-6">
     <div class="max-w-2xl mx-auto animate-fade-up">
       <div class="text-center mb-8">
-        <p class="text-blush-500 font-semibold tracking-widest uppercase text-xs mb-2">Ages 13 &amp; Under</p>
-        <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900">
+        <p class="font-body text-xs font-bold uppercase tracking-widest text-blush-500 mb-2">Ages 13 &amp; Under</p>
+        <h2 class="font-heading text-3xl md:text-4xl text-warm-gray-900">
           Junior Waxing
         </h2>
+        <div class="mx-auto mt-3 h-[2px] w-[60px] bg-blush-300"></div>
       </div>
 
+      <!-- Single column for junior services -->
       <div>
         {juniorServices.map((service) => (
-          <div class="py-3 px-1 border-b border-warm-gray-200/50">
-            <span class="font-body text-base font-medium text-warm-gray-900">
+          <div class="py-3 border-b border-warm-gray-200/40">
+            <span class="font-body text-base md:text-lg font-medium text-warm-gray-800">
               {service}
             </span>
           </div>
         ))}
       </div>
+
+      <!-- Guardian note card -->
+      <div class="mt-8 bg-blush-50 border border-blush-200 rounded-2xl p-6">
+        <p class="font-body text-base text-warm-gray-700 leading-relaxed">
+          All junior services require a parent or guardian present for clients 13 and under.
+        </p>
+      </div>
     </div>
   </section>
-
-  <WatercolorDivider />
 
   <!-- ============================================================= -->
   <!-- What to Expect                                                 -->
   <!-- ============================================================= -->
-  <section class="py-16 sm:py-20 px-6">
+  <section class="py-12 md:py-16 px-6">
     <div class="max-w-3xl mx-auto animate-fade-up">
-      <h2 class="font-heading text-3xl sm:text-4xl text-warm-gray-900 mb-8 text-center">
+      <h2 class="font-heading text-3xl md:text-4xl text-warm-gray-900 mb-6 text-center">
         What to Expect at Your First Wax
       </h2>
-      <div class="border-l-[3px] border-blush-300 bg-linen rounded-r-2xl p-8 sm:p-10 text-warm-gray-700 text-lg leading-relaxed space-y-4">
+      <div class="mx-auto mb-8 h-[2px] w-[60px] bg-blush-300"></div>
+      <div class="border-l-[3px] border-blush-300 bg-linen rounded-r-2xl p-8 sm:p-10 text-warm-gray-700 text-base md:text-lg leading-relaxed space-y-4">
         <p>
           A waxing appointment at Bashful Beauty typically takes 15-60 minutes depending on
           the service. We use premium hard wax that adheres to hair, not skin — making the

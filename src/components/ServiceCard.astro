@@ -1,8 +1,8 @@
 ---
 /**
  * ServiceCard — Editorial-style card for a service category.
- * Mobile: horizontal layout (image left, text right).
- * Desktop: vertical portrait card with image zoom on hover.
+ * Mobile: full-width vertical card (image top, text below).
+ * Desktop: vertical card with image zoom on hover.
  */
 interface Props {
   title: string;
@@ -18,11 +18,11 @@ const { title, description, href, imageSrc } = Astro.props;
   href={href}
   class="group block bg-white rounded-2xl overflow-hidden border border-blush-100 hover:bg-blush-50/50 transition-colors duration-300"
 >
-  <!-- Mobile: horizontal / sm+: vertical -->
-  <div class="flex flex-row sm:flex-col">
+  <!-- Vertical card: image top, text below -->
+  <div class="flex flex-col">
     <!-- Image area -->
     {imageSrc ? (
-      <div class="w-32 h-32 sm:w-full sm:h-auto sm:aspect-[3/4] overflow-hidden shrink-0">
+      <div class="w-full aspect-[3/2] sm:aspect-[4/3] overflow-hidden">
         <img
           src={imageSrc}
           alt={title}
@@ -31,15 +31,15 @@ const { title, description, href, imageSrc } = Astro.props;
         />
       </div>
     ) : (
-      <div class="w-32 h-32 sm:w-full sm:h-auto sm:aspect-[3/4] bg-blush-50 flex items-center justify-center shrink-0">
+      <div class="w-full aspect-[3/2] sm:aspect-[4/3] bg-blush-50 flex items-center justify-center">
         <span class="text-blush-200 text-4xl sm:text-5xl font-heading">&#10047;</span>
       </div>
     )}
 
     <!-- Content -->
-    <div class="flex flex-col justify-center p-4 sm:p-6 sm:border-t-2 sm:border-blush-300">
+    <div class="p-4 sm:p-6 sm:border-t-2 sm:border-blush-300">
       <h3 class="font-heading text-xl sm:text-2xl text-warm-gray-900 mb-1 sm:mb-2">{title}</h3>
-      <p class="text-warm-gray-700 text-sm leading-relaxed line-clamp-3 sm:line-clamp-none">{description}</p>
+      <p class="text-warm-gray-700 text-base leading-relaxed">{description}</p>
     </div>
   </div>
 </a>

@@ -1,0 +1,169 @@
+---
+/**
+ * AmbientBackground — Renders large, blurred CSS gradient orbs that drift
+ * slowly behind all page content, creating a subtle watercolor ambient effect.
+ *
+ * @param variant - Color palette: "blush" | "sage" | "gold" | "cool"
+ * @param intensity - Opacity level: "subtle" | "medium"
+ */
+interface Props {
+  variant?: 'blush' | 'sage' | 'gold' | 'cool';
+  intensity?: 'subtle' | 'medium';
+}
+
+const { variant = 'blush', intensity = 'subtle' } = Astro.props;
+
+/**
+ * Color definitions per variant. Each variant provides 4 orb colors.
+ * Single solid colors blur better than gradients.
+ */
+const palettes: Record<string, string[]> = {
+  blush: ['#FFCCD4', '#FFE4E8', '#F0E6C8', '#B76E79'],
+  sage:  ['#A8B5A0', '#FFE4E8', '#FFF9F5', '#F0E6C8'],
+  gold:  ['#F0E6C8', '#FFCCD4', '#FFF9F5', '#F5F0EB'],
+  cool:  ['#FFE4E8', '#A8B5A0', '#FAF5F0', '#F0E6C8'],
+};
+
+const colors = palettes[variant] ?? palettes.blush;
+
+/**
+ * Opacity ranges per intensity. The 4th orb (rose-gold in blush)
+ * is always slightly lower to act as a secondary accent.
+ */
+const opacityMap: Record<string, number[]> = {
+  subtle: [0.2, 0.18, 0.22, 0.12],
+  medium: [0.3, 0.28, 0.32, 0.2],
+};
+
+const opacities = opacityMap[intensity] ?? opacityMap.subtle;
+---
+
+<div class="ambient-bg" aria-hidden="true">
+  <div
+    class="orb orb-1"
+    style={`background:${colors[0]}; opacity:${opacities[0]};`}
+  />
+  <div
+    class="orb orb-2"
+    style={`background:${colors[1]}; opacity:${opacities[1]};`}
+  />
+  <div
+    class="orb orb-3"
+    style={`background:${colors[2]}; opacity:${opacities[2]};`}
+  />
+  <div
+    class="orb orb-4"
+    style={`background:${colors[3]}; opacity:${opacities[3]};`}
+  />
+</div>
+
+<style>
+  /* --- Container: fixed behind everything --- */
+  .ambient-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  /* --- Shared orb styles --- */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    will-change: transform;
+  }
+
+  /* --- Individual orb sizing & positioning --- */
+  .orb-1 {
+    width: 480px;
+    height: 480px;
+    top: -8%;
+    left: -5%;
+    filter: blur(100px);
+    animation: drift-1 52s ease-in-out infinite alternate;
+  }
+
+  .orb-2 {
+    width: 420px;
+    height: 420px;
+    top: 55%;
+    right: -8%;
+    filter: blur(90px);
+    animation: drift-2 46s ease-in-out infinite alternate;
+  }
+
+  .orb-3 {
+    width: 360px;
+    height: 360px;
+    bottom: -5%;
+    left: 30%;
+    filter: blur(100px);
+    animation: drift-3 58s ease-in-out infinite alternate;
+  }
+
+  .orb-4 {
+    width: 300px;
+    height: 300px;
+    top: 25%;
+    left: 55%;
+    filter: blur(80px);
+    animation: drift-4 44s ease-in-out infinite alternate;
+  }
+
+  /* --- Keyframes: gentle drift with slight scale breathing --- */
+  @keyframes drift-1 {
+    0% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(60px, -40px) scale(1.05);
+    }
+    100% {
+      transform: translate(-30px, 50px) scale(0.95);
+    }
+  }
+
+  @keyframes drift-2 {
+    0% {
+      transform: translate(0, 0) scale(1.05);
+    }
+    50% {
+      transform: translate(-50px, 30px) scale(1);
+    }
+    100% {
+      transform: translate(40px, -60px) scale(1.1);
+    }
+  }
+
+  @keyframes drift-3 {
+    0% {
+      transform: translate(0, 0) scale(0.95);
+    }
+    50% {
+      transform: translate(70px, 40px) scale(1.05);
+    }
+    100% {
+      transform: translate(-40px, -30px) scale(1);
+    }
+  }
+
+  @keyframes drift-4 {
+    0% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(-60px, -50px) scale(0.95);
+    }
+    100% {
+      transform: translate(50px, 30px) scale(1.05);
+    }
+  }
+
+  /* --- Respect user motion preferences --- */
+  @media (prefers-reduced-motion: reduce) {
+    .orb {
+      animation: none !important;
+    }
+  }
+</style>

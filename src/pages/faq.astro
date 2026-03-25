@@ -104,10 +104,10 @@ const sprayTanTips = [
           <details class="group border-b border-warm-gray-200/50">
             <summary class="flex items-center justify-between cursor-pointer px-4 py-5 md:py-6 text-left select-none">
               <span class="font-heading text-lg md:text-xl text-warm-gray-900 pr-4 leading-snug">{faq.question}</span>
-              <span class="shrink-0 w-7 h-7 flex items-center justify-center rounded-full border border-blush-300 text-blush-500 transition-transform duration-300 group-open:rotate-45 text-xl leading-none font-light" aria-hidden="true">+</span>
+              <span class="faq-icon shrink-0 w-7 h-7 flex items-center justify-center rounded-full border border-blush-300 text-blush-500 transition-transform duration-300 group-open:rotate-45 text-xl leading-none font-light" aria-hidden="true">+</span>
             </summary>
             <div class="px-4 pb-6 pr-12 faq-answer">
-              <p class="text-warm-gray-700 text-base leading-relaxed max-w-prose">{faq.answer}</p>
+              <p class="text-warm-gray-600 text-base md:text-lg leading-relaxed max-w-prose">{faq.answer}</p>
             </div>
           </details>
         ))}
@@ -229,6 +229,14 @@ const sprayTanTips = [
 </BaseLayout>
 
 <style>
+  /* Hide default marker/triangle on summary */
+  details summary {
+    list-style: none;
+  }
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+
   /* Smooth reveal animation for FAQ answers */
   details .faq-answer {
     animation: faq-reveal 0.3s ease-out;
@@ -245,5 +253,11 @@ const sprayTanTips = [
     }
   }
 
-  /* Chevron transition is handled by group-open:rotate-45 in Tailwind */
+  /* Smooth icon rotation transition (augments Tailwind group-open:rotate-45) */
+  details summary .faq-icon {
+    transition: transform 0.3s ease;
+  }
+  details[open] summary .faq-icon {
+    transform: rotate(45deg);
+  }
 </style>
